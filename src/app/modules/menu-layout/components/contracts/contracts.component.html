@@ -1,0 +1,111 @@
+<h1>Contratos</h1>
+<br>
+<!-- <div nz-row>
+  <div nz-col nzOffset="7">
+    <label>Filtrar Contratos Por:</label>
+  </div>
+</div> -->
+<div nz-row class="row-1">
+
+  <div nz-col nzSpan="4">
+    <div *ngIf="!constractsIsDisable ; else enable">
+      <button nz-button [nzType]="'primary'" (click)="GetContracts(0, true)"><span>Mostrar desabilitados</span></button>
+    </div>
+    <ng-template #enable>
+      <button nz-button [nzType]="'primary'" (click)="GetContracts(1, true)"><span>Mostrar Habilitados</span></button>
+    </ng-template>
+
+  </div>
+
+    <div nz-col nzSpan="3" class="row1-col1">
+      <app-modal-new-contract [ListOfClients]="ListOfClients" (DataUpdated)="TablaUpdated($event)"></app-modal-new-contract>
+    </div>
+<!-- 
+    <div nz-col nzSpan="8">  
+      <nz-select nzMode="tags" nzPlaceHolder="Tag Mode" [(ngModel)]="listOfTagOptions" (ngModelChange)="SelectFilterEvent($event)">
+        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+      </nz-select>
+    </div> -->
+
+</div>
+
+<br>
+
+<div nz-row class="row-2">
+  <div nz-col>
+      <nz-table #table [nzData]="ListOfData" nzTableLayout="fixed" [nzScroll]="{  x: '100%', y: '100%' }"  [nzPageSize]="10">
+        <thead>
+          <tr>
+          <th nzLeft nzWidth="80px" nzAlign="center">Acciones</th>
+            <th
+              *ngFor="let column of listOfColumns"
+              [nzSortOrder]="column.sortOrder"
+              [nzSortFn]="column.sortFn"
+              [nzSortDirections]="column.sortDirections"
+              [nzFilterMultiple]="column.filterMultiple"
+              [nzFilters]="column.listOfFilter"
+              [nzFilterFn]="column.filterFn"
+              nzWidth="90px"
+            >
+              {{ column.name }}
+            </th>
+            <th nzRight nzWidth="55px" nzAlign="center">Medidor</th>
+            <th nzRight nzWidth="55px" nzAlign="center">Factura Proveedor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of table.data">    
+            <td nzLeft nzAlign="center">
+              <div nz-row>
+                <div nz-col>
+                  <div *ngIf="data.estado; else disablesList"> 
+                      <button nz-button [nzLoading]="IsLoading" nzSize="small" nzDanger nzType="primary"  
+                      nz-popconfirm
+                      nzPopconfirmTitle="Quieres deshabilitar este item?"
+                      (nzOnConfirm)="disableContract(data, 0)"
+                      (nzOnCancel)="cancel()"
+                      nzPopconfirmPlacement="rightBottom"
+                      ><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+                  </div>
+                  <ng-template #disablesList>
+                      <button nz-button nzSize="small" nzType="primary" 
+                      nz-popconfirm
+                      nzPopconfirmTitle="Quieres habilitar este item?"
+                      (nzOnConfirm)="disableContract(data, 1)"
+                      (nzOnCancel)="cancel()"
+                      nzPopconfirmPlacement="rightBottom"
+                      ><i nz-icon nzType="undo" nzTheme="outline"></i></button>
+                  </ng-template>
+  
+                </div>
+                <div nz-col nzOffset="3">
+                  <app-modal-new-contract [ListOfClients]="ListOfClients" [dataPosition]="data"></app-modal-new-contract>
+  
+                </div>
+
+              </div>
+              </td>
+            <td nzLeft>{{data.codigo}}</td>  
+            <td>{{data.descripcion}}</td>
+            <td>{{ data.nombre }}</td>
+            <td>{{ data.fechaCreacion   | date:'dd/M/yyyy' : 'GMT'  }}</td>  
+            <td>{{ data.fechaVenc   | date:'dd/M/yyyy' : 'GMT'  }}</td> 
+            <td nzRight nzAlign="center">
+                <app-modal-medidores [dataPosition]="data" [listOfZones]="listOfZones" [listOfRates] = "listOfRates" [listOfMeters]="listOfMeters"></app-modal-medidores>
+            </td>
+            <td nzAlign="center"  *ngIf="data.tipoContratoId === 1; else Client">
+              <app-factura-ehh [dataPosition]="data"></app-factura-ehh>
+            </td>
+            <ng-template #Client>   
+              <td nzAlign="center">
+                <i nz-icon nzTheme="outline" nzType="alert"></i>
+              </td>
+            </ng-template>
+            
+
+          </tr>
+        </tbody>
+      </nz-table>
+      
+  </div>
+</div>

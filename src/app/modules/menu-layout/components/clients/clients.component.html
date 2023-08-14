@@ -1,0 +1,68 @@
+<h1>Clientes</h1>
+<br>
+<div nz-row>
+  <div nz-col nzOffset="1" nzSpan="4">
+    <div *ngIf="!disableClients ; else enableClients">
+      <button nz-button [nzType]="'primary'" (click)="GetClients(0, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar desabilitados</span></button>
+    </div>
+    <ng-template #enableClients>
+      <button nz-button [nzType]="'primary'" (click)="GetClients(1, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Habilitados</span></button>
+    </ng-template>
+
+  </div>
+  <div nz-col> 
+    <app-submit-client-modal (DataUpdated)="updateTable($event)"></app-submit-client-modal>
+  </div>
+</div>
+<br>
+<div nz-row class="row-2">
+    
+  <div nz-col nzOffset="1" *ngFor="let provider of listOfClients">
+  
+      <nz-card class="card" [nzCover]="coverTemplate" [nzActions]="[actionEdit]">
+          <nz-card-meta
+            nzTitle= {{provider.nombre}}
+            nzDescription= {{provider.direccion}}
+          ></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate>
+          <img *ngIf="provider.imagen; else NoImage" style="max-height: 1000px; height: 200px;" class="logo" alt="example" src="{{provider.imagen}}" />
+          <ng-template #NoImage>
+            <!-- <img class="logo" alt="example" src="../../../../../assets/Images/Imagen_error.webp" /> -->
+            <img class="logo" alt="example" src="assets/Images/error.png" />
+          </ng-template>
+          
+        </ng-template>
+        <ng-template #actionEdit>
+          <div nz-row  nzJustify="center">
+            <div nz-col>
+              <div *ngIf="provider.estado ; else disable">
+                <button nz-button nzDanger nzType="primary" 
+                nz-popconfirm
+                nzPopconfirmTitle="Estas seguro que quieres deshabilitarlo?"
+                (nzOnConfirm)="disableProvider(provider, 0)"
+                (nzOnCancel)="cancel()"
+                nzPopconfirmPlacement="rightBottom"
+                nz-button
+                ><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+              </div>
+              <ng-template #disable>
+                <button nz-button
+                nz-popconfirm
+                nzPopconfirmTitle="Estas seguro que quieres habilitarlo?"
+                (nzOnConfirm)="disableProvider(provider, 1)"
+                (nzOnCancel)="cancel()"
+                nzPopconfirmPlacement="rightBottom"
+                nz-button 
+                ><i nz-icon nzType="undo" nzTheme="outline"></i></button>
+              </ng-template>
+            </div>
+              <div nz-col nzOffset="1">
+                <app-submit-client-modal [dataPosition]="provider"></app-submit-client-modal>
+              </div>
+            </div> 
+          </ng-template> 
+
+
+  </div>
+</div>

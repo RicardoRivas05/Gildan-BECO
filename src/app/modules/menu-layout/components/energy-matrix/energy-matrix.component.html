@@ -1,0 +1,61 @@
+<h1>Matriz Energetica</h1>
+<div nz-row class="row-1">
+
+    <div nz-col nzOffset="8" nzSpan="4" class="row1-col1">
+      <app-modal-new-matrix></app-modal-new-matrix>
+    </div>
+
+    <div nz-col nzSpan="12" class="row1-col2">
+
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="input search text" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+        
+    </div>
+
+
+</div>
+<div nz-row class="row-2">
+  <div nz-col>
+      <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed" [nzScroll]="{  x: '1150px', y: '385px' }"  [nzPageSize]="10">
+        <thead>
+          <tr>
+          <th nzLeft nzWidth="80px">Acciones</th>
+            <th
+              *ngFor="let column of listOfColumns"
+              [nzSortOrder]="column.sortOrder"
+              [nzSortFn]="column.sortFn"
+              [nzSortDirections]="column.sortDirections"
+              [nzFilterMultiple]="column.filterMultiple"
+              [nzFilters]="column.listOfFilter"
+              [nzFilterFn]="column.filterFn"
+              nzWidth="150px"
+            >
+              {{ column.name }}
+            </th>
+            <th nzRight nzWidth="100px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of filterTable.data">    
+            <td nzLeft>
+                <button class="edit" nz-button nzType="primary"  nzShape="circle"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+                <button class="delete" nz-button nzType="primary"  nzShape="circle"><i nz-icon nzType="delete" nzTheme="outline" (click)="DeleteRate(data.id)"></i></button>
+              </td>
+            <td>{{data.id}}</td>
+            <td>{{data.proveedor}}</td>
+            <td>{{data.fechaInicio}}</td>
+            <td>{{ data.fechaFinal }}</td>
+            <td>{{ data.totalEnergia }}</td>  
+            <td nzRight>
+                <app-modal-distribution></app-modal-distribution>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      
+  </div>
+</div>

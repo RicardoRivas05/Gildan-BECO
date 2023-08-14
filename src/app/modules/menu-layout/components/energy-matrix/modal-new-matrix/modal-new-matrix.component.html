@@ -1,0 +1,64 @@
+
+<button nz-button [nzType]="'primary'" (click)="showModal()"><span>Nuevo Registro</span></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Parametros de entrada" (nzOnCancel)="handleCancel()" (nzOnOk)="Post()">
+    <ng-container *nzModalContent>
+
+    <form nz-form nzLayout="horizontal">
+
+        <div nz-row>
+            <div nz-col nzSpan="11">
+                <label>Fecha Inicial</label>
+                    <div nz-row>
+                        <nz-form-item>
+                        <nz-form-control>
+                            <nz-date-picker class="inputMedium"></nz-date-picker>
+                        </nz-form-control>
+                        </nz-form-item>
+                    </div>
+            </div>
+            <div nz-col nzSpan="11" nzOffset="2">
+                <label>Fecha Final</label>
+                <div nz-row>
+                    <nz-form-item >
+                    <nz-form-control>
+                        <nz-date-picker class="inputMedium"></nz-date-picker>
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div nz-row>
+            <div nz-col>
+                <label>Proveedor de energia</label>
+                <div nz-row>
+                    <nz-form-item nzFlex>
+                    <nz-form-control>
+                        <nz-select [ngModel]="'Norte'" class="inputLarge">
+                            <nz-option nzLabel="Norte" nzValue="Norte"></nz-option>
+                            <nz-option nzLabel="Sur" nzValue="Sur"></nz-option>
+                        </nz-select>                   
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+
+        <div nz-row>
+            <div nz-col>
+                    
+                <label  nzRequired>Observacion</label>
+                <div nz-row>
+                    <nz-form-item>
+                    <nz-form-control>
+                        <textarea class="inputLarge" nz-input rows="2" placeholder="Escriba algo"></textarea>
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+            </div>
+        </div>
+
+    </form>
+    </ng-container>
+</nz-modal>

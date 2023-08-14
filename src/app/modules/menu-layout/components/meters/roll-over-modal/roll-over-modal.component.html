@@ -1,0 +1,195 @@
+<button nz-button [nzType]="'primary'" nzSize="small" (click)="showModal()"><i nz-icon nzType="clock-circle" nzTheme="outline"></i></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="RollOver" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzStyle]="{ top: '5px' }">
+    <ng-container *nzModalContent>
+        <form nz-form [formGroup]="validateForm" nzLayout="horizontal">
+          <div nz-row>
+              <div nz-col>
+                  <label>Fecha de RollOver</label>
+                  <div nz-row>
+                          <nz-range-picker formControlName="fecha" [nzShowTime]="true" style="width: 475px;" [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+                  </div>
+    
+              </div>
+    
+          </div>
+          <div nz-row>
+          
+            <div nz-col nzSpan="11">
+              <label>SourceID de medidor</label>
+              <div nz-row>
+                <nz-form-item  nzFlex>
+                  <nz-form-control>
+                    <nz-select class="inputMedium" formControlName="medidorId" [(ngModel)]="dataPosition.id" nzAllowClear [nzDisabled]="true">
+                          <nz-option [nzLabel]="dataPosition.descripcion" [nzValue]="dataPosition.id"></nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+      
+            </div>   
+
+            <div nz-col nzSpan="11" nzOffset="2">
+
+              <label>Energia</label>
+              <div nz-row>
+                  <nz-form-control>
+                      <nz-form-item  nzFlex>
+                          <nz-select class="inputMedium" formControlName="energia" nzPlaceHolder="Activa, Reactiva" nzAllowClear>
+                                  <nz-option nzLabel="Activa" [nzValue]=1></nz-option>
+                                  <nz-option nzLabel="Reactiva" [nzValue]=0></nz-option>
+                                  <nz-option nzLabel="Activa Exportada" [nzValue]=2></nz-option>
+                          </nz-select>
+                      </nz-form-item>
+                  </nz-form-control>
+              </div>
+      
+            </div>
+  
+        </div>
+
+
+          <div nz-row>
+            <div nz-col nzSpan="11">
+                <label>Lectura antes de RollOver</label>
+                <div nz-row>
+                    <nz-form-item>
+                        <nz-form-control>
+                                <input nz-input style="width: 220px;" formControlName="lecturaAnterior" type="number" placeholder="1200">
+                            
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+            <div nz-col nzSpan="11" nzOffset="2">
+                <label>Nueva Lectura</label>
+                <div nz-row>
+                    <nz-form-item  nzFlex>
+                        <nz-form-control>
+                            <input nz-input style="width: 220px;" formControlName="lecturaNueva" placeholder="0.0"  type="number">
+                        </nz-form-control>
+                    </nz-form-item>
+
+                </div>
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzSpan="24">
+                <label>Observacion</label>
+                <div nz-row>
+                        <nz-form-item  nzFlex>
+                            <nz-form-control>
+                                <textarea class="inputLarge" formControlName="observacion" nz-input rows="2" placeholder="Escriba algo"></textarea>
+
+                            </nz-form-control>
+                        </nz-form-item>
+                </div>
+
+            </div>
+          </div>
+
+          <div nz-row>
+            <div nz-col nzOffset="19" nzSpan="1">
+                <button nz-button (click)="cleanForm()"><i nz-icon nzTheme="outline" nzType="clear"></i></button>
+            </div>
+            <div nz-col nzOffset="1" nzSpan="1">
+                <button nz-button (click)="submitForm()"><i nz-icon nzTheme="outline" nzType="save"></i></button>
+            </div>
+          </div>
+          <br>
+        </form>
+
+
+        <div nz-row>
+          <div nz-col>
+            <div *ngIf="!IsDisableRollOver ; else enable">
+              <button nz-button [nzType]="'primary'" (click)="filterData(false, true)"><span>Mostrar desabilitados</span></button>
+            </div>
+            <ng-template #enable>
+              <button nz-button [nzType]="'primary'" (click)="filterData(true, true)"><span>Mostrar Habilitados</span></button>
+            </ng-template>
+        
+          </div>
+        </div>
+        
+        <div nz-row>
+        
+          <div nz-col>
+        
+            <nz-table #table [nzData]="ListOfData" nzTableLayout="fixed" [nzScroll]="{ x: '1150px', y: '240px' }">
+              <thead>
+                <tr>
+                  
+                  <th  nzLeft nzWidth="90px">Acciones</th>
+                  <th 
+                    *ngFor="let column of listOfColumns"
+                    [nzSortOrder]="column.sortOrder"
+                    [nzSortFn]="column.sortFn"
+                    [nzSortDirections]="column.sortDirections"
+                    [nzFilterMultiple]="column.filterMultiple"
+                    [nzFilters]="column.listOfFilter"
+                    [nzFilterFn]="column.filterFn"
+                  >
+                    {{ column.name }}
+                  </th>
+                  <th   nzRight nzWidth="90px">Energia</th>
+                </tr>
+              </thead>
+            
+              <tbody>
+                <tr *ngFor="let data of table.data">
+
+
+                  <td nzLeft> 
+                    <div nz-row>
+                      <div nz-col>
+                        <div *ngIf="data.estado; else disablesList"> 
+                            <button nzSize="small" nz-button nzType="primary" nzDanger 
+                            nz-popconfirm
+                            nzPopconfirmTitle="Quieneres deshabilitar este item?"
+                            (nzOnConfirm)=" disableVMeter(data, false)"
+                            (nzOnCancel)="cancel()"
+                            nzPopconfirmPlacement="rightBottom"
+                            ><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+                        </div>
+                        <ng-template #disablesList>
+                            <button nzSize="small"  nz-button nzType="primary" 
+                            nz-popconfirm
+                            nzPopconfirmTitle="Quieneres habilitar este item?"
+                            (nzOnConfirm)=" disableVMeter(data, true)"
+                            (nzOnCancel)="cancel()"
+                            nzPopconfirmPlacement="rightBottom" 
+                            ><i nz-icon nzType="undo" nzTheme="outline"></i></button>
+                        </ng-template>
+                      </div>
+                      <div nz-col nzOffset="1">
+                        <button nz-button nzSize="small" nzType="primary" (click)="editableForm(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ data.fechaInicial  | date:'dd/M/yyyy':'GMT' }}</td>
+                  <td>{{ data.fechaFinal  | date:'dd/M/yyyy':'GMT'  }}</td>
+                  <td>{{ data.lecturaAnterior }}</td>
+                  <td>{{ data.lecturaNueva }}</td>
+                  <td nzRight>
+                    <div *ngIf="data.energia;else Reactiva">
+                      <span>Activa</span>
+                    </div>
+                    <ng-template #Reactiva>
+                      <span>Reactiva</span>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>  
+        
+          </div>
+        
+        </div>
+        
+
+        
+    </ng-container>
+</nz-modal>
+

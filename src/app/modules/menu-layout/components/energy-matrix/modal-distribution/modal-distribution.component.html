@@ -1,0 +1,98 @@
+
+<button nz-button [nzType]="'primary'" (click)="showModal()"><span>Distribucion</span></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Distribucion de energia" (nzOnCancel)="handleCancel()" (nzOnOk)="Post()">
+    <ng-container *nzModalContent>
+
+    <form nz-form nzLayout="horizontal">
+        <div nz-row>
+            <div nz-col nzSpan="24">
+                <label>Tipo de origen</label>
+                <div nz-row>
+                    <nz-form-item nzFlex>
+                    <nz-form-control>
+                        <nz-select [ngModel]="'Norte'" class="inputLarge">
+                            <nz-option nzLabel="Norte" nzValue="Norte"></nz-option>
+                            <nz-option nzLabel="Sur" nzValue="Sur"></nz-option>
+                        </nz-select>                   
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </div>
+        
+        <div nz-row>
+            <div nz-col nzSpan="11">
+                <label>Consumo de energia</label>
+                <div nz-row>
+                    <nz-form-item>
+                    <nz-form-control>
+                        <input nz-input class="inputMedium" id="Descripcion" type="text" placeholder="(0.5)%"  [disabled]="false" />
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+            </div>
+            <div nz-col nzSpan="11" nzOffset="2">
+                <label>Emisiones CO2</label>
+                <div nz-row>
+                    <nz-form-item>
+                    <nz-form-control>
+                        <input nz-input class="inputMedium" id="Descripcion" type="text" placeholder="(0.5)%"  [disabled]="false" />
+                    </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="4"  [nzOffset]="15" class="row4-col1">
+                <nz-form-item  nzFlex>
+                    <button nz-button nzType="default">Cancelar</button>
+                </nz-form-item>
+            </div>
+            <div nz-col nzOffset="1" [nzSpan]="4" class="row4-col2">
+                <nz-form-item  nzFlex>
+                    <button nz-button nzType="primary">Guardar</button>
+                </nz-form-item>
+    
+            </div>
+        </div>
+        <div nz-row>
+            <div nz-col>
+                <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed" [nzScroll]="{  x: '900px', y: '240px' }"  [nzPageSize]="10">
+                <thead>
+                    <tr>
+                    <th nzLeft nzWidth="80px">ID</th>
+                    <th
+                        *ngFor="let column of listOfColumns"
+                        [nzSortOrder]="column.sortOrder"
+                        [nzSortFn]="column.sortFn"
+                        [nzSortDirections]="column.sortDirections"
+                        [nzFilterMultiple]="column.filterMultiple"
+                        [nzFilters]="column.listOfFilter"
+                        [nzFilterFn]="column.filterFn"
+                        nzWidth="150px"
+                    >
+                        {{ column.name }}
+                    </th>
+                    <th nzRight nzWidth="80px">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of filterTable.data">
+                    <td nzLeft>{{ data.name }}</td>
+                    <td>{{ data.age }}</td>
+                    <td>{{ data.address }}</td>
+                    <td nzRight>
+                        <button class="edit" nz-button nzType="primary"  nzShape="circle"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+                        <button class="delete" nz-button nzType="primary"  nzShape="circle"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+                    </td>
+                    </tr>
+                </tbody>
+                </nz-table>
+
+            </div>
+        </div>
+    </form>
+    </ng-container>
+</nz-modal>

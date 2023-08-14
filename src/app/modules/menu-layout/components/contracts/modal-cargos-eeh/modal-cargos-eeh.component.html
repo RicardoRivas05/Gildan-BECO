@@ -1,0 +1,124 @@
+
+<button nz-button nzType="primary" nzSize="small" (click)="showModal()"><i nz-icon nzTheme="outline" nzType="plus"></i></button>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Cargos" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzStyle]="{ top: '5px' }">
+    <ng-container *nzModalContent>
+
+        <form nz-form [formGroup]="validateForm" nzLayout="horizontal">
+            <div nz-row>
+                <div nz-col>
+                    <label>Nombre</label>
+                    <nz-form-item  nzFlex>
+                        <nz-form-control>
+                            <input nz-input formControlName="nombre" type="text" style="width: 475px;">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+            <div nz-row>
+                <div nz-col>
+                    <label>Valor en Lps.</label>
+                    <nz-form-item  nzFlex>
+                        <nz-form-control>
+                          <input nz-input type="text" placeholder="Ingrese el valor monetario"  formControlName="valor" [ngModel]="0" style="width: 475px;" (ngModelChange)="UpdateTotalCargos($event)">
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+
+        </form>
+        <br>  
+  
+        <div nz-row class="row-4">
+            
+            <div nz-col nzOffset="19" nzSpan="1">
+                <button nz-button (click)="CleanForm()"><i nz-icon nzTheme="outline" nzType="clear"></i></button>
+            </div>
+            <div nz-col nzOffset="1" nzSpan="1" >
+                    <button nz-button ><i nz-icon nzTheme="outline" nzType="save" (click)="submitForm()"></i></button>
+            </div>
+    
+        </div>
+    
+        <br>  
+        <div nz-row>
+          <div nz-col>
+            <div *ngIf="!IsDisable ; else enableClients">
+              <button nz-button [nzType]="'primary'" (click)="filterCargos(false, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar desabilitados</span></button>
+            </div>
+            <ng-template #enableClients>
+              <button nz-button [nzType]="'primary'" (click)="filterCargos(true, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Habilitados</span></button>
+            </ng-template>
+        
+          </div>
+        </div>
+          <br> 
+                 
+              <div nz-row class="row-6">
+                  <div nz-col>
+                      <nz-table #table [nzData]="listOfData" nzTableLayout="fixed"  [nzPageSize]="4">
+                      <thead>
+                          <tr>
+                          <th nzWidth="70px">Acciones</th>
+                          <th
+                              *ngFor="let column of listOfColumns"
+                              [nzSortOrder]="column.sortOrder"
+                              [nzSortFn]="column.sortFn"
+                              [nzSortDirections]="column.sortDirections"
+                              [nzFilterMultiple]="column.filterMultiple"
+                              [nzFilters]="column.listOfFilter"
+                              [nzFilterFn]="column.filterFn"
+                              nzWidth="150px"
+                          >
+                              {{ column.name }}
+                          </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let data of table.data">
+                            <td>
+                              <div nz-row>
+                                <div nz-col>
+                                  <button *ngIf="data.estado; else enable" class="delete" nzSize="small" nz-button nzType="primary" nzDanger 
+                                  nz-popconfirm
+                                  nzPopconfirmTitle="Quieres deshabilitar este item?"
+                                  (nzOnConfirm)="disable(data, false)"
+                                  (nzOnCancel)="cancel()"
+                                  nzPopconfirmPlacement="rightBottom"
+                                  ><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+                                  <ng-template #enable>
+                                    <button class="delete" nzSize="small" nz-button nzType="primary"><i nz-icon nzType="undo" nzTheme="outline" 
+                                      nz-popconfirm
+                                      nzPopconfirmTitle="Quieres habilitar este item?"
+                                      (nzOnConfirm)="disable(data, true)"
+                                      (nzOnCancel)="cancel()"
+                                      nzPopconfirmPlacement="rightBottom"
+                                      ></i></button>
+
+                                  </ng-template>
+                                  
+                                </div>
+                                <div nz-col nzOffset="1">
+                                  <button class="edit" nzSize="small" nz-button nzType="primary" (click)="editableForm(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+                                </div>
+                              </div>
+                            </td>
+                          <td>{{data.nombre}}</td>
+                          <td>L {{data.valor  | number:'1.2-2':'en-US'}}</td>
+                          </tr>
+                      </tbody>
+                      </nz-table>
+                      
+                  </div>
+              </div>
+              
+              <div nz-row>
+                <div nz-col>
+                  <label>{{"Total Cargos Lps."}}</label>
+                </div>
+                <div nz-col nzOffset="1" nzSpan="16">
+                  <nz-input-number style="width: 170px;" [ngModel]="total | number:'1.2-2':'en-US' " [nzDisabled]="true"></nz-input-number>
+                </div>
+              </div>
+    </ng-container>
+</nz-modal>

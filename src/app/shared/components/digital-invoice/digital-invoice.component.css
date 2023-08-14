@@ -1,0 +1,337 @@
+.print-btn{
+    position: fixed;
+    overflow: hidden;
+    opacity: 0.6;
+}
+#logo {
+    margin-right: 15%;
+    justify-content: start;
+}
+#cliente {
+    justify-content: center;
+}
+
+.tg  {border-collapse:collapse;border-spacing:0; }
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-zk76{background-color:#c0c0c0;border-color:#ffffff;text-align:center    ;vertical-align:top}
+.tg .tg-oe15{background-color:#ffffff;border-color:#ffffff;text-align:left;vertical-align:top}
+.tg .tg-wk8r{background-color:#ffffff;border-color:#ffffff;text-align:center;vertical-align:top}
+.tg .tg-dou8{background-color:#001529;border-color:inherit;color:#ffffff;text-align:center;vertical-align:top}
+.tg .tg-hvao{background-color:#c0c0c0;border-color:#ffffff;text-align:left;vertical-align:top}
+        
+
+
+.origen-table  {border-collapse:collapse;border-spacing:0;}
+.origen-table td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.origen-table th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.origen-table .tg-ifil{background-color:#656565;border-color:#ffffff;color:#ffffff;font-weight:bold;text-align:center;vertical-align:top}
+.origen-table .tg-8jgo{border-color:#ffffff;text-align:right;vertical-align:top}
+.origen-table .tg-g6p1{background-color:#656565;border-color:#ffffff;color:#ffffff;font-weight:bold;text-align:left;vertical-align:top}
+
+.grid-container {
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ". .";
+    width: 80%;
+    margin: auto;
+}
+
+
+.cabecera {
+    background-color: #001529;
+    display: flex;
+    margin: 3% 10% 1% 10%;
+    justify-content: space-between;
+}
+
+.direccion {
+    color: white;
+    margin: 2px 15px 0px 0px;
+}
+
+.titulos {
+    background-color: #001529;
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin: auto;
+}
+
+.datos {
+    margin-top: 5px;
+    background-color: rgb(223, 223, 223);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ". .";
+    margin-right: 1%;
+}
+
+.etiqueta-izq {
+    font-size: 13px;
+    color: black;
+    margin: 0% 0% 3% 28%;
+}
+
+.etiqueta-der {
+    font-size: 13px;
+    color: black;
+    margin: 0% 0% 3% 0%;
+}
+
+.etiqueta-izq-titular {
+    font-size: 13px;
+    color: black;
+    margin: 0% 0% 2% 28%;
+}
+
+.etiqueta-der-titular {
+    font-size: 13px;
+    color: black;
+    margin: 0% 0% 2% 0%;
+}
+
+.resumen-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ". . .";
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.consumo {
+    background-color: rgb(223, 223, 223);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1%;
+}
+
+.etiqueta-consumo-total {
+    font-size: 16px;
+    color: black;
+    margin: 8% 0% 1% 0%;
+}
+
+.etiqueta-valor {
+    font-size: 20px;
+    color: rgb(82, 82, 82);
+    font-weight: bold;
+    margin: 0% 0% 4% 0%;
+}
+
+.detalle-container {
+    display: grid;
+    grid-template-columns: 1fr ;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ".";
+    margin-top: 3px;
+    width: 80%;
+    margin: auto;
+}
+
+.detalle {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ".";
+    margin-top: 5px;
+}
+
+.consumo-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ". .";
+    margin-top: 5px;
+    width: 80%;
+    margin: auto;
+}
+
+.origen-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ". .";
+    margin-top: 5px;
+    width: 80%;
+    margin: auto;
+}
+
+.origen-energia {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ".";
+    margin-top: 5px;
+}
+
+.matriz {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ".";
+    margin-top: 5px;
+}
+
+.table thead th {
+    vertical-align: bottom;
+    background-color: #969696;
+    border: none;
+    color: white;
+    text-align: center;
+}
+
+.table-bordered td,
+.table-bordered th {
+    border: 3px solid #ffffff;
+    background-color: #d8d8d8;
+    text-align: center;
+    color: black;
+}
+
+.align-td {
+    text-align: right;
+}
+
+.calculo-consumo-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr;
+    gap: 1px 1px;
+    grid-template-areas: ".";
+    margin-top: 5px;
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    margin: 0px;
+}
+
+.historico-consumo-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 1px 1px;
+    grid-template-areas: ".";
+    margin-top: 5px;
+}
+
+
+.datos-cliente-regulado {
+    display: flex;
+    color: black;
+    margin: 0% 5% 0% 5%;
+}
+
+.totales-historico {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    font-weight: bold;
+    margin: 0% 5% 0% 5%;
+}
+
+.totales-tablas {
+    color: black; 
+    font-weight: bold;
+    background-color: #b9b9b9;
+}
+
+.total-pagar {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    margin: 1% 5% 1% 5%;
+}
+
+.contenedor-cliente-regulado {
+    display: grid;
+    grid-template-areas: ". .";
+    margin-top: 5px;
+    background-color: #eaeaea;
+}
+
+.img-formula {
+    position: relative;
+    left: 17%;
+    width: 46%;
+    height: 8%;
+}
+
+.formula-dividendo {
+    color: black;
+    font-size: 15px;
+    position: absolute;
+    left: 0%;
+}
+
+.formula-divisor1 {
+    color: black;
+    font-size: 15px;
+    position: absolute;
+    left: 27%;
+}
+
+.mas {
+    right: 40%;
+    color: black;
+    font-size: 15px;
+    position: absolute;
+    left: 51%;
+}
+
+.formula-divisor2 {
+    color: black;
+    font-size: 15px;
+    position: absolute;
+    left: 60%;
+}
+
+.formula-penalidad {
+    font-size: 15px;
+    color: black;
+}
+
+.resultado-factor {
+    color: black;
+    font-size: 15px;
+    position: absolute;
+    right: 0%;
+    background-color: #d8d8d8;
+    padding: 0px 12px 0px 12px;
+}
+
+.resultado-penalidad {
+    background-color: #d8d8d8;
+    padding: 0px 12px 0px 12px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: white;
+    margin: 5px;
+}
