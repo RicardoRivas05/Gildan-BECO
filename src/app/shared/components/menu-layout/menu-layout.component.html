@@ -33,7 +33,7 @@
           <div routerLink="providers" nz-menu-item nzMatchRouter>
             <li>
                 <i nz-icon nzType="thunderbolt"></i>
-                <span >Proveedores</span>
+                <span >Generadores</span>
             </li>
           </div>
           <!-- <div routerLink="zones" nz-menu-item nzMatchRouter>
@@ -48,12 +48,23 @@
                 <span >Medidores</span>
             </li>
           </div>
+
+          <div routerLink="icp" nz-menu-item nzMatchRouter>
+            <li>
+              <span nz-icon nzType="reconciliation"></span>
+                <span >ICP</span>
+            </li>
+          </div>
+
           <!-- <div *ngIf="rol == 2" routerLink="users" nz-menu-item nzMatchRouter>
             <li>
                 <i nz-icon nzType="user"></i>
                 <span >Usuarios</span>
             </li>
           </div> -->
+
+
+
         </ul>
       </li>
 
@@ -65,14 +76,14 @@
       </div> -->
 
 
-<!--
-      <div routerLink="input-parameters" nz-menu-item nzMatchRouter>
+
+      <!-- <div routerLink="input-parameters" nz-menu-item nzMatchRouter>
         <li>
             <i nz-icon nzType="control"></i>
             <span >Parametros de entrada</span>
         </li>
-      </div>
-       -->
+      </div> -->
+
       <div *ngIf="rol == 2 || rol == 1" routerLink="contracts" nz-menu-item nzMatchRouter>
         <li>
             <i nz-icon nzType="reconciliation"></i>

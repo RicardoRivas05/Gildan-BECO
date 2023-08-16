@@ -13,18 +13,6 @@
 
   </div>
 
-  <div nz-col  nzSpan="4">
-    <div *ngIf="!meterIsManual; else automatico">
-      <button nz-button nzType="primary" (click)="GetManualSchemas(true)"><span nz-icon nzType="filter" nzTheme="outline"></span>Mostrar Manuales</button>
-    </div>
-    <ng-template #automatico>
-      <div>
-        <button nz-button nzType="primary" (click)="GetManualSchemas(false)"><span nz-icon nzType="filter" nzTheme="outline"></span>Mostrar Automaticos</button>
-      </div>
-    </ng-template>
-
-  </div>
-
   <div nz-col>
 
     <app-meters-modal [listOfMPoinst]="listOfMPoinst" (DataUpdated)="updateTable($event)" [listOfSourceId]="listOfSource"></app-meters-modal>
@@ -53,10 +41,13 @@
           >
             {{ column.name }}
           </th>
+          <th nzRight nzWidth="100px">Tipo Medidor</th>
           <th nzRight nzWidth="80px">Estado</th>
           <th nzRight nzWidth="90px">RollOver</th>
           <th nzRight nzWidth="100px">Medidores Virtuales</th>
-          <th nzRight nzWidth="125px">Registro manual</th>
+
+
+
         </tr>
       </thead>
     <!-- Cuerpo de tabla -->
@@ -95,12 +86,17 @@
           <td>{{ data.sourceId }}</td>
           <td>{{ data.descripcion }}</td>
           <td>{{ data.modelo }}</td>
+
           <td>{{ data.serie }}</td>
           <td *ngIf="!data.tipo; else bidireccional">Unidireccional</td>
           <ng-template #bidireccional>
             <td >Bidireccional</td>
           </ng-template>
 
+          <td *ngIf="data.TipoMedidorId === 1; else respaldo">Principal</td>
+          <ng-template #respaldo>
+            <td>Respaldo</td>
+          </ng-template>
 
           <td nzRight nzAlign="center">
             <div *ngIf="data.estado; else contractDisable">
@@ -116,12 +112,11 @@
           <td nzAlign="center" nzRight>
             <app-virtual-meter-modal [listOfVMeters]="listOfDataVM" [dataPosition]="data" [listOfMeters]="listOfManualMeterAux"></app-virtual-meter-modal>
           </td>
-          <td nzAlign="center" nzRight *ngIf="data.registroDatos; else automatico">
-            <app-manual-registration-modal [dataPosition]="data" [listOfVariables]="listOfVariables"></app-manual-registration-modal>
-          </td>
-          <ng-template #automatico>
-            <td nzAlign="center" nzRight><i nz-icon nzType="warning" nzTheme="outline"></i></td>
-          </ng-template>
+
+
+
+
+
 
         </tr>
       </tbody>

@@ -1,7 +1,7 @@
 <h1>Tarifas</h1>
 <div nz-row class="row-1">
 
-  
+
   <div nz-col nzSpan="4">
 
     <div *ngIf="!ratesIsActive ; else enableClients">
@@ -16,17 +16,17 @@
     <div nz-col>
       <app-modal-new-rate (DataUpdated)="updateTable($event)"></app-modal-new-rate>
     </div>
-    
+
     <!-- <div nz-col nzOffset="1">
       <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a global param">
         <nz-option *ngFor="let param of listOfGeneralParams" [nzLabel]=param.observacion [nzValue]=param.id ></nz-option>
       </nz-select>
     </div>
-    
+
     <div nz-col>
       <button nz-button nzType="primary" nzSize="default"><i nz-icon nzType="plus" nzTheme="outline"></i></button>
     </div> -->
-    
+
 </div>
 <br>
 <div nz-row class="row-2">
@@ -56,11 +56,11 @@
                 <div nz-col>
                   <app-modal-new-rate [dataPosition]="data"></app-modal-new-rate>
                 </div>
-                
+
                 <div nz-col nzOffset="1">
                   <div nz-col>
-                    <div *ngIf="data.estado; else disablesList"> 
-                        <button nz-button nzSize="small" nzDanger nzType="primary" 
+                    <div *ngIf="data.estado; else disablesList">
+                        <button nz-button nzSize="small" nzDanger nzType="primary"
                         nz-popconfirm
                         nzPopconfirmTitle="Quieres deshabilitar este item ?"
                         (nzOnConfirm)="disableRate(data, 0)"
@@ -69,7 +69,7 @@
                         ><i nz-icon nzType="delete" nzTheme="outline"></i></button>
                     </div>
                     <ng-template #disablesList>
-                        <button nz-button nzSize="small" nzType="primary" 
+                        <button nz-button nzSize="small" nzType="primary"
                         nz-popconfirm
                         nzPopconfirmTitle="Quieres habilitar este item ?"
                         (nzOnConfirm)="disableRate(data, 1)"
@@ -77,14 +77,14 @@
                         nzPopconfirmPlacement="rightBottom"
                         ><i nz-icon nzType="undo" nzTheme="outline"></i></button>
                     </ng-template>
-    
+
                   </div>
                 </div>
 
               </div>
             </td>
             <td>{{data.codigo}}</td>
-            <td>{{ data.descripcion }}</td>
+            <td>{{ data.descripcion}}</td>
             <td>{{ data.observacion }}</td>
             <td nzRight nzAlign="center">
               <app-modal-parameters [dataPosition]="data" [listOfParamRelation]="listOfParamRelation"></app-modal-parameters>
@@ -92,6 +92,6 @@
           </tr>
         </tbody>
       </nz-table>
-      
+
   </div>
 </div>

@@ -13,7 +13,7 @@ export class EspecialChargesComponent implements OnInit {
   isVisible = false;
   validateForm!: FormGroup;
   listOfData: EspecialChargesInterface[] = [];
-  newECharge!: EspecialChargesInterface; 
+  newECharge!: EspecialChargesInterface;
   url = {
     get: 'get-especial-charges',
     post: 'cargos-facturas',
@@ -21,7 +21,7 @@ export class EspecialChargesComponent implements OnInit {
     update: 'cargos-facturas',
   };
 
-  
+
   editIsActive!: EspecialChargesInterface | undefined;
   chargeIsDisable: boolean = false;
 
@@ -40,7 +40,7 @@ export class EspecialChargesComponent implements OnInit {
     this.GetCharges(1, false);
     this.validateForm = this.EmptyForm;
   }
-  
+
 
   showModal(): void {
     this.isVisible = true;
@@ -76,7 +76,7 @@ export class EspecialChargesComponent implements OnInit {
 
 
   disableCharge(charge: EspecialChargesInterface, estado : boolean){
-    
+
     this.globalService.Patch(this.url.update, charge.id, {estado: estado}).subscribe(
       result => {
         if(!result){
@@ -89,10 +89,10 @@ export class EspecialChargesComponent implements OnInit {
         }
       }
     );
-    
+
   }
-  
-  
+
+
   listOfColumns: ColumnItem[] = [
     {
       name: 'Fecha Inicio',

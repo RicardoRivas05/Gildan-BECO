@@ -7,6 +7,7 @@ import { SourceSchema } from 'src/Core/interfaces/iondata-source.interface';
 import { MeasurePointSchema } from 'src/Core/interfaces/measure-point.interface';
 import { MeterSchema } from 'src/Core/interfaces/meter.interface';
 
+
 @Component({
   selector: 'app-meters-modal',
   templateUrl: './meters-modal.component.html',
@@ -18,6 +19,7 @@ export class MetersModalComponent implements OnInit {
   @Input() listOfSourceId: SourceSchema[] = [];
   @Output() DataUpdated : EventEmitter<MeterSchema> = new EventEmitter<MeterSchema>();
 
+  tipoMedidorMap: { [key: number]: string } = {};
   validateForm!: FormGroup;
   isVisible:boolean = false;
   meter!: MeterSchema;
@@ -37,7 +39,16 @@ export class MetersModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.createTipoMedidorMap();
     this.cleanForm();
+  }
+
+
+  createTipoMedidorMap(): void {
+    this.tipoMedidorMap = {};
+    this.listOfMPoinst.forEach(option => {
+      this.tipoMedidorMap[option.id] = option.descripcion;
+    });
   }
 
   showModal(): void {
@@ -143,10 +154,9 @@ export class MetersModalComponent implements OnInit {
       serie: [data.serie, [Validators.required]],
       lecturaMax: [data.lecturaMax, [Validators.required]],
       puntoConexion: [data.puntoConexion, [Validators.required]],
-      puntoMedicionId: [data.puntoMedicionId, [Validators.required]],
+      TipoMedidorId: [data.TipoMedidorId, [Validators.required]],
       observacion: [data.observacion, [Validators.required]],
       tipo: [data.tipo, [Validators.required]],
-      registroDatos: [data.registroDatos, [Validators.required]],
       almacenamientoLocal: [data.almacenamientoLocal, [Validators.required]],
       funcionalidad: [data.funcionalidad, [Validators.required]],
     });
@@ -169,10 +179,10 @@ export class MetersModalComponent implements OnInit {
     this.dataPosition.serie = this.validateForm.value.serie;
     this.dataPosition.lecturaMax = this.validateForm.value.lecturaMax;
     this.dataPosition.puntoConexion = this.validateForm.value.puntoConexion;
-    this.dataPosition.puntoMedicionId = this.validateForm.value.puntoMedicionId;
+    this.dataPosition.TipoMedidorId = this.validateForm.value.TipoMedidorId;
     this.dataPosition.observacion = this.validateForm.value.observacion;
     this.dataPosition.tipo = this.validateForm.value.tipo;
-    this.dataPosition.registroDatos = this.validateForm.value.registroDatos;
+
     this.dataPosition.almacenamientoLocal = this.validateForm.value.almacenamientoLocal;
     this.dataPosition.funcionalidad = this.validateForm.value.funcionalidad;
     //console.log(this.validateForm.value);
@@ -191,10 +201,9 @@ export class MetersModalComponent implements OnInit {
       serie: ['', [Validators.required]],
       lecturaMax: ['', [Validators.required]],
       puntoConexion: ['', [Validators.required]],
-      puntoMedicionId: ['', [Validators.required]],
+      TipoMedidorId: ['', [Validators.required]],
       observacion: ['', [Validators.required]],
       tipo: ['', [Validators.required]],
-      registroDatos: ['', [Validators.required]],
       almacenamientoLocal: ['', [Validators.required]],
       funcionalidad: ['', [Validators.required]],
     });

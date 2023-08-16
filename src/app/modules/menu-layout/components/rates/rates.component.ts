@@ -24,7 +24,7 @@ export class RatesComponent implements OnInit{
   listOfGeneralParams: InputParamSchema[] = [];
   ratesIsActive: boolean = false;
   dataPosition: any[] = [];
-  
+
   url = {
     get: 'get-rates',
     getParams: 'get-parameter',
@@ -45,14 +45,14 @@ export class RatesComponent implements OnInit{
     this.GetRates(1, false);
     this.GetParams();
     this.GetGeneralParams();
-    
+
   }
 
-  
+
   updateTable(list: any){
     this.listOfData = [... this.listOfData, list];
   }
-  
+
   showModal(): void {
     this.isVisible = true;
   }
@@ -64,11 +64,11 @@ export class RatesComponent implements OnInit{
   handleCancel(): void {
     this.isVisible = false;
   }
-  
+
   GetParams(){
     this.globalService.Get(this.url.getParams).subscribe(
       (result:any) => {
-        
+
         this.listOfParamRelation = result;
       }
     );
@@ -119,7 +119,7 @@ export class RatesComponent implements OnInit{
 
 
 
-  
+
   listOfColumns: ColumnItem[] = [
     {
       name: 'Codigo',
@@ -131,7 +131,7 @@ export class RatesComponent implements OnInit{
       filterFn: (list: string[], item: RatesInterface) => list.some(codigo => item.codigo.indexOf(codigo) !== -1)
     },
     {
-      name: 'Descripcion',
+      name: 'descripcion',
       sortOrder: null,
       sortFn: (a: RatesInterface, b: RatesInterface) => a.descripcion.localeCompare(b.descripcion),
       sortDirections: ['ascend', 'descend', null],

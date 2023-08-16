@@ -44,11 +44,11 @@
                   </nz-form-control>
                 </nz-form-item>
               </div>
-  
+
             </div>
-  
+
         </div>
-        
+
         <div nz-row>
           <div nz-col>
             <label>Medidor operado</label>
@@ -63,7 +63,7 @@
             </div>
           </div>
 
-          
+
           <div nz-col nzOffset="1">
             <label>Mostrar en factura</label>
             <div nz-row>
@@ -78,7 +78,7 @@
             </div>
           </div>
         </div>
-        
+
           <div nz-row class="row-3">
 
             <div nzSpan="24" nz-col class="row3-col1">
@@ -123,7 +123,7 @@
               <ng-template #enableClients>
                 <button nz-button [nzType]="'primary'" (click)="GetVirtualMeters(true, true)"><span>Mostrar Habilitados</span></button>
               </ng-template>
-          
+
             </div>
           </div>
           <br>
@@ -149,13 +149,13 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let data of table.data">
-                      
+
                       <td nzRight nzAlign="center">
                         <div nz-row>
 
                           <div nz-col>
-                            <div *ngIf="data.estado; else disablesList"> 
-                                <button nz-button nzSize="small" nzType="primary" 
+                            <div *ngIf="data.estado; else disablesList">
+                                <button nz-button nzSize="small" nzType="primary"
                                 nz-popconfirm
                                 nzPopconfirmTitle="Quieres deshabilitar este item ?"
                                 (nzOnConfirm)="disableVMeter(data, false)"
@@ -177,7 +177,7 @@
 
                           <div nz-col nzOffset="1">
                             <button nz-button nzSize="small" nzType="primary" (click)="editableForm(data)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
-                            
+
                           </div>
 
                         </div>
@@ -194,7 +194,7 @@
                     </tr>
                   </tbody>
                 </nz-table>
-                
+
             </div>
           </div>
         </form>

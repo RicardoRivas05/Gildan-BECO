@@ -7,7 +7,7 @@ export interface MeterSchema{
     serie: string;
     lecturaMax: number;
     multiplicador: number;
-    puntoMedicionId: number;
+    TipoMedidorId: number;
     observacion: string;
     puntoConexion: number;
     tipo: boolean;

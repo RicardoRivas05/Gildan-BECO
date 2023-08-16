@@ -5,6 +5,7 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ClientsComponent } from "./components/clients/clients.component";
 import { ProvidersComponent } from "./components/providers/providers.component";
 import { ZonesComponent } from "./components/zones/zones.component";
+import { cpiComponent } from './components/cpi/cpi.component';
 import { MetersComponent } from "./components/meters/meters.component";
 import { RatesComponent } from './components/rates/rates.component';
 import { InputParametersComponent } from './components/input-parameters/input-parameters.component';
@@ -39,6 +40,10 @@ const routes: Routes = [
       {
         path: 'zones',
         component: ZonesComponent
+      },
+      {
+        path: 'cpi',
+        component: cpiComponent
       },
       {
         path: 'meters',

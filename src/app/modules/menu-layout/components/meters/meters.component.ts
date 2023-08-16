@@ -110,30 +110,6 @@ export class MetersComponent implements OnInit, OnChanges {
   }
 
 
-  GetManualSchemas(isManual: boolean){
-    if(isManual)
-      this.meterIsManual = true;
-    else
-      this.meterIsManual = false;
-
-    if(this.listOfManualMeterAux){
-      this.listOfData = [... this.listOfManualMeterAux];
-
-    }
-
-    this.listOfManualRegister.length = 0;
-
-    for(let i = 0; i < this.listOfData.length; i++){
-      if(this.listOfData[i].registroDatos == isManual){
-        this.listOfManualRegister = [... this.listOfManualRegister, this.listOfData[i]];
-      }
-    }
-
-    this.listOfData.length = 0;
-    this.listOfData = [... this.listOfManualRegister];
-
-  }
-
   GetVariables(){
     this.globalService.Get(this.url.getVariables).subscribe(
       (result:any) => {
@@ -184,7 +160,7 @@ export class MetersComponent implements OnInit, OnChanges {
       filterFn: null
     },
     {
-      name: 'Descripcion',
+      name: 'Descripcionon',
       sortOrder: null,
       sortFn: (a: MeterSchema, b: MeterSchema) => a.descripcion.localeCompare(b.descripcion),
       sortDirections: ['ascend', 'descend', null],
@@ -210,8 +186,9 @@ export class MetersComponent implements OnInit, OnChanges {
       listOfFilter: [],
       filterFn: (address: string, item: MeterSchema) => item.serie.indexOf(address) !== -1
     },
+
     {
-      name: 'Tipo',
+      name: 'Medicion',
       sortOrder: null,
       sortDirections: ['ascend', 'descend', null],
       sortFn: null,
@@ -219,5 +196,7 @@ export class MetersComponent implements OnInit, OnChanges {
       listOfFilter: [],
       filterFn: null
     },
+
+
   ];
 }

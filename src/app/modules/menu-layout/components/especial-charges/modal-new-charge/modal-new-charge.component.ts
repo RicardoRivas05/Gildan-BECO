@@ -22,7 +22,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
 
   dates:{from: any, to: any} = {from: '', to: ''};
   ranges = { Today: [new Date(), new Date()], 'This Month': [new Date(), endOfMonth(new Date())] };
-  
+
   listOfData: any[] = [];
   url = {
     get: 'get-especial-charges',
@@ -59,7 +59,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    
+
     this.validateForm = this.fb.group({
       fecha: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
@@ -85,7 +85,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
       });
     }
   }
-  
+
   showModal(): void {
     if(this.dataPosition){
       this.editableForm();
@@ -112,7 +112,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
     this.isVisible = false;
   }
   Get(){
-    this.globalService.Get(this.url.get).subscribe( 
+    this.globalService.Get(this.url.get).subscribe(
       (result:any) => {
         result.Id = Number(result.Id);
         this.listOfData = result;
@@ -141,16 +141,16 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
     }
     else{
       this.submitUpdateForm();
-  
+
 
     }
   }
-  
+
   submitPostForm(): void{
     if (this.validateForm.valid) {
       this.fullSchema();
       this.globalService.Post(this.url.post, this.provider).subscribe(
-        (result:any) => { 
+        (result:any) => {
           if(result){
             this.DataUpdated.emit(result);
             this.isVisible = false;
@@ -158,7 +158,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
           }else{
             this.notificationService.createMessage('error', 'La accion fallo 😓');
           }
-            
+
         }
       );
     } else {
@@ -184,7 +184,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
           }else{
             this.notificationService.createMessage('error', 'La accion fallo 😓');
           }
-            
+
         }
         );
     } else {
@@ -204,15 +204,15 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
       ... {descripcion, cargoFinanciamiento, ajuste, cargoCorte, cargoMora, otrosCargos, observacion} ,
       fechaInicio: this.validateForm.value.fecha[0],
       fechaFinal: this.validateForm.value.fecha[1],
-      totalCargos: 
+      totalCargos:
       toNumber(this.validateForm.value.cargoCorte + this.validateForm.value.cargoMora
       + this.validateForm.value.otrosCargos + this.validateForm.value.ajuste),
       estado: true
-    }  
+    }
   }
 
   updateMainTable(data: any){
-    
+
     this.dataPosition.ajuste = data.ajuste;
     this.dataPosition.cargoCorte = data.cargoCorte;
     this.dataPosition.cargoFinanciamiento = data.cargoFinanciamiento;
@@ -228,7 +228,7 @@ export class ModalNewChargeComponent implements OnInit, OnChanges {
   }
 
 
-  
+
   onChange(result: Date[]): void {
     this.dates = {
       from: result[0],
