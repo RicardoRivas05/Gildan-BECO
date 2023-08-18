@@ -18,6 +18,7 @@ import { ClientsComponent } from './components/clients/clients.component';
 import { ProvidersComponent } from './components/providers/providers.component';
 import { ZonesComponent } from './components/zones/zones.component';
 import { cpiComponent } from './components/cpi/cpi.component';
+import { ipcComponent } from './components/ipc/ipc.component';
 import { MetersComponent } from './components/meters/meters.component';
 import { MetersModalComponent } from "./components/meters/meters-modal/meters-modal.component";
 import { VirtualMeterModalComponent } from "./components/meters/virtual-meter-modal/virtual-meter-modal.component";
@@ -63,6 +64,7 @@ import { ReportComponent } from './components/report/report.component';
 import { RollOverModalComponent } from './components/meters/roll-over-modal/roll-over-modal.component';
 import { SubmitZoneModalComponent } from './components/zones/submit-zone-modal/submit-zone-modal.component';
 import { SubmitcpiModalComponent } from './components/cpi/submit-cpi-modal/submit-cpi-modal.component';
+import { SubmitipcModalComponent } from './components/ipc/submit-ipc-modal/submit-ipc-modal.component';
 import { SubmitProviderModalComponent } from './components/providers/submit-provider-modal/submit-provider-modal.component';
 import { SubmitClientModalComponent } from './components/clients/submit-client-modal/submit-client-modal.component';
 import { ManualRegistrationModalComponent } from './components/meters/manual-registration-modal/manual-registration-modal.component';
@@ -82,6 +84,7 @@ import { CredentialUserModalComponent } from './components/users/credential-user
     ProvidersComponent,
     ZonesComponent,
     cpiComponent,
+    ipcComponent,
     MetersComponent,
     MetersModalComponent,
     VirtualMeterModalComponent,
@@ -106,6 +109,7 @@ import { CredentialUserModalComponent } from './components/users/credential-user
     RollOverModalComponent,
     SubmitZoneModalComponent,
     SubmitcpiModalComponent,
+    SubmitipcModalComponent,
     SubmitProviderModalComponent,
     SubmitClientModalComponent,
     ManualRegistrationModalComponent,

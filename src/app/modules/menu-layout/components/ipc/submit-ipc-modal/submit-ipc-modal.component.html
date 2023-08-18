@@ -9,7 +9,7 @@
   </ng-template>
 
 
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="Ingrese los datos del CPI" (nzOnCancel)="handleCancel()"
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Ingrese los datos del ipc" (nzOnCancel)="handleCancel()"
     (nzOnOk)="submitForm()">
     <ng-container *nzModalContent>
 
@@ -52,7 +52,7 @@
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input class="inputLarge" nz-input rows="2" placeholder=" Valor del CPI " formControlName="Value" />
+                  <input class="inputLarge" nz-input rows="2" placeholder=" Valor del ipc " formControlName="Value" />
                 </nz-form-control>
               </nz-form-item>
             </div>

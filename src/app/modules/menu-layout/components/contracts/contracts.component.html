@@ -50,7 +50,7 @@
               {{ column.name }}
             </th>
             <th nzRight nzWidth="55px" nzAlign="center">Medidor</th>
-            <th nzRight nzWidth="55px" nzAlign="center">Factura Generador</th>
+            <!-- <th nzRight nzWidth="55px" nzAlign="center">Factura Proveedor</th> -->
           </tr>
         </thead>
         <tbody>
@@ -93,9 +93,9 @@
             <td nzRight nzAlign="center">
                 <app-modal-medidores [dataPosition]="data" [listOfZones]="listOfZones" [listOfRates] = "listOfRates" [listOfMeters]="listOfMeters"></app-modal-medidores>
             </td>
-            <td nzAlign="center"  *ngIf="data.tipoContratoId === 1; else Client">
+            <!-- <td nzAlign="center"  *ngIf="data.tipoContratoId === 1; else Client">
               <app-factura-ehh [dataPosition]="data"></app-factura-ehh>
-            </td>
+            </td> -->
             <ng-template #Client>
               <td nzAlign="center">
                 <i nz-icon nzTheme="outline" nzType="alert"></i>

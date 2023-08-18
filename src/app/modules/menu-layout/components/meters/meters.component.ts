@@ -160,7 +160,7 @@ export class MetersComponent implements OnInit, OnChanges {
       filterFn: null
     },
     {
-      name: 'Descripcionon',
+      name: 'Descripcion',
       sortOrder: null,
       sortFn: (a: MeterSchema, b: MeterSchema) => a.descripcion.localeCompare(b.descripcion),
       sortDirections: ['ascend', 'descend', null],

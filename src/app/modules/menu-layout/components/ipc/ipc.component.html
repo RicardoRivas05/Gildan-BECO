@@ -1,18 +1,18 @@
-<h1>DATOS DE CPI USA</h1>
+<h1>DATOS DE IPC</h1>
 <br>
 <div nz-row class="row-1">
 
   <div nz-col nzSpan="5">
-    <div *ngIf="!CPIIsDisable ; else enableClients">
-      <button nz-button [nzType]="'primary'" (click)="Getcpi(0, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Deshabilitados</span></button>
+    <div *ngIf="!ipcIsDisable ; else enableClients">
+      <button nz-button [nzType]="'primary'" (click)="Getipc(0, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Deshabilitados</span></button>
     </div>
     <ng-template #enableClients>
-      <button nz-button [nzType]="'primary'" (click)="Getcpi(1, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Habilitados</span></button>
+      <button nz-button [nzType]="'primary'" (click)="Getipc(1, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Habilitados</span></button>
     </ng-template>
 
   </div>
 
-  <app-submit-cpi-modal  (DataUpdated)="updateTable($event)"></app-submit-cpi-modal>
+  <app-submit-ipc-modal  (DataUpdated)="updateTable($event)"></app-submit-ipc-modal>
 
 </div>
 <br>
@@ -61,7 +61,7 @@
                 </ng-template>
               </div>
               <div nz-col nzOffset="1">
-                <app-submit-cpi-modal  [dataPosition]="data"></app-submit-cpi-modal>
+                <app-submit-ipc-modal  [dataPosition]="data"></app-submit-ipc-modal>
               </div>
             </div>
           </td>

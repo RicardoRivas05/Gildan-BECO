@@ -2,28 +2,28 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EndPointGobalService } from '@shared/services/end-point-gobal.service';
 import { NotificationService } from '@shared/services/notification.service';
-import { cpiShema } from 'src/Core/interfaces/cpi.interface';
+import { ipcShema } from 'src/Core/interfaces/ipc.interface';
 
 @Component({
-  selector: 'app-submit-cpi-modal',
-  templateUrl: './submit-cpi-modal.component.html',
-  styleUrls: ['./submit-cpi-modal.component.css']
+  selector: 'app-submit-ipc-modal',
+  templateUrl: './submit-ipc-modal.component.html',
+  styleUrls: ['./submit-ipc-modal.component.css']
 })
-export class SubmitcpiModalComponent implements OnInit {
-  @Output() DataUpdated: EventEmitter<cpiShema> = new EventEmitter<cpiShema>();
-  @Input() dataPosition!: cpiShema;
+export class SubmitipcModalComponent implements OnInit {
+  @Output() DataUpdated: EventEmitter<ipcShema> = new EventEmitter<ipcShema>();
+  @Input() dataPosition!: ipcShema;
 
   isVisible = false;
-  CPIIsDisable: boolean = false;
-  listOfData: cpiShema[] = [];
+  ipcIsDisable: boolean = false;
+  listOfData: ipcShema[] = [];
   validateForm!: FormGroup;
-  newcpi!: cpiShema;
+  newipc!: ipcShema;
 
   url = {
-    get: 'get-cpi',
-    post: 'cpi',
-    delete: 'cpi',
-    update: 'cpi',
+    get: 'get-ipc',
+    post: 'ipc',
+    delete: 'ipc',
+    update: 'ipc',
   };
   EmptyForm = this.fb.group({
     Month: ['', [Validators.required]],
@@ -56,12 +56,12 @@ export class SubmitcpiModalComponent implements OnInit {
 
   submitPostForm() {
     if (this.validateForm.valid) {
-      this.newcpi = {
+      this.newipc = {
         ...this.validateForm.value,
         estado: true
       };
       this.isVisible = false;
-      this.globalService.Post(this.url.post, this.newcpi).subscribe(
+      this.globalService.Post(this.url.post, this.newipc).subscribe(
         (result: any) => {
           console.log("----------", result);
           if (result) {
@@ -90,19 +90,19 @@ export class SubmitcpiModalComponent implements OnInit {
 
   submitUpdateForm() {
     if (this.validateForm.valid) {
-      this.newcpi = {
+      this.newipc = {
         ...this.validateForm.value,
         estado: true
       };
       this.isVisible = false;
       this.globalService
-        .Patch(this.url.post, this.dataPosition.ID, this.newcpi)
+        .Patch(this.url.post, this.dataPosition.ID, this.newipc)
         .subscribe(
           (result: any) => {
             if (!result){
-            this.dataPosition.Month = this.newcpi.Month;
-            this.dataPosition.Year = this.newcpi.Year;
-            this.dataPosition.Value = this.newcpi.Value;
+            this.dataPosition.Month = this.newipc.Month;
+            this.dataPosition.Year = this.newipc.Year;
+            this.dataPosition.Value = this.newipc.Value;
 
             this.notificationService.createMessage(
               'success',
@@ -126,7 +126,7 @@ export class SubmitcpiModalComponent implements OnInit {
   }
   }
 
-  editableFrom(data: cpiShema): void{
+  editableFrom(data: ipcShema): void{
     //console.log(data);
     this.validateForm = this.fb.group({
       Year: [data.Year, [Validators.required]],
@@ -137,7 +137,7 @@ export class SubmitcpiModalComponent implements OnInit {
   }
 
   fullSchema(){
-    this.newcpi = {
+    this.newipc = {
       ... this.validateForm.value,
       estado: true
     }

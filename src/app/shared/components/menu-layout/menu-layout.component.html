@@ -20,7 +20,7 @@
             <span >Inicio</span>
         </li>
       </div>
-      <li *ngIf="rol == 2  || rol == 1" nz-submenu nzOpen nzTitle="Mantenimientos" nzIcon="tool">
+      <li *ngIf="rol == 2  || rol == 1" nz-submenu nzOpen nzTitle="Configuraciones" nzIcon="tool">
         <ul>
           <div routerLink="clients" nz-menu-item nzMatchRouter>
             <li>
@@ -49,10 +49,17 @@
             </li>
           </div>
 
-          <div routerLink="icp" nz-menu-item nzMatchRouter>
+          <div routerLink="cpi" nz-menu-item nzMatchRouter>
             <li>
               <span nz-icon nzType="reconciliation"></span>
-                <span >ICP</span>
+                <span >CPI</span>
+            </li>
+          </div>
+
+          <div routerLink="ipc" nz-menu-item nzMatchRouter>
+            <li>
+              <span nz-icon nzType="reconciliation"></span>
+                <span >IPC</span>
             </li>
           </div>
 
@@ -98,7 +105,7 @@
         </li>
       </div> -->
 
-      <li nz-submenu nzOpen nzTitle="Facturacion" nzIcon="calculator">
+      <li nz-submenu nzOpen nzTitle="Constancias" nzIcon="calculator">
         <ul>
           <!-- <div routerLink="especial-charges" nz-menu-item nzMatchRouter>
             <li>

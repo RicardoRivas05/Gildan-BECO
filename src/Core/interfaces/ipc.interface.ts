@@ -1,4 +1,4 @@
-export interface cpiShema {
+export interface ipcShema {
     ID: number;
     Month: string;
     Year: number;

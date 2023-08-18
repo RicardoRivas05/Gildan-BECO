@@ -2,27 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { ColumnItem } from 'src/Core/interfaces/col-meter-table.interface';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { EndPointGobalService } from '@shared/services/end-point-gobal.service';
-import { cpiShema } from 'src/Core/interfaces/cpi.interface';
+import { ipcShema } from 'src/Core/interfaces/ipc.interface';
 import { NotificationService } from '@shared/services/notification.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'app-cpi',
-  templateUrl: './cpi.component.html',
-  styleUrls: ['./cpi.component.css']
+  selector: 'app-ipc',
+  templateUrl: './ipc.component.html',
+  styleUrls: ['./ipc.component.css']
 })
-export class cpiComponent implements OnInit {
+export class ipcComponent implements OnInit {
   isVisible = false;
-  CPIIsDisable: boolean = false;
-  listOfData: cpiShema[] = [];
+  ipcIsDisable: boolean = false;
+  listOfData: ipcShema[] = [];
   validateForm!: FormGroup;
-  provider!: cpiShema;
+  provider!: ipcShema;
 
   url = {
-    get: 'get-cpi',
-    post: 'cpi',
-    delete: 'cpi',
-    update: 'cpi',
+    get: 'get-ipc',
+    post: 'ipc',
+    delete: 'ipc',
+    update: 'ipc',
   };
   EmptyForm =this.fb.group({
     Month: ['', [Validators.required]],
@@ -38,27 +38,27 @@ export class cpiComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.Getcpi(1, false);
+    this.Getipc(1, false);
     this.validateForm = this.EmptyForm;
   }
 
 
 
-  updateTable(list: cpiShema) {
+  updateTable(list: ipcShema) {
     this.listOfData = [...this.listOfData, list];
     console.log("Updated listOfData: ", this.listOfData); // Add this line to check the value of listOfData after the update
   }
 
 
 
-  Getcpi(estado: number, switched: boolean) {
+  Getipc(estado: number, switched: boolean) {
     if (switched) {
-      if ((!this.CPIIsDisable) && estado === 0) {
+      if ((!this.ipcIsDisable) && estado === 0) {
         console.log("Deshabilitados")
-        this.CPIIsDisable = true;
+        this.ipcIsDisable = true;
       } else {
         console.log("habilitados")
-        this.CPIIsDisable = false;
+        this.ipcIsDisable = false;
       }
     }
 
@@ -72,15 +72,15 @@ export class cpiComponent implements OnInit {
   }
 
 
-  disableClient(CPI: cpiShema, estado : number){
+  disableClient(ipc: ipcShema, estado : number){
     let newEstado = Boolean(estado);
-    this.globalService.Patch(this.url.update, CPI.ID, {estado: newEstado}).subscribe(
+    this.globalService.Patch(this.url.update, ipc.ID, {estado: newEstado}).subscribe(
       result => {
         if(!result){
           if(estado === 1){
-            this.Getcpi(0, false);
+            this.Getipc(0, false);
           }else{
-            this.Getcpi(1, false);
+            this.Getipc(1, false);
           }
 
         }
@@ -96,29 +96,29 @@ export class cpiComponent implements OnInit {
     {
       name: 'Mes',
       sortOrder: null,
-      sortFn: (a: cpiShema, b: cpiShema) => a.Month.localeCompare(b.Month),
+      sortFn: (a: ipcShema, b: ipcShema) => a.Month.localeCompare(b.Month),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: string[], item: cpiShema) => list.some(Month => item.Month.indexOf(Month) !== -1)
+      filterFn: (list: string[], item: ipcShema) => list.some(Month => item.Month.indexOf(Month) !== -1)
     },
     {
       name: 'Año',
       sortOrder: null,
-      sortFn: (a: cpiShema, b: cpiShema) => a.Year - b.Year,
+      sortFn: (a: ipcShema, b: ipcShema) => a.Year - b.Year,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: number[], item: cpiShema) => list.includes(item.Year)
+      filterFn: (list: number[], item: ipcShema) => list.includes(item.Year)
     },
     {
       name: 'Valor',
       sortOrder: null,
-      sortFn: (a: cpiShema, b: cpiShema) => a.Value - b.Value,
+      sortFn: (a: ipcShema, b: ipcShema) => a.Value - b.Value,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: number[], item: cpiShema) => list.includes(item.Value)
+      filterFn: (list: number[], item: ipcShema) => list.includes(item.Value)
     }
   ];
 
