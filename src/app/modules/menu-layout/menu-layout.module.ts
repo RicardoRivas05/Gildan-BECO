@@ -48,9 +48,6 @@ import { InputParametersComponent } from './components/input-parameters/input-pa
 import { ContractsComponent } from './components/contracts/contracts.component';
 import { EnergyMatrixComponent } from './components/energy-matrix/energy-matrix.component';
 import { EspecialChargesComponent } from './components/especial-charges/especial-charges.component';
-import { GeneratedInvoicesComponent } from './components/generated-invoices/generated-invoices.component';
-import { IssuedInvoicesComponent } from './components/issued-invoices/issued-invoices.component';
-import { CancelledInvoicesComponent } from './components/cancelled-invoices/cancelled-invoices.component';
 import { ModalParametersComponent } from './components/rates/modal-parameters/modal-parameters.component';
 import { ModalMedidoresComponent } from './components/contracts/modal-medidores/modal-medidores.component';
 import { ModalNewContractComponent } from './components/contracts/modal-new-contract/modal-new-contract.component';
@@ -59,7 +56,6 @@ import { ModalNewChargeComponent } from './components/especial-charges/modal-new
 import { ModalNewMatrixComponent } from './components/energy-matrix/modal-new-matrix/modal-new-matrix.component';
 import { ModalDistributionComponent } from './components/energy-matrix/modal-distribution/modal-distribution.component';
 import { ModalNewRateComponent } from './components/rates/modal-new-rate/modal-new-rate.component';
-import { ModalNewInvoicesComponent } from './components/generated-invoices/modal-new-invoices/modal-new-invoices.component';
 import { ReportComponent } from './components/report/report.component';
 import { RollOverModalComponent } from './components/meters/roll-over-modal/roll-over-modal.component';
 import { SubmitZoneModalComponent } from './components/zones/submit-zone-modal/submit-zone-modal.component';
@@ -73,6 +69,7 @@ import { ModalCargosEehComponent } from './components/contracts/modal-cargos-eeh
 import { UsersComponent } from './components/users/users.component';
 import { SubmitUserModalComponent } from './components/users/submit-user-modal/submit-user-modal.component';
 import { CredentialUserModalComponent } from './components/users/credential-user-modal/credential-user-modal.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 
 
@@ -93,9 +90,6 @@ import { CredentialUserModalComponent } from './components/users/credential-user
     ContractsComponent,
     EnergyMatrixComponent,
     EspecialChargesComponent,
-    GeneratedInvoicesComponent,
-    IssuedInvoicesComponent,
-    CancelledInvoicesComponent,
     ModalParametersComponent,
     ModalMedidoresComponent,
     ModalNewContractComponent,
@@ -104,7 +98,6 @@ import { CredentialUserModalComponent } from './components/users/credential-user
     ModalNewMatrixComponent,
     ModalDistributionComponent,
     ModalNewRateComponent,
-    ModalNewInvoicesComponent,
     ReportComponent,
     RollOverModalComponent,
     SubmitZoneModalComponent,
@@ -118,6 +111,7 @@ import { CredentialUserModalComponent } from './components/users/credential-user
     UsersComponent,
     SubmitUserModalComponent,
     CredentialUserModalComponent,
+    ReportsComponent,
   ],
   imports: [
     CommonModule,

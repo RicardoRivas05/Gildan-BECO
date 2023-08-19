@@ -13,11 +13,9 @@ import { InputParametersComponent } from './components/input-parameters/input-pa
 import { ContractsComponent } from './components/contracts/contracts.component';
 import { EnergyMatrixComponent } from './components/energy-matrix/energy-matrix.component';
 import { EspecialChargesComponent } from './components/especial-charges/especial-charges.component';
-import { GeneratedInvoicesComponent } from './components/generated-invoices/generated-invoices.component';
-import { IssuedInvoicesComponent } from './components/issued-invoices/issued-invoices.component';
-import { CancelledInvoicesComponent } from './components/cancelled-invoices/cancelled-invoices.component';
 import { ReportComponent } from './components/report/report.component';
 import { UsersComponent } from './components/users/users.component';
+import { ReportsComponent } from './components/reports/reports.component';
 
 
 const routes: Routes = [
@@ -75,21 +73,16 @@ const routes: Routes = [
         path: 'especial-charges',
         component: EspecialChargesComponent
       },
-      {
-        path: 'generated-invoices',
-        component: GeneratedInvoicesComponent
-      },
-      {
-        path: 'issued-invoices',
-        component: IssuedInvoicesComponent
-      },
-      {
-        path: 'cancelled-invoices',
-        component: CancelledInvoicesComponent
-      },
+
+
       {
         path: 'report',
         component: ReportComponent
+      },
+
+      {
+        path: 'reports',
+        component: ReportsComponent
       },
       {
         path: 'users',

@@ -12,23 +12,19 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { TimeService } from '@shared/services/time.service';
-import { InvoiceInterface } from 'src/Core/interfaces/invoices-tables.interface';
-export interface facturas{
+//import { InvoiceInterface } from 'src/Core/interfaces/invoices-tables.interface';
 
-  cliente: string,
-  codigo: string,
-  codigoContrato: string,
-  contratoId: number
-  energiaConsumida: number,
-  estado: number
-  fechaCancelacion: string,
-  fechaEmision: string,
-  fechaFin: string,
-  fechaInicio: string,
-  fechaLectura: string,
-  fechaVencimiento: string,
-  total: number
-}
+export interface  InvoiceInterface{
+    sourceID: number,
+    TimestampUTC : string,
+    sourceName: string,
+    Signature: string,
+    quantityID: number,
+    quantityName:string,
+    Value: number,
+    TipoMedidor:string;
+  }
+
 @Component({
   selector: 'app-digital-invoice',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,7 +32,7 @@ export interface facturas{
   styleUrls: ['./digital-invoice.component.css']
 })
 export class DigitalInvoiceComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() dataInvoice !: LecturasPorContrato;
+  @Input() dataInvoice !: InvoiceInterface;
   diaFacturacion: string = '';
   isVisible: boolean = false;
   spinnerIsVisible: boolean = false;
@@ -56,7 +52,7 @@ export class DigitalInvoiceComponent implements OnInit, OnChanges, OnDestroy {
 
 
   url = {
-    getHistorico: "get-invoices-contract",
+    getHistorico: "get-report",
   }
   constructor(
     private globalService: EndPointGobalService,
@@ -75,31 +71,9 @@ export class DigitalInvoiceComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
 
     if(this.dataInvoice){
-      this.vencimiento = (this.UnDiaMLS * this.dataInvoice.contrato.diasDisponibles) + this.hoy;
-      this.diaFacturacion = this.numeroADia(this.dataInvoice.contrato.diaGeneracion);
-      this.pieGraph = {
-        chart: {
-          caption: "Distribución de consumo energético",
-          subCaption: "",
-          numberPrefix: "$",
-          showPercentInTooltip: "0",
-          decimals: "1",
-          useDataPlotColorForLabels: "1",
-          theme: "fusion"
+      // this.vencimiento = (this.UnDiaMLS * this.dataInvoice.contrato.diasDisponibles) + this.hoy;
+      // this.diaFacturacion = this.numeroADia(this.dataInvoice.contrato.diaGeneracion);
 
-        },
-        data: [
-          {
-            label: "Generación solar",
-            value: ((this.dataInvoice.totalEnergiaFotovoltaicaActivaConsumida) + this.dataInvoice.totalEnergiaDeInyeccionConsumida).toString()
-          },
-          {
-            label: "Energía ENEE",
-            value: ( this.dataInvoice.totalLecturaActivaAjustada + (this.dataInvoice.PT * this.dataInvoice.PPPTT)).toString()
-          }
-
-        ]
-      };
 
     }
 
@@ -211,12 +185,12 @@ export class DigitalInvoiceComponent implements OnInit, OnChanges, OnDestroy {
         }).then(async (doc) => {
         //imprimir
         if(opc === 1){
-          doc.save(`Factura ${this.dataInvoice.contrato.cliente} ${this.times.getMountLeters(this.dataInvoice.medidor[0].historico.fechaAnterior)}.pdf`);
+          doc.save(`Factura ${this.dataInvoice.sourceID} ${this.times.getMountLeters(this.dataInvoice.sourceName)}.pdf`);
         }
         //enviar por correo
         if(opc === 2){
           this.globalService.Post('send-email', {
-            identificator: this.dataInvoice.contrato.correo,
+            identificator: this.dataInvoice.sourceName,
             subject: 'Factura de consumo',
             text: 'Su factura a fue generada el ' + this.pipe.transform(new Date().toISOString(), 'yyyy/MM/dd HH:mm:ss', '-1200'),
             atachment: doc.output('datauri'),
