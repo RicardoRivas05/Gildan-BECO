@@ -24,9 +24,31 @@
       <input type="checkbox" [(ngModel)]="energiaEntregada" value="129"> Energía Entregada
     </label>
     <label class="checkbox-label">
-      <input type="checkbox" [(ngModel)]="energiaGenerada" value="91"> Energía Recibida
+      <input type="checkbox" [(ngModel)]="energiaRecibida" value="139"> Energía Recibida
     </label>
   </div>
 
   <button class="btn-generar" (click)="generarReporte()">Generar Reporte</button>
+  <div *ngIf="tipoReporte === '1'" class="checkbox-group">
+    <div *ngIf="mostrarTabla" class="tabla-container">
+      <table class="tabla-reportes">
+        <thead>
+          <tr>
+            <th>Fecha Inicial</th>
+            <th>Fecha Final</th>
+            <th>Nombre del Reporte</th>
+            <th>Generar PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ fechaInicial | date:'yyyy-MM-dd' }}</td>
+            <td>{{ fechaFinal | date:'yyyy-MM-dd' }}</td>
+            <td>{{ tipoReporte }}</td>
+            <td><button class="btn-generar-pdf" (click)="generarPDF()">Descargar PDF</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

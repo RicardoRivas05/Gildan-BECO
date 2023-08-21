@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { registerLocaleData, CommonModule } from '@angular/common';
 
 import localeEsMX from '@angular/common/locales/ff-Latn-CM';
@@ -26,8 +26,9 @@ import { JwtInterceptor } from '@shared/helpers/jwt.interceptor';
     HttpClientModule,
     AppRoutingModule,
     SharedModule,
-    BrowserAnimationsModule
-    
+    BrowserAnimationsModule,
+    PdfViewerModule
+
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
