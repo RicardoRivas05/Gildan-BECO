@@ -12,14 +12,14 @@
   <div class="form-group">
     <label for="tipoReporte">Tipo de Reporte:</label>
     <select [(ngModel)]="tipoReporte">
-      <option value="1">Reporte 1</option>
+      <option value="Energia Sumistrada">Energia Sumistrada</option>
       <option value="2">Reporte 2</option>
       <option value="3">Reporte 3</option>
       <option value="4">Reporte 4</option>
     </select>
   </div>
 
-  <div *ngIf="tipoReporte === '1'" class="checkbox-group">
+  <div *ngIf="tipoReporte === 'Energia Sumistrada'" class="checkbox-group">
     <label class="checkbox-label">
       <input type="checkbox" [(ngModel)]="energiaEntregada" value="129"> Energía Entregada
     </label>
@@ -29,7 +29,7 @@
   </div>
 
   <button class="btn-generar" (click)="generarReporte()">Generar Reporte</button>
-  <div *ngIf="tipoReporte === '1'" class="checkbox-group">
+  <div *ngIf="tipoReporte === 'Energia Sumistrada'" class="checkbox-group">
     <div *ngIf="mostrarTabla" class="tabla-container">
       <table class="tabla-reportes">
         <thead>
@@ -37,7 +37,7 @@
             <th>Fecha Inicial</th>
             <th>Fecha Final</th>
             <th>Nombre del Reporte</th>
-            <th>Generar PDF</th>
+            <th>Descargar PDF</th>
           </tr>
         </thead>
         <tbody>

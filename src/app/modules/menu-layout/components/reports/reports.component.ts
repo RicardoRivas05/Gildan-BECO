@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit {
     notificationService: NotificationService;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onFechaInicialChange(value: Date): void {
     this.fechaInicial = value;
@@ -36,7 +36,7 @@ export class ReportsComponent implements OnInit {
 
   generarReporte(): void {
     this.mostrarTabla = true;
-    if (this.tipoReporte === '1') {
+    if (this.tipoReporte === 'Energia Sumistrada') {
       if (this.energiaEntregada) {
         const fechaInicialFormatted = new Date(this.fechaInicial);
         fechaInicialFormatted.setHours(0, 0, 0, 0);
@@ -69,7 +69,7 @@ export class ReportsComponent implements OnInit {
         const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
         this.reportService
           .getConsumoMedidores(
-          139,
+            139,
             fechaInicialFormatted.toISOString().split('T')[0],
             fechaFinalFormatted
           )
@@ -89,23 +89,73 @@ export class ReportsComponent implements OnInit {
   }
 
   generarPDF() {
-    if (this.tipoReporte == '1' && this.resp) {
+    if (this.tipoReporte == 'Energia Sumistrada' && this.resp) {
       const doc = new jsPDF();
       const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
       const fechaFinFormateada = this.fechaFinal.toLocaleDateString();
-
       const fechaInicialFormatted = new Date(this.fechaInicial);
       fechaInicialFormatted.setHours(0, 0, 0, 0);
       const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
-      let dataLecturaAnterior=0;
-      let dataLecturaActual =0;
-      let dataDiferencia =0;
-      let calibracion = 0;
+      let legend1 = '';
+      let legend2 = '';
+      let legend1Width = 0;
+      let legend2Width = 0;
+      let xPosLegend1 = 0;
+      let xPosLegend2 = 0;
+      let fontSize = 0;
+      let fontSize2 = 0;
+      let diferencia = '';
+      let EnergiaEnviada = '';
+      let EnergiaRecibida = '';
+      let kwh= 'kwh';
+      let EnergiNeta = '';
+      let dataLecturaAnterior = 0;
+      let dataLecturaActual = 0;
+      let dataNombreMedidor = '';
+      let serieMedidor = '';
+      let dataSerieMedidor = '';
+      let pageWidth = doc.internal.pageSize.getWidth();
+      let LAnterior = '';
+      let LActual ='';
+      let dataDiferencia = 0;
+      let calibracion = '';
       let energiaNetaActual = 0;
-      let energiaNetaAnterior=0;
-      let diferenciaEnergiaNeta=0;
+      let energiaNetaAnterior = 0;
+      let diferenciaEnergiaNeta = 0;
+      doc.setFontSize(10);
+      const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
+      const subtitle = `ENERGÍA ELÉCTRICA SUMINISTRADA`;
+      pageWidth = doc.internal.pageSize.getWidth();
+      fontSize = 10;
 
-      //service entregada
+      // Calcular el ancho del título
+      const titleWidth =
+        (doc.getStringUnitWidth(title) * fontSize) / doc.internal.scaleFactor;
+      const xPosTitle = (pageWidth - titleWidth) / 2;
+
+      // Calcular el ancho del subtítulo
+      const subtitleWidth =
+        (doc.getStringUnitWidth(subtitle) * fontSize) /
+        doc.internal.scaleFactor;
+      const xPosSubtitle = (pageWidth - subtitleWidth) / 2;
+
+      // Configurar leyenda 1 a la izquierda
+
+      legend1 = `MEDIDORES PRINCIPALES`;
+      fontSize2 = 10;
+      legend1Width =
+        (doc.getStringUnitWidth(legend1) * fontSize2) /
+        doc.internal.scaleFactor;
+      xPosLegend1 = pageWidth / 4 - legend1Width / 2;
+
+      legend2 = `MEDIDORES DE RESPALDO`;
+      fontSize2 = 10;
+      legend2Width =
+        (doc.getStringUnitWidth(legend2) * fontSize2) /
+        doc.internal.scaleFactor;
+      xPosLegend2 = (pageWidth * 3) / 4 - legend2Width / 2;
+
+      //service energia enviada
       this.reportService
         .getConsumoMedidores(
           129,
@@ -117,93 +167,94 @@ export class ReportsComponent implements OnInit {
 
           if (this.resp) {
             // Configurar título y fuente
-            doc.setFontSize(12);
-            const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
-            const subtitle = `ENERGÍA ELÉCTRICA SUMINISTRADA`;
-            const pageWidth = doc.internal.pageSize.getWidth();
-            const fontSize = 12;
-
-            // Calcular el ancho del título
-            const titleWidth =
-              (doc.getStringUnitWidth(title) * fontSize) /
-              doc.internal.scaleFactor;
-            const xPosTitle = (pageWidth - titleWidth) / 2;
-
-            // Calcular el ancho del subtítulo
-            const subtitleWidth =
-              (doc.getStringUnitWidth(subtitle) * fontSize) /
-              doc.internal.scaleFactor;
-            const xPosSubtitle = (pageWidth - subtitleWidth) / 2;
-
-            // Configurar leyenda 1 a la izquierda
-            const legend1 = `MEDIDORES PRINCIPALES`;
-            const fontSize2 = 10;
-            const legend1Width =
-              (doc.getStringUnitWidth(legend1) * fontSize2) /
-              doc.internal.scaleFactor;
-            const xPosLegend1 = pageWidth / 4 - legend1Width / 2;
-
-
-            console.log("este es", resp.inicial.length);
 
             for (let i = 0; i < resp.inicial.length; i++) {
-              console.log("aveeer", i);
-              const elemento = resp.inicial[i];
-              doc.setFontSize(12);
-              const fonSize = 12
-              const LAnterior = "Lectura Anterior (A) kwh";
-              dataLecturaAnterior = elemento.Value;
+              const elementoInicial = resp.inicial[i];
+              const elementoFinal = resp.final[i];
 
-              const diferencia = "Difertencia (A-B) kwh";
-              const dataDiferencia = elemento.Value[0] - elemento.Value[1];
-              const EnergiaEnviada = "Energia Enviada ";
-              const EnergiaRecibida = "Energia Recibida";
-              const calibracion = "Calibracion";
-              const EnergiNeta = "Energia Neta"
+              // Obtén las lecturas inicial y final
+              let dataLecturaAnterior = elementoInicial.Value;
+              let dataLecturaActual = elementoFinal.Value;
+
+              // Calcula la diferencia
 
 
-              // Accede a otras propiedades según sea necesario
+              // Configura las etiquetas y los datos
+              fontSize = 8;
+              serieMedidor = 'Serie de medidor';
+              dataNombreMedidor = elementoInicial.sourceName;
+              dataSerieMedidor = elementoInicial.Signature;
+              LAnterior = 'Lectura Anterior(A)';
+              LActual = 'Lectura Actual(B)';
+              EnergiaEnviada = 'Energia Enviada ';
+              EnergiaRecibida = 'Energia Recibida';
+              calibracion = 'Calibracion';
+              EnergiNeta = 'Energia Neta';
+              diferencia='Diferencia(A-B)';
+
+              // Imprime los datos para cada elemento
+              doc.setFontSize(7);
+
+              if (elementoInicial.TipoMedidor === 'Principal') {
+                let dataDiferencia = dataLecturaActual - dataLecturaAnterior;
+                //labels
+                doc.text(dataNombreMedidor, xPosLegend1, 60 + i * 20);
+                doc.text(dataSerieMedidor, xPosLegend1 + 40, 60 + i * 20);
+                doc.text(LAnterior, xPosLegend1, 65 + i * 20);
+                doc.text(LActual, xPosLegend1+23, 65 + i * 20);
+                doc.text(kwh,xPosLegend1+7,67 +i*20)
+                doc.text(kwh,xPosLegend1+29,67 +i*20)
+                doc.text(kwh,xPosLegend1+49,67 +i*20)
+
+                doc.text(diferencia.toString(),xPosLegend1+44,65 + i*20);
+
+                doc.text(EnergiaEnviada, 10, 70 + i * 20);
+                doc.text(EnergiaRecibida, 10, 75 + i * 20);
+                doc.text(calibracion, 10, 80 + i * 20);
+                doc.text(EnergiNeta, 10, 85 + i * 20);
+
+                //data
+                doc.text(dataLecturaAnterior.toString(), xPosLegend1+3, 70 + i * 20);
+                doc.text(dataLecturaActual.toString(), xPosLegend1+26,70 + i *20);
+                doc.text(dataDiferencia.toString(),xPosLegend1+46,70 +i *20);
+              } else {
+                //labels para medidores de respaldo
+                let dataDiferencia = dataLecturaActual - dataLecturaAnterior;
+                doc.text(dataNombreMedidor, xPosLegend2, 40 + i * 20);
+                doc.text(dataSerieMedidor, xPosLegend2 + 40, 40 + i * 20);
+                doc.text(LAnterior, xPosLegend2, 45 + i * 20);
+                doc.text(LActual, xPosLegend2+23, 45 + i * 20);
+                doc.text(kwh, xPosLegend2+7,47 + i *20);
+                doc.text(kwh, xPosLegend2+29,47 + i *20);
+                doc.text(kwh, xPosLegend2+49,47 + i *20);
+                doc.text(diferencia.toString(),xPosLegend2+44,45 + i*20);
+                doc.text(EnergiaEnviada, xPosLegend2 - 20, 50 + i * 20);
+                doc.text(EnergiaRecibida, xPosLegend2 - 20, 55 + i * 20);
+                doc.text(calibracion, xPosLegend2 - 20, 60 + i * 20);
+                doc.text(EnergiNeta, xPosLegend2 - 20, 65 + i * 20);
+
+                //data
+                doc.text(dataLecturaAnterior.toString(),xPosLegend2+3,50 + i * 20);
+                doc.text(dataLecturaActual.toString(), xPosLegend2+27, 50 +i*20);
+                doc.text(dataDiferencia.toString(),xPosLegend2+46,50 +i *20);
+              }
+              doc.setFontSize(10);
             }
-            for (let i = 0; i < resp.final.length; i++) {
-              console.log("aveeer2", i);
-              const elemento = resp.final[i];
-              console.log("FECHA2:", elemento.TimestampUTC);
-              // Accede a otras propiedades según sea necesario
-
-              const LActual = "Lectura Actual (B) kwh";
-              dataLecturaActual =  elemento.Value;
-            }
-
-            // Configurar leyenda 2 a la derecha
-            const legend2 = `MEDIDORES DE RESPALDO`;
-            const legend2Width =
-              (doc.getStringUnitWidth(legend2) * fontSize2) /
-              doc.internal.scaleFactor;
-            const xPosLegend2 = (pageWidth * 3) / 4 - legend2Width / 2;
-
-
-
-
-
-            // Establecer el título, subtítulo y leyendas en el documento
-            doc.text(title, xPosTitle, 10);
-            doc.text(subtitle, xPosSubtitle, 25);
-            doc.text(legend1, xPosLegend1, 45);
-            doc.rect(xPosLegend1, 40, legend1Width + 10, 10); // Añadí 5 unidades a cada lado del ancho
-            doc.text(legend2, xPosLegend2, 45);
-            doc.rect(xPosLegend2, 40, legend2Width + 10, 10); // Añadí 5 unidades a cada lado del ancho
-
-
-
-
-
 
             doc.save('reporte.pdf');
+
+
           } else {
             console.log('this.resp es null');
           }
-
         });
+
+      doc.text(title, xPosTitle, 10);
+      doc.text(subtitle, xPosSubtitle, 25);
+      doc.text(legend1, xPosLegend1, 45);
+      doc.rect(xPosLegend1, 40, legend1Width + 1, 10);
+      doc.text(legend2, xPosLegend2, 45);
+      doc.rect(xPosLegend2, 40, legend2Width + 1, 10);
     }
   }
 }
