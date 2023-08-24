@@ -113,10 +113,14 @@ export class ReportsComponent implements OnInit {
       let dataEnergiaNetaAnterior = 0
       let dataenergiaNetaActual = 0;
       let dataDiferenciaEnergiaNeta = 0;
+      let sumMedPrimarios = 0;
+      let sumMedSecundarios = 0;
       doc.setFontSize(10);
       const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
       const subtitle = `ENERGÍA ELÉCTRICA SUMINISTRADA`;
-      const subtitle1 =  `ENERGÍA TOTAL TOMADA DE MEDIDORES PRINCIPALES (kwh)`
+      const subtitle1 = `ENERGÍA TOTAL TOMADA DE MEDIDORES PRINCIPALES (kwh)`;
+      const subtitle2 = `ENERGÍA TOTAL TOMADA DE MEDIDORES DE RESPALDO (kwh)`;
+      const subtitle3 = `COMPARACION ENTRE TOTAL DE MEDIDORES PRINCIPALES Y TOTAL DE MEDIDORES DE RESPALDO`;
       pageWidth = doc.internal.pageSize.getWidth();
       fontSize = 10;
       const titleWidth =
@@ -185,6 +189,8 @@ export class ReportsComponent implements OnInit {
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
+                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
+                    sumMedPrimarios += dataDiferenciaEnergiaNeta;
                     doc.text(dataNombreMedidor, xPosLegend1, 60 + i * 20);
                     doc.text(dataSerieMedidor, xPosLegend1 + 40, 60 + i * 20);
                     doc.text(LAnterior, xPosLegend1, 65 + i * 20);
@@ -204,15 +210,14 @@ export class ReportsComponent implements OnInit {
                     doc.text(dataDiferencia.toString(), xPosLegend1 + 46, 70 + i * 20);
                     doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend1 + 1, 85 + i * 20);
                     doc.text(dataenergiaNetaActual.toString(), xPosLegend1 + 22, 85 + i * 20);
-
-
-
-
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 46, 85 + i * 20);
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
+                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
+                    sumMedSecundarios += dataDiferenciaEnergiaNeta;
                     doc.text(dataNombreMedidor, xPosLegend2, 40 + i * 20);
                     doc.text(dataSerieMedidor, xPosLegend2 + 40, 40 + i * 20);
                     doc.text(LAnterior, xPosLegend2, 45 + i * 20);
@@ -232,6 +237,7 @@ export class ReportsComponent implements OnInit {
                     doc.text(dataDiferencia.toString(), xPosLegend2 + 46, 50 + i * 20);
                     doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend2 + 2, 65 + i * 20);
                     doc.text(dataenergiaNetaActual.toString(), xPosLegend2 + 25, 65 + i * 20);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 46, 65 + i * 20);
 
                   }
                   doc.setFontSize(10);
@@ -239,6 +245,13 @@ export class ReportsComponent implements OnInit {
               } else {
                 console.log('this.resp es null para el servicio 129');
               }
+              doc.setFontSize(6);
+              doc.text(subtitle1, xPosLegend1 - 25, 255)
+              doc.text(subtitle2, xPosLegend2 - 25, 255)
+              doc.setFontSize(7);
+              doc.text(sumMedPrimarios.toString(), 75, 255);
+              doc.text(sumMedSecundarios.toString(), xPosLegend2 + 46, 255)
+              doc.setFontSize(10);
               // Procesar datos del servicio 139
               if (this.resp) {
                 for (let j = 0; j < resp139.inicial.length; j++) {
@@ -261,23 +274,18 @@ export class ReportsComponent implements OnInit {
                   doc.setFontSize(7);
                   if (elementoInicialRec.TipoMedidor === 'Principal') {
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
-                    dataDiferenciaEnergiaNeta = dataDiferencia - dataDiferenciaRec;
-
-
                     //data
                     doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1 + 3, 75 + j * 20);
                     doc.text(dataLecturaActualRec.toString(), xPosLegend1 + 26, 75 + j * 20);
                     doc.text(dataDiferenciaRec.toString(), xPosLegend1 + 46, 75 + j * 20);
-                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 46,85 + j *20);
                   } else {
                     //labels para medidores de respaldo
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
-                    dataDiferenciaEnergiaNeta = dataDiferencia - dataDiferenciaRec;
+
                     //data
                     doc.text(dataLecturaAnteriorRec.toString(), xPosLegend2 + 3, 55 + j * 20);
                     doc.text(dataLecturaActualRec.toString(), xPosLegend2 + 27, 55 + j * 20);
                     doc.text(dataDiferenciaRec.toString(), xPosLegend2 + 46, 55 + j * 20);
-                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 46,65 + j *20);
                   }
                   doc.setFontSize(10);
                 }
@@ -291,14 +299,6 @@ export class ReportsComponent implements OnInit {
       doc.text(subtitle, xPosSubtitle, 25);
       doc.text(legend1, xPosLegend1, 45);
       doc.text(legend2, xPosLegend2, 45);
-
-      doc.setFontSize(7);
-      doc.setFont("bold");
-      doc.text(subtitle1, 3,255)
-
-      doc.setFont("normal");
-      doc.setFontSize(10);
-
     }
   }
 }
