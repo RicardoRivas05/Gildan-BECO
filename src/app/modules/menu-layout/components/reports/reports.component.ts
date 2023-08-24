@@ -94,8 +94,9 @@ export class ReportsComponent implements OnInit {
       let diferencia = '';
       let EnergiaEnviada = '';
       let EnergiaRecibida = '';
-      let kwh= 'kwh';
+      let kwh = 'kwh';
       let EnergiNeta = '';
+      let dataLecturaAnteriorMP = 0;
       let dataLecturaAnterior = 0;
       let dataLecturaActual = 0;
       let dataLecturaAnteriorRec = 0;
@@ -105,15 +106,17 @@ export class ReportsComponent implements OnInit {
       let dataSerieMedidor = '';
       let pageWidth = doc.internal.pageSize.getWidth();
       let LAnterior = '';
-      let LActual ='';
-      let dataDiferencia = 0;
+      let LActual = '';
       let calibracion = '';
-      let energiaNetaActual = 0;
-      let energiaNetaAnterior = 0;
-      let diferenciaEnergiaNeta = 0;
+      let dataDiferencia = 0;
+      const ids = [129, 139];
+      let dataEnergiaNetaAnterior = 0
+      let dataenergiaNetaActual = 0;
+      let dataDiferenciaEnergiaNeta = 0;
       doc.setFontSize(10);
       const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
       const subtitle = `ENERGÍA ELÉCTRICA SUMINISTRADA`;
+      const subtitle1 =  `ENERGÍA TOTAL TOMADA DE MEDIDORES PRINCIPALES (kwh)`
       pageWidth = doc.internal.pageSize.getWidth();
       fontSize = 10;
       const titleWidth =
@@ -141,158 +144,161 @@ export class ReportsComponent implements OnInit {
           fechaInicialFormatted.toISOString().split('T')[0],
           fechaFinalFormatted
         )
-        .subscribe((resp: any) => {
-          console.log('Esto trae el backend', resp);
-          if (this.resp) {
-            for (let i = 0; i < resp.inicial.length; i++) {
-              const elementoInicial = resp.inicial[i];
-              const elementoFinal = resp.final[i];
-              dataLecturaAnterior = elementoInicial.Value.toFixed(4);
-              dataLecturaActual = elementoFinal.Value.toFixed(4);
-              fontSize = 8;
-              serieMedidor = 'Serie de medidor';
-              dataNombreMedidor = elementoInicial.sourceName;
-              dataSerieMedidor = elementoInicial.Signature;
-              LAnterior = 'Lectura Anterior(A)';
-              LActual = 'Lectura Actual(B)';
-              EnergiaEnviada = 'Energia Enviada ';
-              EnergiaRecibida = 'Energia Recibida';
-              calibracion = 'Calibracion';
-              EnergiNeta = 'Energia Neta';
-              diferencia='Diferencia(A-B)';
-              doc.setFontSize(7);
-              if (elementoInicial.TipoMedidor === 'Principal') {
-                let dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                //labels
-                doc.text(dataNombreMedidor, xPosLegend1, 60 + i * 20);
-                doc.text(dataSerieMedidor, xPosLegend1 + 40, 60 + i * 20);
-                doc.text(LAnterior, xPosLegend1, 65 + i * 20);
-                doc.text(LActual, xPosLegend1+23, 65 + i * 20);
-                doc.text(kwh,xPosLegend1+7,67 +i*20)
-                doc.text(kwh,xPosLegend1+29,67 +i*20)
-                doc.text(kwh,xPosLegend1+49,67 +i*20)
-                doc.text(diferencia.toString(),xPosLegend1+44,65 + i*20);
-                doc.text(EnergiaEnviada, 10, 70 + i * 20);
-                doc.text(EnergiaRecibida, 10, 75 + i * 20);
-                doc.text(calibracion, 10, 80 + i * 20);
-                doc.text(EnergiNeta, 10, 85 + i * 20);
+        .subscribe((resp129: any) => {
+          console.log('Esto trae el backend del servicio 129', resp129);
 
-                //data
-                doc.text(dataLecturaAnterior.toString(), xPosLegend1+3, 70 + i * 20);
-                doc.text(dataLecturaActual.toString(), xPosLegend1+26,70 + i *20);
-                doc.text(dataDiferencia.toString(),xPosLegend1+46,70 +i *20);
+          // Obtener los datos del servicio 139
+          this.reportService
+            .getConsumoMedidores(
+              139,
+              fechaInicialFormatted.toISOString().split('T')[0],
+              fechaFinalFormatted
+            )
+            .subscribe((resp139: any) => {
+              console.log('Esto trae el backend del servicio 139', resp139);
+
+              // Procesar datos del servicio 129
+              if (this.resp) {
+                for (let i = 0; i < resp129.inicial.length; i++) {
+                  const elementoInicial = resp129.inicial[i];
+                  const elementoFinal = resp129.final[i];
+                  dataLecturaAnterior = elementoInicial.Value.toFixed(2);
+                  dataLecturaActual = elementoFinal.Value.toFixed(2);
+                  const elementoInicialRec = resp139.inicial[i];
+                  const elementoFinalRec = resp139.final[i];
+                  dataLecturaAnteriorRec = elementoInicialRec.Value.toFixed(2);
+                  dataLecturaActualRec = elementoFinalRec.Value.toFixed(2);
+                  fontSize = 8;
+                  serieMedidor = 'Serie de medidor';
+                  dataNombreMedidor = elementoInicial.sourceName;
+                  dataSerieMedidor = elementoInicial.Signature;
+                  LAnterior = 'Lectura Anterior(A)';
+                  LActual = 'Lectura Actual(B)';
+                  EnergiaEnviada = 'Energia Enviada ';
+                  EnergiaRecibida = 'Energia Recibida';
+                  calibracion = 'Calibracion';
+                  EnergiNeta = 'Energia Neta';
+                  diferencia = 'Diferencia(A-B)';
+
+                  doc.setFontSize(7);
+                  if (elementoInicial.TipoMedidor === 'Principal') {
+                    dataDiferencia = dataLecturaActual - dataLecturaAnterior;
+                    dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
+                    dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
+                    doc.text(dataNombreMedidor, xPosLegend1, 60 + i * 20);
+                    doc.text(dataSerieMedidor, xPosLegend1 + 40, 60 + i * 20);
+                    doc.text(LAnterior, xPosLegend1, 65 + i * 20);
+                    doc.text(LActual, xPosLegend1 + 23, 65 + i * 20);
+                    doc.text(kwh, xPosLegend1 + 7, 67 + i * 20)
+                    doc.text(kwh, xPosLegend1 + 29, 67 + i * 20)
+                    doc.text(kwh, xPosLegend1 + 49, 67 + i * 20)
+                    doc.text(diferencia.toString(), xPosLegend1 + 44, 65 + i * 20);
+                    doc.text(EnergiaEnviada, 10, 70 + i * 20);
+                    doc.text(EnergiaRecibida, 10, 75 + i * 20);
+                    doc.text(calibracion, 10, 80 + i * 20);
+                    doc.text(EnergiNeta, 10, 85 + i * 20);
+
+                    //data
+                    doc.text(dataLecturaAnterior.toString(), xPosLegend1 + 2, 70 + i * 20);
+                    doc.text(dataLecturaActual.toString(), xPosLegend1 + 24, 70 + i * 20);
+                    doc.text(dataDiferencia.toString(), xPosLegend1 + 46, 70 + i * 20);
+                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend1 + 1, 85 + i * 20);
+                    doc.text(dataenergiaNetaActual.toString(), xPosLegend1 + 22, 85 + i * 20);
+
+
+
+
+                  } else {
+                    //labels para medidores de respaldo
+                    dataDiferencia = dataLecturaActual - dataLecturaAnterior;
+                    dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
+                    dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
+                    doc.text(dataNombreMedidor, xPosLegend2, 40 + i * 20);
+                    doc.text(dataSerieMedidor, xPosLegend2 + 40, 40 + i * 20);
+                    doc.text(LAnterior, xPosLegend2, 45 + i * 20);
+                    doc.text(LActual, xPosLegend2 + 23, 45 + i * 20);
+                    doc.text(kwh, xPosLegend2 + 7, 47 + i * 20);
+                    doc.text(kwh, xPosLegend2 + 29, 47 + i * 20);
+                    doc.text(kwh, xPosLegend2 + 49, 47 + i * 20);
+                    doc.text(diferencia.toString(), xPosLegend2 + 44, 45 + i * 20);
+                    doc.text(EnergiaEnviada, xPosLegend2 - 20, 50 + i * 20);
+                    doc.text(EnergiaRecibida, xPosLegend2 - 20, 55 + i * 20);
+                    doc.text(calibracion, xPosLegend2 - 20, 60 + i * 20);
+                    doc.text(EnergiNeta, xPosLegend2 - 20, 65 + i * 20);
+
+                    //data
+                    doc.text(dataLecturaAnterior.toString(), xPosLegend2 + 2, 50 + i * 20);
+                    doc.text(dataLecturaActual.toString(), xPosLegend2 + 25, 50 + i * 20);
+                    doc.text(dataDiferencia.toString(), xPosLegend2 + 46, 50 + i * 20);
+                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend2 + 2, 65 + i * 20);
+                    doc.text(dataenergiaNetaActual.toString(), xPosLegend2 + 25, 65 + i * 20);
+
+                  }
+                  doc.setFontSize(10);
+                }
               } else {
-                //labels para medidores de respaldo
-                let dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                doc.text(dataNombreMedidor, xPosLegend2, 40 + i * 20);
-                doc.text(dataSerieMedidor, xPosLegend2 + 40, 40 + i * 20);
-                doc.text(LAnterior, xPosLegend2, 45 + i * 20);
-                doc.text(LActual, xPosLegend2+23, 45 + i * 20);
-                doc.text(kwh, xPosLegend2+7,47 + i *20);
-                doc.text(kwh, xPosLegend2+29,47 + i *20);
-                doc.text(kwh, xPosLegend2+49,47 + i *20);
-                doc.text(diferencia.toString(),xPosLegend2+44,45 + i*20);
-                doc.text(EnergiaEnviada, xPosLegend2 - 20, 50 + i * 20);
-                doc.text(EnergiaRecibida, xPosLegend2 - 20, 55 + i * 20);
-                doc.text(calibracion, xPosLegend2 - 20, 60 + i * 20);
-                doc.text(EnergiNeta, xPosLegend2 - 20, 65 + i * 20);
-
-                //data
-                doc.text(dataLecturaAnterior.toString(),xPosLegend2+3,50 + i * 20);
-                doc.text(dataLecturaActual.toString(), xPosLegend2+27, 50 +i*20);
-                doc.text(dataDiferencia.toString(),xPosLegend2+46,50 +i *20);
+                console.log('this.resp es null para el servicio 129');
               }
-              doc.setFontSize(10);
-            }
-            doc.save('reporte.pdf');
-          } else {
-            console.log('this.resp es null');
-          }
-        });
+              // Procesar datos del servicio 139
+              if (this.resp) {
+                for (let j = 0; j < resp139.inicial.length; j++) {
+                  const elementoInicialRec = resp139.inicial[j];
+                  const elementoFinalRec = resp139.final[j];
+                  dataLecturaAnteriorRec = elementoInicialRec.Value.toFixed(2);
+                  dataLecturaActualRec = elementoFinalRec.Value.toFixed(2);
+                  fontSize = 8;
+                  serieMedidor = 'Serie de medidor';
+                  dataNombreMedidor = elementoInicialRec.sourceName;
+                  dataSerieMedidor = elementoInicialRec.Signature;
+                  LAnterior = 'Lectura Anterior(A)';
+                  LActual = 'Lectura Actual(B)';
+                  EnergiaEnviada = 'Energia Enviada ';
+                  EnergiaRecibida = 'Energia Recibida';
+                  calibracion = 'Calibracion';
+                  EnergiNeta = 'Energia Neta';
+                  diferencia = 'Diferencia(A-B)';
 
-        this.reportService
-        .getConsumoMedidores(
-          139,
-          fechaInicialFormatted.toISOString().split('T')[0],
-          fechaFinalFormatted
-        )
-        .subscribe((resp: any) => {
-          this.resp = resp.inicial[0];
-          if (this.resp) {
-            for (let i = 0; i < resp.inicial.length; i++) {
-              const elementoInicial = resp.inicial[i];
-              const elementoFinal = resp.final[i];
-              dataLecturaAnteriorRec = elementoInicial.Value.toFixed(4);
-              dataLecturaActualRec = elementoFinal.Value.toFixed(4);
-              fontSize = 8;
-              serieMedidor = 'Serie de medidor';
-              dataNombreMedidor = elementoInicial.sourceName;
-              dataSerieMedidor = elementoInicial.Signature;
-              LAnterior = 'Lectura Anterior(A)';
-              LActual = 'Lectura Actual(B)';
-              EnergiaEnviada = 'Energia Enviada ';
-              EnergiaRecibida = 'Energia Recibida';
-              calibracion = 'Calibracion';
-              EnergiNeta = 'Energia Neta';
-              diferencia='Diferencia(A-B)';
-              doc.setFontSize(7);
-              if (elementoInicial.TipoMedidor === 'Principal') {
-                let dataDiferencia = dataLecturaActualRec - dataLecturaAnteriorRec;
-                //labels
-                // doc.text(dataNombreMedidor, xPosLegend1, 60 + i * 20);
-                // doc.text(dataSerieMedidor, xPosLegend1 + 40, 60 + i * 20);
-                // doc.text(LAnterior, xPosLegend1, 65 + i * 20);
-                // doc.text(LActual, xPosLegend1+23, 65 + i * 20);
-                // doc.text(kwh,xPosLegend1+7,67 +i*20)
-                // doc.text(kwh,xPosLegend1+29,67 +i*20)
-                // doc.text(kwh,xPosLegend1+49,67 +i*20)
-                // doc.text(diferencia.toString(),xPosLegend1+44,65 + i*20);
-                // doc.text(EnergiaEnviada, 10, 70 + i * 20);
-                // doc.text(EnergiaRecibida, 10, 75 + i * 20);
-                // doc.text(calibracion, 10, 80 + i * 20);
-                // doc.text(EnergiNeta, 10, 85 + i * 20);
-                //data
-                doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1+3, 75 + i * 20);
-                doc.text(dataLecturaActualRec.toString(), xPosLegend1+26,75 + i *20);
-                doc.text(dataDiferencia.toString(),xPosLegend1+46,75 +i *20);
+                  doc.setFontSize(7);
+                  if (elementoInicialRec.TipoMedidor === 'Principal') {
+                    let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
+                    dataDiferenciaEnergiaNeta = dataDiferencia - dataDiferenciaRec;
+
+
+                    //data
+                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1 + 3, 75 + j * 20);
+                    doc.text(dataLecturaActualRec.toString(), xPosLegend1 + 26, 75 + j * 20);
+                    doc.text(dataDiferenciaRec.toString(), xPosLegend1 + 46, 75 + j * 20);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 46,85 + j *20);
+                  } else {
+                    //labels para medidores de respaldo
+                    let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
+                    dataDiferenciaEnergiaNeta = dataDiferencia - dataDiferenciaRec;
+                    //data
+                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend2 + 3, 55 + j * 20);
+                    doc.text(dataLecturaActualRec.toString(), xPosLegend2 + 27, 55 + j * 20);
+                    doc.text(dataDiferenciaRec.toString(), xPosLegend2 + 46, 55 + j * 20);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 46,65 + j *20);
+                  }
+                  doc.setFontSize(10);
+                }
               } else {
-                //labels para medidores de respaldo
-                // let dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                // doc.text(dataNombreMedidor, xPosLegend2, 45 + i * 20);
-                // doc.text(dataSerieMedidor, xPosLegend2 + 40, 45 + i * 20);
-                // doc.text(LAnterior, xPosLegend2, 50 + i * 20);
-                // doc.text(LActual, xPosLegend2+23, 50 + i * 20);
-                // doc.text(kwh, xPosLegend2+7,52 + i *20);
-                // doc.text(kwh, xPosLegend2+29,52 + i *20);
-                // doc.text(kwh, xPosLegend2+49,52 + i *20);
-                // doc.text(diferencia.toString(),xPosLegend2+44,50 + i*20);
-                // doc.text(EnergiaEnviada, xPosLegend2 - 20, 55 + i * 20);
-                // doc.text(EnergiaRecibida, xPosLegend2 - 20, 60 + i * 20);
-                // doc.text(calibracion, xPosLegend2 - 20, 65 + i * 20);
-                // doc.text(EnergiNeta, xPosLegend2 - 20, 70 + i * 20);
-
-                //data
-                doc.text(dataLecturaAnteriorRec.toString(),xPosLegend2+3,55 + i * 20);
-                doc.text(dataLecturaActualRec.toString(), xPosLegend2+27, 55 +i*20);
-                doc.text(dataDiferencia.toString(),xPosLegend2+46,55 +i *20);
+                console.log('this.resp es null para el servicio 139');
               }
-              doc.setFontSize(10);
-            }
-
-            doc.save('reporte.pdf');
-          } else {
-            console.log('this.resp es null');
-          }
+              doc.save('reporte.pdf');
+            });
         });
-
-
-
       doc.text(title, xPosTitle, 10);
       doc.text(subtitle, xPosSubtitle, 25);
       doc.text(legend1, xPosLegend1, 45);
-      doc.rect(xPosLegend1, 40, legend1Width + 1, 10);
       doc.text(legend2, xPosLegend2, 45);
-      doc.rect(xPosLegend2, 40, legend2Width + 1, 10);
+
+      doc.setFontSize(7);
+      doc.setFont("bold");
+      doc.text(subtitle1, 3,255)
+
+      doc.setFont("normal");
+      doc.setFontSize(10);
+
     }
   }
 }
