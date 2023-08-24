@@ -75,7 +75,7 @@ export class ReportsComponent implements OnInit {
     }
   }
 
-  generarPDF() {
+  crearPDF() {
     if (this.tipoReporte == 'Energia Sumistrada' && this.resp) {
       const doc = new jsPDF();
       const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
@@ -192,26 +192,26 @@ export class ReportsComponent implements OnInit {
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
                     sumMedPrimarios += dataDiferenciaEnergiaNeta;
-                    doc.text(dataNombreMedidor, xPosLegend1, 60 + i * 20);
-                    doc.text(dataSerieMedidor, xPosLegend1 + 40, 60 + i * 20);
-                    doc.text(LAnterior, xPosLegend1, 65 + i * 20);
-                    doc.text(LActual, xPosLegend1 + 23, 65 + i * 20);
-                    doc.text(kwh, xPosLegend1 + 7, 67 + i * 20)
-                    doc.text(kwh, xPosLegend1 + 29, 67 + i * 20)
-                    doc.text(kwh, xPosLegend1 + 49, 67 + i * 20)
-                    doc.text(diferencia.toString(), xPosLegend1 + 44, 65 + i * 20);
-                    doc.text(EnergiaEnviada, 10, 70 + i * 20);
-                    doc.text(EnergiaRecibida, 10, 75 + i * 20);
-                    doc.text(calibracion, 10, 80 + i * 20);
-                    doc.text(EnergiNeta, 10, 85 + i * 20);
+                    doc.text(dataNombreMedidor, xPosLegend1, 45 + i * 20);
+                    doc.text(dataSerieMedidor, xPosLegend1 + 40, 45 + i * 20);
+                    doc.text(LAnterior, xPosLegend1, 50 + i * 20);
+                    doc.text(LActual, xPosLegend1 + 23, 50 + i * 20);
+                    doc.text(kwh, xPosLegend1 + 7, 52 + i * 20)
+                    doc.text(kwh, xPosLegend1 + 29, 52 + i * 20)
+                    doc.text(kwh, xPosLegend1 + 49, 52 + i * 20)
+                    doc.text(diferencia, xPosLegend1 + 44, 50 + i * 20);
+                    doc.text(EnergiaEnviada, 10, 55 + i * 20);
+                    doc.text(EnergiaRecibida, 10, 60 + i * 20);
+                    doc.text(calibracion, 10, 65 + i * 20);
+                    doc.text(EnergiNeta, 10, 70 + i * 20);
 
                     //data
-                    doc.text(dataLecturaAnterior.toString(), xPosLegend1 + 2, 70 + i * 20);
-                    doc.text(dataLecturaActual.toString(), xPosLegend1 + 24, 70 + i * 20);
-                    doc.text(dataDiferencia.toString(), xPosLegend1 + 46, 70 + i * 20);
-                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend1 + 1, 85 + i * 20);
-                    doc.text(dataenergiaNetaActual.toString(), xPosLegend1 + 22, 85 + i * 20);
-                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 46, 85 + i * 20);
+                    doc.text(dataLecturaAnterior.toString(), xPosLegend1 + 2, 55 + i * 20);
+                    doc.text(dataLecturaActual.toString(), xPosLegend1 + 24, 55 + i * 20);
+                    doc.text(dataDiferencia.toString(), xPosLegend1 + 46, 55 + i * 20);
+                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend1 + 1, 70 + i * 20);
+                    doc.text(dataenergiaNetaActual.toString(), xPosLegend1 + 22, 70 + i * 20);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 46, 70 + i * 20);
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
@@ -219,26 +219,26 @@ export class ReportsComponent implements OnInit {
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
                     sumMedSecundarios += dataDiferenciaEnergiaNeta;
-                    doc.text(dataNombreMedidor, xPosLegend2, 40 + i * 20);
-                    doc.text(dataSerieMedidor, xPosLegend2 + 40, 40 + i * 20);
-                    doc.text(LAnterior, xPosLegend2, 45 + i * 20);
-                    doc.text(LActual, xPosLegend2 + 23, 45 + i * 20);
-                    doc.text(kwh, xPosLegend2 + 7, 47 + i * 20);
-                    doc.text(kwh, xPosLegend2 + 29, 47 + i * 20);
-                    doc.text(kwh, xPosLegend2 + 49, 47 + i * 20);
-                    doc.text(diferencia.toString(), xPosLegend2 + 44, 45 + i * 20);
-                    doc.text(EnergiaEnviada, xPosLegend2 - 20, 50 + i * 20);
-                    doc.text(EnergiaRecibida, xPosLegend2 - 20, 55 + i * 20);
-                    doc.text(calibracion, xPosLegend2 - 20, 60 + i * 20);
-                    doc.text(EnergiNeta, xPosLegend2 - 20, 65 + i * 20);
+                    doc.text(dataNombreMedidor, xPosLegend2, 25 + i * 20);
+                    doc.text(dataSerieMedidor, xPosLegend2 + 40, 25 + i * 20);
+                    doc.text(LAnterior, xPosLegend2, 30 + i * 20);
+                    doc.text(LActual, xPosLegend2 + 23, 30 + i * 20);
+                    doc.text(kwh, xPosLegend2 + 7, 32 + i * 20);
+                    doc.text(kwh, xPosLegend2 + 29, 32 + i * 20);
+                    doc.text(kwh, xPosLegend2 + 49, 32 + i * 20);
+                    doc.text(diferencia.toString(), xPosLegend2 + 44, 30 + i * 20);
+                    doc.text(EnergiaEnviada, xPosLegend2 - 20, 35 + i * 20);
+                    doc.text(EnergiaRecibida, xPosLegend2 - 20, 40 + i * 20);
+                    doc.text(calibracion, xPosLegend2 - 20, 45 + i * 20);
+                    doc.text(EnergiNeta, xPosLegend2 - 20, 50 + i * 20);
 
                     //data
-                    doc.text(dataLecturaAnterior.toString(), xPosLegend2 + 2, 50 + i * 20);
-                    doc.text(dataLecturaActual.toString(), xPosLegend2 + 25, 50 + i * 20);
-                    doc.text(dataDiferencia.toString(), xPosLegend2 + 46, 50 + i * 20);
-                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend2 + 2, 65 + i * 20);
-                    doc.text(dataenergiaNetaActual.toString(), xPosLegend2 + 25, 65 + i * 20);
-                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 46, 65 + i * 20);
+                    doc.text(dataLecturaAnterior.toString(), xPosLegend2 + 2, 35 + i * 20);
+                    doc.text(dataLecturaActual.toString(), xPosLegend2 + 25, 35 + i * 20);
+                    doc.text(dataDiferencia.toString(), xPosLegend2 + 46, 35 + i * 20);
+                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend2 + 2, 50 + i * 20);
+                    doc.text(dataenergiaNetaActual.toString(), xPosLegend2 + 25, 50 + i * 20);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 46, 50 + i * 20);
 
                   }
                   doc.setFontSize(10);
@@ -248,14 +248,14 @@ export class ReportsComponent implements OnInit {
               }
               porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios)/sumMedPrimarios).toFixed(4));
               doc.setFontSize(6);
-              doc.text(subtitle1, xPosLegend1 - 25, 255)
-              doc.text(subtitle2, xPosLegend2 - 25, 255)
+              doc.text(subtitle1, xPosLegend1 - 25, 240)
+              doc.text(subtitle2, xPosLegend2 - 25, 240)
               doc.setFontSize(7);
-              doc.text(sumMedPrimarios.toString(), 75, 255);
-              doc.text(sumMedSecundarios.toString(), xPosLegend2 + 46, 255)
-              doc.text(porcentajeTotales.toString() + "%", xPosLegend2-20 ,265)
+              doc.text(sumMedPrimarios.toString(), 75, 240);
+              doc.text(sumMedSecundarios.toString(), xPosLegend2 + 46, 240)
+              doc.text(porcentajeTotales.toString() + "%", xPosLegend2-20 ,248)
               doc.setFontSize(6)
-              doc.text(subtitle3, xPosLegend1-25, 265);
+              doc.text(subtitle3, xPosLegend1-25, 248);
               doc.setFontSize(10);
               // Procesar datos del servicio 139
               if (this.resp) {
@@ -280,17 +280,17 @@ export class ReportsComponent implements OnInit {
                   if (elementoInicialRec.TipoMedidor === 'Principal') {
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
                     //data
-                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1 + 3, 75 + j * 20);
-                    doc.text(dataLecturaActualRec.toString(), xPosLegend1 + 26, 75 + j * 20);
-                    doc.text(dataDiferenciaRec.toString(), xPosLegend1 + 46, 75 + j * 20);
+                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1 + 3, 60 + j * 20);
+                    doc.text(dataLecturaActualRec.toString(), xPosLegend1 + 26, 60 + j * 20);
+                    doc.text(dataDiferenciaRec.toString(), xPosLegend1 + 46, 60 + j * 20);
                   } else {
                     //labels para medidores de respaldo
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
 
                     //data
-                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend2 + 3, 55 + j * 20);
-                    doc.text(dataLecturaActualRec.toString(), xPosLegend2 + 27, 55 + j * 20);
-                    doc.text(dataDiferenciaRec.toString(), xPosLegend2 + 46, 55 + j * 20);
+                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend2 + 3, 40 + j * 20);
+                    doc.text(dataLecturaActualRec.toString(), xPosLegend2 + 27, 40 + j * 20);
+                    doc.text(dataDiferenciaRec.toString(), xPosLegend2 + 46, 40 + j * 20);
                   }
                   doc.setFontSize(10);
                 }
