@@ -115,6 +115,7 @@ export class ReportsComponent implements OnInit {
       let dataDiferenciaEnergiaNeta = 0;
       let sumMedPrimarios = 0;
       let sumMedSecundarios = 0;
+      let porcentajeTotales =0
       doc.setFontSize(10);
       const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
       const subtitle = `ENERGÍA ELÉCTRICA SUMINISTRADA`;
@@ -245,12 +246,16 @@ export class ReportsComponent implements OnInit {
               } else {
                 console.log('this.resp es null para el servicio 129');
               }
+              porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios)/sumMedPrimarios).toFixed(4));
               doc.setFontSize(6);
               doc.text(subtitle1, xPosLegend1 - 25, 255)
               doc.text(subtitle2, xPosLegend2 - 25, 255)
               doc.setFontSize(7);
               doc.text(sumMedPrimarios.toString(), 75, 255);
               doc.text(sumMedSecundarios.toString(), xPosLegend2 + 46, 255)
+              doc.text(porcentajeTotales.toString() + "%", xPosLegend2-20 ,265)
+              doc.setFontSize(6)
+              doc.text(subtitle3, xPosLegend1-25, 265);
               doc.setFontSize(10);
               // Procesar datos del servicio 139
               if (this.resp) {
@@ -296,9 +301,9 @@ export class ReportsComponent implements OnInit {
             });
         });
       doc.text(title, xPosTitle, 10);
-      doc.text(subtitle, xPosSubtitle, 25);
-      doc.text(legend1, xPosLegend1, 45);
-      doc.text(legend2, xPosLegend2, 45);
+      doc.text(subtitle, xPosSubtitle, 20);
+      doc.text(legend1, xPosLegend1, 35);
+      doc.text(legend2, xPosLegend2, 35);
     }
   }
 }
