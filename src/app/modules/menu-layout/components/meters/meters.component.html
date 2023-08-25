@@ -85,9 +85,6 @@
           <td>{{ data.codigo }}</td>
           <td>{{ data.sourceId }}</td>
           <td>{{ data.descripcion }}</td>
-          <td>{{ data.modelo }}</td>
-
-          <td>{{ data.serie }}</td>
           <td *ngIf="!data.tipo; else bidireccional">Unidireccional</td>
           <ng-template #bidireccional>
             <td >Bidireccional</td>

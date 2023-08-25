@@ -34,7 +34,8 @@
       ],
       "@core/*":[
         "src/core/*"
-      ]
+      ],
+      "path": ["node_modules/path-browserify"]
     }
   },
   "angularCompilerOptions": {

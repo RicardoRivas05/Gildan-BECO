@@ -62,11 +62,13 @@
               </div>
             </div>
           </div>
+          <div nz-row class="row-2">
+
+          </div>
         </div>
 
         <div nz-row class="row-7">
           <div nzSpan="11" nz-col class="row7-col1">
-
             <label>Tipo medicion</label>
             <div nz-row>
               <nz-form-item nzFlex>
@@ -82,16 +84,12 @@
           </div>
 
           <div nzOffset="2" nzSpan="11" nz-col class="row7-col2">
-            <label>Nivel de Tension</label>
+            <label>Lectura Maxima</label>
             <div nz-row>
               <nz-form-item nzFlex>
                 <nz-form-control>
-                  <nz-select class="inputMedium" formControlName="puntoConexion" nzPlaceHolder="Baja tension, media, alta"
-                    nzAllowClear>
-                    <nz-option nzLabel="Baja Tension" [nzValue]="0"></nz-option>
-                    <nz-option nzLabel="Media Tension" [nzValue]="1"></nz-option>
-                    <nz-option nzLabel="Alta Tension" [nzValue]="2"></nz-option>
-                  </nz-select>
+                  <nz-input-number style="width: 215px;" placeholder="12200" formControlName="lecturaMax" [nzMin]="0.01"
+                    [nzStep]="100"></nz-input-number>
                 </nz-form-control>
               </nz-form-item>
             </div>
@@ -99,72 +97,7 @@
         </div>
       </div>
 
-      <div nz-row class="row-7">
-        <div nzSpan="11" nz-col class="row7-col1">
 
-          <label>Almacenamiento local</label>
-          <div nz-row>
-            <nz-form-item nzFlex>
-              <nz-form-control>
-                <nz-select class="inputMedium" formControlName="almacenamientoLocal" nzPlaceHolder="Si, No"
-                  nzAllowClear>
-                  <nz-option nzLabel="Si" [nzValue]=true></nz-option>
-                  <nz-option nzLabel="No" [nzValue]=false></nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-
-          </div>
-        </div>
-
-        <div nzOffset="2" nzSpan="11" nz-col class="row7-col2">
-          <label>Funcionalidad</label>
-          <div nz-row>
-            <nz-form-item nzFlex>
-              <nz-form-control>
-                <nz-select class="inputMedium" formControlName="funcionalidad" nzPlaceHolder="Generacion, Consumo"
-                  nzAllowClear>
-                  <nz-option nzLabel="Generación" [nzValue]=1></nz-option>
-                  <nz-option nzLabel="Consumo" [nzValue]=0></nz-option>
-
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-
-
-        </div>
-      </div>
-
-      <div nz-row class="row-5">
-        <div nzSpan="11" nz-col class="row5-col1">
-          <label>Modelo</label>
-
-          <div nz-row>
-            <nz-form-item nzFlex>
-              <nz-form-control>
-                <input style="width: 215px;" nz-input id="descripcion" type="text" placeholder="MD091"
-                  formControlName="modelo" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-
-
-        </div>
-
-        <div nzOffset="2" nzSpan="11" nz-col class="row7-col2">
-          <label>Lectura Maxima</label>
-          <div nz-row>
-            <nz-form-item nzFlex>
-              <nz-form-control>
-                <nz-input-number style="width: 215px;" placeholder="12200" formControlName="lecturaMax" [nzMin]="0.01"
-                  [nzStep]="100"></nz-input-number>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-
-      </div>
 
       <div nz-row class="row-2">
         <div nzSpan="24" nz-col class="row2-col1">
@@ -172,7 +105,7 @@
           <div nz-row>
             <nz-form-item>
               <nz-form-control>
-                <input class="inputLarge" nz-input id="descripcion" type="text" placeholder="Medidor sin etiqueta"
+                <input class="inputLarge" nz-input id="descripcion" type="text" placeholder="Ingrese el nombre del Medidor"
                   formControlName="descripcion" />
               </nz-form-control>
             </nz-form-item>
@@ -181,33 +114,7 @@
         </div>
       </div>
 
-      <div nz-row class="row-3">
-        <div nzSpan="11" nz-col class="row3-col1">
-          <label>Serie</label>
-          <div nz-row>
-            <nz-form-item>
-              <nz-form-control>
-                <input style="width: 215px;" nz-input id="Serie" type="text" placeholder="098U23"
-                  formControlName="serie" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
 
-
-        <div nz-col nzSpan="11" nzOffset="2">
-          <label>Multiplicador</label>
-          <div nz-row>
-            <nz-form-item>
-              <nz-form-control>
-                <nz-input-number style="width: 215px;" [nzPlaceHolder]="'1'" formControlName="multiplicador"
-                  [nzMin]="1"></nz-input-number>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-
-      </div>
 
       <div nz-row class="row-7">
         <div nzSpan="12" nz-col class="row1-col1">

@@ -4,6 +4,7 @@ import jsPDF from 'jspdf';
 import { ReportData } from 'src/Core/interfaces/report.interface';
 import { NotificationService } from '@shared/services/notification.service';
 import { forkJoin } from 'rxjs';
+import * as path from 'path';
 
 @Component({
   selector: 'app-reports',
@@ -77,6 +78,19 @@ export class ReportsComponent implements OnInit {
   crearPDF() {
     if (this.tipoReporte == 'Energia Sumistrada' && this.resp) {
       const doc = new jsPDF();
+      const img = new Image();
+      const img2 = new Image();
+      img.src = 'assets/Images/gobierno.jpg';
+      img2.src = 'assets/Images/enee.png';
+
+      img.onload = () => {
+        doc.addImage(img, 25, 10, 25, 10);
+      };
+
+      img2.onload = () => {
+        doc.addImage(img2, 160, 10, 25, 10);
+      };
+
       const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
       const fechaFinFormateada = this.fechaFinal.toLocaleDateString();
       const fechaInicialFormatted = new Date(this.fechaInicial);

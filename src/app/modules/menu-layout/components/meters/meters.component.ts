@@ -168,24 +168,8 @@ export class MetersComponent implements OnInit, OnChanges {
       listOfFilter: [],
       filterFn: (list: string[], item: MeterSchema) => list.some(codigo => item.descripcion.indexOf(codigo) !== -1)
     },
-    {
-      name: 'Modelo',
-      sortOrder: null,
-      sortDirections: ['ascend', 'descend', null],
-      sortFn: (a: MeterSchema, b: MeterSchema) => a.modelo.localeCompare(b.modelo),
-      filterMultiple: false,
-      listOfFilter: [],
-      filterFn: (address: string, item: MeterSchema) => item.modelo.indexOf(address) !== -1
-    },
-    {
-      name: 'Serie',
-      sortOrder: null,
-      sortDirections: ['ascend', 'descend', null],
-      sortFn: (a: MeterSchema, b: MeterSchema) => a.serie.localeCompare(b.serie),
-      filterMultiple: false,
-      listOfFilter: [],
-      filterFn: (address: string, item: MeterSchema) => item.serie.indexOf(address) !== -1
-    },
+
+
 
     {
       name: 'Medicion',

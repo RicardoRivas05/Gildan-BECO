@@ -149,16 +149,14 @@ export class MetersModalComponent implements OnInit {
       sourceId: [data.sourceId, [Validators.required]],
       codigo: [data.codigo, [Validators.required]],
       descripcion: [data.descripcion, [Validators.required]],
-      multiplicador: [data.multiplicador, [Validators.required]],
-      modelo: [data.modelo, [Validators.required]],
-      serie: [data.serie, [Validators.required]],
+
+
       lecturaMax: [data.lecturaMax, [Validators.required]],
-      puntoConexion: [data.puntoConexion, [Validators.required]],
+
       TipoMedidorId: [data.TipoMedidorId, [Validators.required]],
       observacion: [data.observacion, [Validators.required]],
       tipo: [data.tipo, [Validators.required]],
-      almacenamientoLocal: [data.almacenamientoLocal, [Validators.required]],
-      funcionalidad: [data.funcionalidad, [Validators.required]],
+
     });
 
   }
@@ -175,16 +173,14 @@ export class MetersModalComponent implements OnInit {
     this.dataPosition.sourceId = this.validateForm.value.sourceId;
     this.dataPosition.codigo = this.validateForm.value.codigo;
     this.dataPosition.descripcion = this.validateForm.value.descripcion;
-    this.dataPosition.modelo = this.validateForm.value.modelo;
-    this.dataPosition.serie = this.validateForm.value.serie;
+
     this.dataPosition.lecturaMax = this.validateForm.value.lecturaMax;
-    this.dataPosition.puntoConexion = this.validateForm.value.puntoConexion;
+
     this.dataPosition.TipoMedidorId = this.validateForm.value.TipoMedidorId;
     this.dataPosition.observacion = this.validateForm.value.observacion;
     this.dataPosition.tipo = this.validateForm.value.tipo;
 
-    this.dataPosition.almacenamientoLocal = this.validateForm.value.almacenamientoLocal;
-    this.dataPosition.funcionalidad = this.validateForm.value.funcionalidad;
+
     //console.log(this.validateForm.value);
     //console.log(this.dataPosition);
 
@@ -195,17 +191,15 @@ export class MetersModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       sourceId: ['', [Validators.required]],
       codigo: ['', [Validators.required]],
-      multiplicador: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-      modelo: ['', [Validators.required]],
-      serie: ['', [Validators.required]],
+
+
       lecturaMax: ['', [Validators.required]],
-      puntoConexion: ['', [Validators.required]],
+
       TipoMedidorId: ['', [Validators.required]],
       observacion: ['', [Validators.required]],
       tipo: ['', [Validators.required]],
-      almacenamientoLocal: ['', [Validators.required]],
-      funcionalidad: ['', [Validators.required]],
+
     });
 
   }
