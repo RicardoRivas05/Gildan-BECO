@@ -45,7 +45,13 @@
             <td>{{ fechaInicial | date:'yyyy-MM-dd' }}</td>
             <td>{{ fechaFinal | date:'yyyy-MM-dd' }}</td>
             <td>{{ tipoReporte }}</td>
-            <td><button class="btn-generar-pdf" (click)="crearPDF()">Descargar PDF</button></td>
+            <td>
+              <button class="btn-generar-pdf" (click)="crearPDF()">
+                <i class="pdf-icon"></i>
+                Descargar PDF
+              </button>
+            </td>
+
           </tr>
         </tbody>
       </table>
