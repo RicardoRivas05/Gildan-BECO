@@ -20,6 +20,7 @@ import { ZonesComponent } from './components/zones/zones.component';
 import { cpiComponent } from './components/cpi/cpi.component';
 import { ipcComponent } from './components/ipc/ipc.component';
 import { euroComponent } from './components/euro/euro.component';
+import { horasPuntaComponent } from './components/horasPunta/horasPunta.component';
 import { MetersComponent } from './components/meters/meters.component';
 import { MetersModalComponent } from "./components/meters/meters-modal/meters-modal.component";
 import { VirtualMeterModalComponent } from "./components/meters/virtual-meter-modal/virtual-meter-modal.component";
@@ -63,6 +64,7 @@ import { SubmitZoneModalComponent } from './components/zones/submit-zone-modal/s
 import { SubmitcpiModalComponent } from './components/cpi/submit-cpi-modal/submit-cpi-modal.component';
 import { SubmiteuroModalComponent } from './components/euro/submit-euro-modal/submit-euro-modal.component';
 import { SubmitipcModalComponent } from './components/ipc/submit-ipc-modal/submit-ipc-modal.component';
+import { SubmithorasPuntaModalComponent } from './components/horasPunta/submit-horasPunta-modal/submit-horasPunta-modal.component';
 import { SubmitProviderModalComponent } from './components/providers/submit-provider-modal/submit-provider-modal.component';
 import { SubmitClientModalComponent } from './components/clients/submit-client-modal/submit-client-modal.component';
 import { ManualRegistrationModalComponent } from './components/meters/manual-registration-modal/manual-registration-modal.component';
@@ -85,6 +87,7 @@ import { ReportsComponent } from './components/reports/reports.component';
     cpiComponent,
     ipcComponent,
     euroComponent,
+    horasPuntaComponent,
     MetersComponent,
     MetersModalComponent,
     VirtualMeterModalComponent,
@@ -107,6 +110,7 @@ import { ReportsComponent } from './components/reports/reports.component';
     SubmitcpiModalComponent,
     SubmitipcModalComponent,
     SubmiteuroModalComponent,
+    SubmithorasPuntaModalComponent,
     SubmitProviderModalComponent,
     SubmitClientModalComponent,
     ManualRegistrationModalComponent,
