@@ -20,7 +20,8 @@ export class SubmiteuroModalComponent implements OnInit {
   listOfData: euroShema[] = [];
   validateForm!: FormGroup;
   neweuro!: euroShema;
-  Fecha: Date = new Date();
+  fechaInicial: Date = new Date();
+  fechaFinal: Date = new Date();
 
   url = {
     get: 'get-euro',
@@ -29,7 +30,8 @@ export class SubmiteuroModalComponent implements OnInit {
     update: 'euro',
   };
   EmptyForm = this.fb.group({
-    Fecha: [null, [Validators.required]],
+    fechaInicial: [null, [Validators.required]],
+    fechaFinal: [null, [Validators.required]],
     Valor: ['', [Validators.required]],
 
   });
@@ -42,7 +44,8 @@ export class SubmiteuroModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {this.validateForm = this.fb.group({
-    Fecha: ['', [Validators.required]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required]],
     Valor: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
 
   });}
@@ -103,7 +106,8 @@ export class SubmiteuroModalComponent implements OnInit {
         .subscribe(
           (result: any) => {
             if (!result){
-            this.dataPosition.Fecha = this.neweuro.Fecha;
+            this.dataPosition.fechaInicial = this.neweuro.fechaInicial;
+            this.dataPosition.fechaInicial = this.neweuro.fechaFinal;
             this.dataPosition.Valor = this.neweuro.Valor;
 
             this.notificationService.createMessage(
@@ -131,7 +135,8 @@ export class SubmiteuroModalComponent implements OnInit {
   editableFrom(data: euroShema): void{
     //console.log(data);
     this.validateForm = this.fb.group({
-      Fecha: [data.Fecha, [Validators.required]],
+      fechaInicial: [data.fechaInicial, [Validators.required]],
+      fechaFinal: [data.fechaFinal, [Validators.required]],
       Valor: [data.Valor, [Validators.required]],
     })
     console.log(this.validateForm.value);
@@ -174,7 +179,8 @@ export class SubmiteuroModalComponent implements OnInit {
 
   CleanForm(){
     this.validateForm = this.fb.group({
-      Fecha: ['', [Validators.required]],
+      fechaInicial: ['', [Validators.required]],
+      fechaFinal: ['', [Validators.required]],
       Valor: ['', [Validators.required]],
     })
   }

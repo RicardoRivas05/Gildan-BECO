@@ -1,8 +1,7 @@
 export interface ipcShema {
     ID: number;
-    Month: string;
-    Year: number;
+    fechaInicial: string;
+    fechaFinal: string;
     Value: number;
     estado:boolean;
-
   }

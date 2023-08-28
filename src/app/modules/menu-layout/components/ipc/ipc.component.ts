@@ -25,8 +25,8 @@ export class ipcComponent implements OnInit {
     update: 'ipc',
   };
   EmptyForm =this.fb.group({
-    Month: ['', [Validators.required]],
-    Year: ['', [Validators.required]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required]],
     Value: ['', [Validators.required]],
   })
   constructor(
@@ -96,20 +96,20 @@ export class ipcComponent implements OnInit {
     {
       name: 'Mes',
       sortOrder: null,
-      sortFn: (a: ipcShema, b: ipcShema) => a.Month.localeCompare(b.Month),
+      sortFn: (a: ipcShema, b: ipcShema) => a.fechaInicial.localeCompare(b.fechaInicial),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: string[], item: ipcShema) => list.some(Month => item.Month.indexOf(Month) !== -1)
+      filterFn: (list: string[], item: ipcShema) => list.some(fechaInicial => item.fechaInicial.indexOf(fechaInicial) !== -1)
     },
     {
-      name: 'Año',
+      name: 'Mes',
       sortOrder: null,
-      sortFn: (a: ipcShema, b: ipcShema) => a.Year - b.Year,
+      sortFn: (a: ipcShema, b: ipcShema) => a.fechaFinal.localeCompare(b.fechaFinal),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: number[], item: ipcShema) => list.includes(item.Year)
+      filterFn: (list: string[], item: ipcShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
       name: 'Valor',

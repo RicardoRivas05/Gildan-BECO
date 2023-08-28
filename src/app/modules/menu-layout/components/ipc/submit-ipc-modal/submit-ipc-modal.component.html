@@ -16,34 +16,30 @@
       <form nz-form [formGroup]="validateForm" nzLayout="horizontal">
         <div nz-row class="row-1">
           <div nz-col [nzSpan]="24" class="row1-col1">
-            <label>Mes</label>
+            <label>Fecha Inicial</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input nz-input class="inputLarge" id="" type="text" placeholder=" Enero, Febrero... "
-                    formControlName="Month" [disabled]="false" />
+                  <nz-date-picker nzFormat="yyyy-MM-dd" [nzDisabled]="false"
+                    formControlName="fechaInicial"></nz-date-picker>
                 </nz-form-control>
               </nz-form-item>
             </div>
           </div>
         </div>
+
         <div nz-row class="row-2">
-
           <div nz-col [nzSpan]="24" class="row3-col1">
-
-            <label>Año</label>
+            <label>Fecha Final</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input nz-input class="inputLarge" id="anio" type="input" placeholder=" Año " formControlName="Year"
-                    [disabled]="false" />
+                  <nz-date-picker nzFormat="yyyy-MM-dd" [nzDisabled]="false"
+                    formControlName="fechaFinal"></nz-date-picker>
                 </nz-form-control>
               </nz-form-item>
             </div>
-
-
           </div>
-
         </div>
         <div nz-row class="row-3">
 

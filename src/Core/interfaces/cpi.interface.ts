@@ -1,7 +1,7 @@
 export interface cpiShema {
     ID: number;
-    Month: string;
-    Year: number;
+    fechaInicial: string;
+    fechaFinal: string;
     Value: number;
     estado:boolean;
 

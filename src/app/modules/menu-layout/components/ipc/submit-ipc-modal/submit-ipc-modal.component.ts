@@ -26,8 +26,8 @@ export class SubmitipcModalComponent implements OnInit {
     update: 'ipc',
   };
   EmptyForm = this.fb.group({
-    Month: ['', [Validators.required]],
-    Year: ['', [Validators.required]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required]],
     Value: ['', [Validators.required]],
 
   });
@@ -39,8 +39,8 @@ export class SubmitipcModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {this.validateForm = this.fb.group({
-    Month: ['', [Validators.required]],
-    Year: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
     Value: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });}
 
@@ -100,8 +100,8 @@ export class SubmitipcModalComponent implements OnInit {
         .subscribe(
           (result: any) => {
             if (!result){
-            this.dataPosition.Month = this.newipc.Month;
-            this.dataPosition.Year = this.newipc.Year;
+            this.dataPosition.fechaInicial = this.newipc.fechaInicial;
+            this.dataPosition.fechaFinal = this.newipc.fechaFinal;
             this.dataPosition.Value = this.newipc.Value;
 
             this.notificationService.createMessage(
@@ -129,8 +129,8 @@ export class SubmitipcModalComponent implements OnInit {
   editableFrom(data: ipcShema): void{
     //console.log(data);
     this.validateForm = this.fb.group({
-      Year: [data.Year, [Validators.required]],
-      Month: [data.Month, [Validators.required]],
+      fechaInicial: [data.fechaInicial, [Validators.required]],
+      fechaFinal: [data.fechaFinal, [Validators.required]],
       Value: [data.Value, [Validators.required]],
     })
     console.log(this.validateForm.value);
@@ -173,8 +173,8 @@ export class SubmitipcModalComponent implements OnInit {
 
   CleanForm(){
     this.validateForm = this.fb.group({
-      Month: ['', [Validators.required]],
-      Year: ['', [Validators.required]],
+      fechaInicial: ['', [Validators.required]],
+      fechaFinal: ['', [Validators.required]],
       Value: ['', [Validators.required]],
     })
   }

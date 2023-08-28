@@ -25,8 +25,8 @@ export class cpiComponent implements OnInit {
     update: 'cpi',
   };
   EmptyForm =this.fb.group({
-    Month: ['', [Validators.required]],
-    Year: ['', [Validators.required]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required]],
     Value: ['', [Validators.required]],
   })
   constructor(
@@ -94,22 +94,22 @@ export class cpiComponent implements OnInit {
 
   listOfColumns: ColumnItem[] = [
     {
-      name: 'Mes',
+      name: 'Fecha Inicial',
       sortOrder: null,
-      sortFn: (a: cpiShema, b: cpiShema) => a.Month.localeCompare(b.Month),
+      sortFn: (a: cpiShema, b: cpiShema) => a.fechaInicial.localeCompare(b.fechaInicial),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: string[], item: cpiShema) => list.some(Month => item.Month.indexOf(Month) !== -1)
+      filterFn: (list: string[], item: cpiShema) => list.some(fechaInicial => item.fechaInicial.indexOf(fechaInicial) !== -1)
     },
     {
-      name: 'Año',
+      name: 'Fecha Final',
       sortOrder: null,
-      sortFn: (a: cpiShema, b: cpiShema) => a.Year - b.Year,
+      sortFn: (a: cpiShema, b: cpiShema) => a.fechaFinal.localeCompare(b.fechaFinal),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: number[], item: cpiShema) => list.includes(item.Year)
+      filterFn: (list: string[], item: cpiShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
       name: 'Valor',

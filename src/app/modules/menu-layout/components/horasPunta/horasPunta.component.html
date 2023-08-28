@@ -66,8 +66,8 @@
             </div>
           </td>
 
-            <td>{{data.fechaInicial| date:'yyyy-MM-dd'}}</td>
-            <td>{{ data.fechaFinal | date:'yyyy-MM-dd' }}</td>
+            <td>{{data.fechaInicial | date:'yyyy-MM-dd':'UTC'}}</td>
+            <td>{{ data.fechaFinal | date:'yyyy-MM-dd':'UTC' }}</td>
             <td>{{ data.valor}}</td>
           </tr>
         </tbody>

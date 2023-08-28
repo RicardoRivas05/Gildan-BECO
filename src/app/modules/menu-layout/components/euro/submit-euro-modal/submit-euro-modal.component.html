@@ -20,16 +20,35 @@
       <form nz-form [formGroup]="validateForm" nzLayout="horizontal">
         <div nz-row class="row-1">
           <div nz-col [nzSpan]="24" class="row1-col1">
-            <label>Fecha</label>
-            <div class="form-group">
-              <nz-date-picker formControlName="Fecha" [nzFormat]="'YYYY-MM-DD'"></nz-date-picker>
+            <label>Fecha Inicial</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-date-picker nzFormat="yyyy-MM-dd" [nzDisabled]="false"
+                    formControlName="fechaInicial"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+
+        <div nz-row class="row-2">
+          <div nz-col [nzSpan]="24" class="row3-col1">
+            <label>Fecha Final</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <nz-date-picker nzFormat="yyyy-MM-dd" [nzDisabled]="false"
+                    formControlName="fechaFinal"></nz-date-picker>
+                </nz-form-control>
+              </nz-form-item>
             </div>
           </div>
         </div>
 
 
-        <div nz-row class="row-2">
-          <div nz-col [nzSpan]="24" class="row2-col1">
+        <div nz-row class="row-3">
+          <div nz-col [nzSpan]="24" class="row3-col1">
             <label>Valor</label>
             <div nz-row>
               <nz-form-item>

@@ -1,6 +1,7 @@
 export interface euroShema{
   id: number;
-  Fecha: Date;
+  fechaInicial: Date;
+  fechaFinal: Date;
   Valor: number;
   estado : boolean;
 }

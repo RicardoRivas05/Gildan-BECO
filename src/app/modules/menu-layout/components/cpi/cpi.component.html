@@ -66,8 +66,8 @@
             </div>
           </td>
 
-            <td>{{data.Month}}</td>
-            <td>{{ data.Year }}</td>
+            <td>{{data.fechaInicial | date:'yyyy-MM-dd':'UTC' }}</td>
+            <td>{{ data.fechaFinal | date:'yyyy-MM-dd':'UTC' }}</td>
             <td>{{ data.Value }}</td>
           </tr>
         </tbody>

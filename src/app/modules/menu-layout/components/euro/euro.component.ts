@@ -25,7 +25,8 @@ export class euroComponent implements OnInit {
     update: 'euro',
   };
   EmptyForm =this.fb.group({
-    Fecha: ['', [Validators.required]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required]],
     Valor: ['', [Validators.required]],
   })
   constructor(
@@ -93,13 +94,22 @@ export class euroComponent implements OnInit {
 
   listOfColumns: ColumnItem[] = [
     {
-      name: 'Fecha',
+      name: 'Fecha Inicial',
       sortOrder: null,
-      sortFn: (a: euroShema, b: euroShema) => a.Fecha.getTime() - b.Fecha.getTime(),
+      sortFn: (a: euroShema, b: euroShema) => a.fechaInicial.getTime() - b.fechaInicial.getTime(),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: euroShema) => list.some(date => date.getTime() === item.Fecha.getTime()),
+      filterFn: (list: Date[], item: euroShema) => list.some(date => date.getTime() === item.fechaInicial.getTime()),
+    },
+    {
+      name: 'Fecha Final',
+      sortOrder: null,
+      sortFn: (a: euroShema, b: euroShema) => a.fechaFinal.getTime() - b.fechaFinal.getTime(),
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: Date[], item: euroShema) => list.some(date => date.getTime() === item.fechaFinal.getTime()),
     },
     {
       name: 'Valor',
