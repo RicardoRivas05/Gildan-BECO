@@ -30,9 +30,12 @@ export class SubmiteuroModalComponent implements OnInit {
     update: 'euro',
   };
   EmptyForm = this.fb.group({
-    fechaInicial: [null, [Validators.required]],
-    fechaFinal: [null, [Validators.required]],
+    fechaInicial: ['', [Validators.required]],
+    fechaFinal: ['', [Validators.required]],
+    ValorInicial: ['', [Validators.required]],
+    ValorUltimoMes:['',[Validators.required]],
     Valor: ['', [Validators.required]],
+    RelacionInflacion:['',[Validators.required]],
 
   });
 
@@ -46,7 +49,10 @@ export class SubmiteuroModalComponent implements OnInit {
   ngOnInit(): void {this.validateForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    Valor: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    ValorInicial: ['', [Validators.required]],
+    ValorUltimoMes:['',[Validators.required]],
+    Valor: ['', [Validators.required]],
+    RelacionInflacion:['',[Validators.required]],
 
   });}
 
@@ -108,8 +114,10 @@ export class SubmiteuroModalComponent implements OnInit {
             if (!result){
             this.dataPosition.fechaInicial = this.neweuro.fechaInicial;
             this.dataPosition.fechaInicial = this.neweuro.fechaFinal;
+            this.dataPosition.ValorInicial = this.neweuro.ValorInicial;
+            this.dataPosition.ValorUltimoMes = this.neweuro.ValorUltimoMes;
             this.dataPosition.Valor = this.neweuro.Valor;
-
+            this.dataPosition.RelacionInflacion = this.neweuro.RelacionInflacion;
             this.notificationService.createMessage(
               'success',
               'La acción se ejecutó con éxito 😎'
@@ -137,7 +145,10 @@ export class SubmiteuroModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
+      ValorInicial:[data.ValorInicial,[Validators.required]],
+      ValorUltimoMes:[data.ValorUltimoMes,[Validators.required]],
       Valor: [data.Valor, [Validators.required]],
+      RelacionInflacion:[data.RelacionInflacion,[Validators.required]],
     })
     console.log(this.validateForm.value);
   }
@@ -181,7 +192,10 @@ export class SubmiteuroModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: ['', [Validators.required]],
       fechaFinal: ['', [Validators.required]],
+      ValorInicial: ['', [Validators.required]],
+      ValorUltimoMes:['',[Validators.required]],
       Valor: ['', [Validators.required]],
+      RelacionInflacion:['',[Validators.required]],
     })
   }
 }

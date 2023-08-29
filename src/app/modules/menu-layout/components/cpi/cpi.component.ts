@@ -27,7 +27,10 @@ export class cpiComponent implements OnInit {
   EmptyForm =this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
+    ValorUltimoMes: ['', [Validators.required]],
+    ValorInicial: ['', [Validators.required]],
     Value: ['', [Validators.required]],
+    RelacionInflacion: ['', [Validators.required]],
   })
   constructor(
     private globalService: EndPointGobalService,
@@ -112,14 +115,41 @@ export class cpiComponent implements OnInit {
       filterFn: (list: string[], item: cpiShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
-      name: 'Valor',
+      name: 'Valor Inicial',
+      sortOrder: null,
+      sortFn: (a: cpiShema, b: cpiShema) => a.ValorInicial - b.ValorInicial,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: cpiShema) => list.includes(item.ValorInicial)
+    },
+    {
+      name: 'Valor Ultimo Mes',
+      sortOrder: null,
+      sortFn: (a: cpiShema, b: cpiShema) => a.ValorUltimoMes - b.ValorUltimoMes,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: cpiShema) => list.includes(item.ValorUltimoMes)
+    },
+    {
+      name: 'Valor Actual',
       sortOrder: null,
       sortFn: (a: cpiShema, b: cpiShema) => a.Value - b.Value,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
       filterFn: (list: number[], item: cpiShema) => list.includes(item.Value)
-    }
+    },
+    {
+      name: 'Relación Inflación',
+      sortOrder: null,
+      sortFn: (a: cpiShema, b: cpiShema) => a.RelacionInflacion - b.RelacionInflacion,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: cpiShema) => list.includes(item.RelacionInflacion)
+    },
   ];
 
 }

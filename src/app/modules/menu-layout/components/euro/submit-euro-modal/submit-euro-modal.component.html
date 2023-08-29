@@ -17,9 +17,9 @@
     (nzOnOk)="submitForm()"
   >
     <ng-container *nzModalContent>
-      <form nz-form [formGroup]="validateForm" nzLayout="horizontal">
+      <form nz-form [formGroup]="validateForm" nzLayout="vertical">
         <div nz-row class="row-1">
-          <div nz-col [nzSpan]="24" class="row1-col1">
+          <div nz-col [nzSpan]="12" class="row2-col1">
             <label>Fecha Inicial</label>
             <div nz-row>
               <nz-form-item>
@@ -30,10 +30,8 @@
               </nz-form-item>
             </div>
           </div>
-        </div>
 
-        <div nz-row class="row-2">
-          <div nz-col [nzSpan]="24" class="row3-col1">
+          <div nz-col [nzSpan]="12" class="row1-col1">
             <label>Fecha Final</label>
             <div nz-row>
               <nz-form-item>
@@ -46,20 +44,56 @@
           </div>
         </div>
 
-
-        <div nz-row class="row-3">
-          <div nz-col [nzSpan]="24" class="row3-col1">
-            <label>Valor</label>
+        <div nz-row class="row-2">
+          <div nz-col [nzSpan]="12" class="row2-col1">
+            <label>Valor Inicial</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input
-                    class="inputLarge"
-                    nz-input
-                    rows="2"
-                    placeholder=" Valor del Euro "
-                    formControlName="Valor"
-                  />
+                  <input nz-input rows="1" placeholder=" Valor del Euro Inicial " formControlName="ValorInicial" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12" class="row2-col1">
+            <label>Valor Ultimo Mes</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input rows="1" placeholder=" Valor del Euro Ultimo Mes" formControlName="ValorUltimoMes" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <!-- <div nz-col [nzSpan]="12" class="row2-col1">
+            <label>Valor Inicial</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input rows="1" placeholder=" Valor del Euro Inicial " formControlName="ValorInicial" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div> -->
+        </div>
+
+        <div nz-row class="row-3">
+          <div nz-col [nzSpan]="12" class="row3-col1">
+            <label>Valor Actual</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input rows="1" placeholder=" Valor Actual del Euro" formControlName="Valor" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12" class="row2-col1">
+            <label>Relacion Inflación</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input rows="1" placeholder=" Valor de la Inflación " formControlName="RelacionInflacion" />
                 </nz-form-control>
               </nz-form-item>
             </div>

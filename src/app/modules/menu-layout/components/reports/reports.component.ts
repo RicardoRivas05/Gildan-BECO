@@ -29,10 +29,12 @@ export class ReportsComponent implements OnInit {
 
   onFechaInicialChange(value: Date): void {
     this.fechaInicial = value;
+    console.log("esto es",this.fechaInicial)
   }
 
   onFechaFinalChange(value: Date): void {
     this.fechaFinal = value;
+    console.log("esto es",this.fechaFinal)
   }
 
   generarReporte(): void {
@@ -88,14 +90,20 @@ export class ReportsComponent implements OnInit {
       };
 
       img2.onload = () => {
-        doc.addImage(img2, 160, 10, 25, 10);
+        doc.addImage(img2, 160, 10, 20, 10);
       };
 
       const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
       const fechaFinFormateada = this.fechaFinal.toLocaleDateString();
+
+
       const fechaInicialFormatted = new Date(this.fechaInicial);
       fechaInicialFormatted.setHours(0, 0, 0, 0);
+
       const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
+
+
+
       let legend1 = '';
       let legend2 = '';
       let legend1Width = 0;

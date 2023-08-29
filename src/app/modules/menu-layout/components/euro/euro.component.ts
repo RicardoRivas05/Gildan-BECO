@@ -27,7 +27,10 @@ export class euroComponent implements OnInit {
   EmptyForm =this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
+    ValorInicial: ['', [Validators.required]],
+    ValorUltimoMes:['',[Validators.required]],
     Valor: ['', [Validators.required]],
+    RelacionInflacion:['',[Validators.required]],
   })
   constructor(
     private globalService: EndPointGobalService,
@@ -112,13 +115,40 @@ export class euroComponent implements OnInit {
       filterFn: (list: Date[], item: euroShema) => list.some(date => date.getTime() === item.fechaFinal.getTime()),
     },
     {
-      name: 'Valor',
+      name: 'Valor Inicial',
+      sortOrder: null,
+      sortFn: (a: euroShema, b: euroShema) => a.ValorInicial - b.ValorInicial,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: euroShema) => list.includes(item.ValorInicial)
+    },
+    {
+      name: 'Valor Último Mes',
+      sortOrder: null,
+      sortFn: (a: euroShema, b: euroShema) => a.ValorUltimoMes - b.ValorUltimoMes,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: euroShema) => list.includes(item.ValorUltimoMes)
+    },
+    {
+      name: 'Valor Actual',
       sortOrder: null,
       sortFn: (a: euroShema, b: euroShema) => a.Valor - b.Valor,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
       filterFn: (list: number[], item: euroShema) => list.includes(item.Valor)
+    },
+    {
+      name: 'Relacion Inflacion',
+      sortOrder: null,
+      sortFn: (a: euroShema, b: euroShema) => a.RelacionInflacion - b.RelacionInflacion,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: euroShema) => list.includes(item.RelacionInflacion)
     },
 
   ];

@@ -27,7 +27,10 @@ export class ipcComponent implements OnInit {
   EmptyForm =this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
+    ValorUltimoMes: ['', [Validators.required]],
+    ValorInicial: ['', [Validators.required]],
     Value: ['', [Validators.required]],
+    RelacionInflacion: ['', [Validators.required]],
   })
   constructor(
     private globalService: EndPointGobalService,
@@ -94,7 +97,7 @@ export class ipcComponent implements OnInit {
 
   listOfColumns: ColumnItem[] = [
     {
-      name: 'Mes',
+      name: 'Fecha Inicial',
       sortOrder: null,
       sortFn: (a: ipcShema, b: ipcShema) => a.fechaInicial.localeCompare(b.fechaInicial),
       sortDirections: ['ascend', 'descend', null],
@@ -103,7 +106,7 @@ export class ipcComponent implements OnInit {
       filterFn: (list: string[], item: ipcShema) => list.some(fechaInicial => item.fechaInicial.indexOf(fechaInicial) !== -1)
     },
     {
-      name: 'Mes',
+      name: 'Fecha Final',
       sortOrder: null,
       sortFn: (a: ipcShema, b: ipcShema) => a.fechaFinal.localeCompare(b.fechaFinal),
       sortDirections: ['ascend', 'descend', null],
@@ -112,14 +115,41 @@ export class ipcComponent implements OnInit {
       filterFn: (list: string[], item: ipcShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
-      name: 'Valor',
+      name: 'Valor Inicial',
+      sortOrder: null,
+      sortFn: (a: ipcShema, b: ipcShema) => a.ValorInicial - b.ValorInicial,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: ipcShema) => list.includes(item.ValorInicial)
+    },
+    {
+      name: 'Valor Último Mes',
+      sortOrder: null,
+      sortFn: (a: ipcShema, b: ipcShema) => a.ValorUltimoMes - b.ValorUltimoMes,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: ipcShema) => list.includes(item.ValorUltimoMes)
+    },
+    {
+      name: 'Valor Actual',
       sortOrder: null,
       sortFn: (a: ipcShema, b: ipcShema) => a.Value - b.Value,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
       filterFn: (list: number[], item: ipcShema) => list.includes(item.Value)
-    }
+    },
+    {
+      name: 'Relacion Inflación',
+      sortOrder: null,
+      sortFn: (a: ipcShema, b: ipcShema) => a.RelacionInflacion - b.RelacionInflacion,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: ipcShema) => list.includes(item.RelacionInflacion)
+    },
   ];
 
 }

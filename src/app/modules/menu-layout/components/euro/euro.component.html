@@ -66,9 +66,12 @@
             </div>
           </td>
 
-          <td>{{ data.fechaInicial | date: 'yyyy-MM-dd' }}</td>
-          <td>{{ data.fechaFinal | date: 'yyyy-MM-dd' }}</td>
-            <td>{{ data.Valor }}</td>
+          <td>{{ data.fechaInicial  | date:'yyyy-MM-dd':'UTC' }}</td>
+          <td>{{ data.fechaFinal |  date:'yyyy-MM-dd':'UTC' }}</td>
+          <td>{{ data.ValorInicial}}</td>
+          <td>{{ data.ValorUltimoMes}}</td>
+          <td>{{ data.Valor}}</td>
+          <td>{{ data.RelacionInflacion}}</td>
           </tr>
         </tbody>
       </nz-table>

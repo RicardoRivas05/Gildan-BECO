@@ -28,7 +28,10 @@ export class SubmitcpiModalComponent implements OnInit {
   EmptyForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
+    ValorUltimoMes: ['', [Validators.required]],
+    ValorInicial: ['', [Validators.required]],
     Value: ['', [Validators.required]],
+    RelacionInflacion: ['', [Validators.required]],
 
   });
 
@@ -41,7 +44,10 @@ export class SubmitcpiModalComponent implements OnInit {
   ngOnInit(): void {this.validateForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    ValorUltimoMes: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    ValorInicial: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
     Value: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    RelacionInflacion: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });}
 
   submitForm(): void {
@@ -102,7 +108,10 @@ export class SubmitcpiModalComponent implements OnInit {
             if (!result){
             this.dataPosition.fechaInicial = this.newcpi.fechaInicial;
             this.dataPosition.fechaFinal = this.newcpi.fechaFinal;
+            this.dataPosition.ValorUltimoMes = this.newcpi.ValorUltimoMes;
+            this.dataPosition.ValorInicial = this.newcpi.ValorInicial;
             this.dataPosition.Value = this.newcpi.Value;
+            this.dataPosition.RelacionInflacion = this.newcpi.RelacionInflacion;
 
             this.notificationService.createMessage(
               'success',
@@ -131,7 +140,10 @@ export class SubmitcpiModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
+      ValorUltimoMes: [data.ValorUltimoMes, [Validators.required]],
+      ValorInicial: [data.ValorInicial, [Validators.required]],
       Value: [data.Value, [Validators.required]],
+      RelacionInflacion: [data.RelacionInflacion, [Validators.required]],
     })
     console.log(this.validateForm.value);
   }
@@ -175,7 +187,10 @@ export class SubmitcpiModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: ['', [Validators.required]],
       fechaFinal: ['', [Validators.required]],
+      ValorUltimoMes: ['', [Validators.required]],
+      ValorInicial: ['', [Validators.required]],
       Value: ['', [Validators.required]],
+      RelacionInflacion: ['', [Validators.required]],
     })
   }
 }
