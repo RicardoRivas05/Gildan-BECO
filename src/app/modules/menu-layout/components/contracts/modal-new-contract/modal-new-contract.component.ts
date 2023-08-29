@@ -30,14 +30,14 @@ export class ModalNewContractComponent implements OnInit {
   dates:{from: any, to: any} = {from: '', to: ''};
   ranges = { Today: [new Date(), new Date()], 'This Month': [new Date(), endOfMonth(new Date())] };
   pipe = new DatePipe('en-US');
-  
+
   url = {
     get: 'get-contracts',
     post: 'contratos',
     delete: 'contratos',
     update: 'contratos',
   };
-  
+
 
   constructor(
     private fb: FormBuilder,
@@ -62,7 +62,7 @@ export class ModalNewContractComponent implements OnInit {
       this.editableForm();
     }else{
       this.cleanForm();
-      
+
     }
   }
 
@@ -71,7 +71,7 @@ export class ModalNewContractComponent implements OnInit {
       codigo: [ this.dataPosition.codigo , [Validators.required]],
       tipoContratoId: [ this.dataPosition.tipoContratoId, [Validators.required]],
       actorId: [ this.dataPosition.actorId, [Validators.required]],
-      fecha: [ [this.pipe.transform(new Date(this.dataPosition.fechaCreacion), 'yyyy-MM-dd HH:mm:ss', 'GMT'), 
+      fecha: [ [this.pipe.transform(new Date(this.dataPosition.fechaCreacion), 'yyyy-MM-dd HH:mm:ss', 'GMT'),
       this.pipe.transform(new Date(this.dataPosition.fechaVenc), 'yyyy-MM-dd HH:mm:ss', 'GMT')], [Validators.required]],
       diaGeneracion: [ this.dataPosition.diaGeneracion, [Validators.required]],
       diasDisponibles: [ this.dataPosition.diasDisponibles, [Validators.required]],
@@ -115,7 +115,7 @@ export class ModalNewContractComponent implements OnInit {
     if (this.validateForm.valid) {
       this.fullSchema();
       this.globalService.Post(this.url.post, this.newContract).subscribe(
-        (result:any) => { 
+        (result:any) => {
           if(result){
             this.DataUpdated.emit(result);
             this.isVisible = false;
@@ -124,7 +124,7 @@ export class ModalNewContractComponent implements OnInit {
           }else{
             this.notificationService.createMessage('error', 'La accion fallo 😓');
           }
-            
+
         }
       );
     } else {
@@ -146,12 +146,12 @@ export class ModalNewContractComponent implements OnInit {
           if(!result){
             this.updateMainTable(this.newContract);
             this.isVisible = false;
-            
+
             this.notificationService.createMessage('success', 'La acción se ejecuto con exito 😎');
           }else{
             this.notificationService.createMessage('error', 'La accion fallo 😓');
           }
-            
+
         }
         );
     } else {
@@ -166,16 +166,16 @@ export class ModalNewContractComponent implements OnInit {
   }
 
   updateMainTable(data: ContractSchema){
-    
+
     for(let i=0; i<this.ListOfClients.length ; i++){
       if(this.ListOfClients[i].id == this.newContract.actorId){
-        this.dataPosition.nombre = this.ListOfClients[i].nombre;
-        
+        this.dataPosition.nombre = this.ListOfClients[i]?.nombre;
+
       }
     }
     for(let i = 0; i< this.ListOfClientsAux.length; i++){
       if(data.actorId === this.ListOfClients[i].id){
-        this.dataPosition.nombre = this.ListOfClientsAux[i-1].nombre;
+        this.dataPosition.nombre = this.ListOfClientsAux[i-1]?.nombre;
       }
     }
     this.dataPosition.codigo = this.newContract.codigo;
@@ -198,7 +198,7 @@ export class ModalNewContractComponent implements OnInit {
       fechaCreacion: this.pipe.transform(this.validateForm.value.fecha[0], 'yyyy-MM-dd HH:mm:ss', '-1200'),
       fechaVenc:  this.pipe.transform(this.validateForm.value.fecha[1], 'yyyy-MM-dd HH:mm:ss', '-1200'),
       estado: true,
-    }   
+    }
 
   }
 
@@ -216,7 +216,7 @@ export class ModalNewContractComponent implements OnInit {
       }
     }
   }
-  
+
   cancel(): void {
     this.nzMessageService.info('click cancel');
   }
