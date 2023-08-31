@@ -12,7 +12,7 @@
 
   <nz-modal
     [(nzVisible)]="isVisible"
-    nzTitle="Ingrese los datos del dollar"
+    nzTitle="Ingrese los datos del combustible"
     (nzOnCancel)="handleCancel()"
     (nzOnOk)="submitForm()"
   >
@@ -46,35 +46,37 @@
 
         <div nz-row class="row-2">
           <div nz-col [nzSpan]="12" class="row2-col1">
-            <label>Valor Compra</label>
+            <label>Precio Bajo</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input nz-input rows="1" placeholder=" Valor de Compra del Dollar " formControlName="Compra" />
+                  <input nz-input rows="1" placeholder="Precio bajo del combustible" formControlName="precioBajo" />
                 </nz-form-control>
               </nz-form-item>
             </div>
           </div>
           <div nz-col [nzSpan]="12" class="row2-col1">
-            <label>Venta</label>
+            <label>Precio Alto</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input nz-input rows="1" placeholder=" Valor de la Venta del Dollar" formControlName="Venta" />
+                  <input nz-input rows="1" placeholder="Precio alto del combustible" formControlName="precioAlto" />
                 </nz-form-control>
               </nz-form-item>
             </div>
           </div>
-          <!-- <div nz-col [nzSpan]="12" class="row2-col1">
-            <label>Valor Inicial</label>
+        </div>
+        <div nz-row class="row-2">
+          <div nz-col [nzSpan]="12" class="row2-col1">
+            <label>Precio Base</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input nz-input rows="1" placeholder=" Valor del dollar Inicial " formControlName="ValorInicial" />
+                  <input nz-input rows="1" placeholder="Precio base del combustible" formControlName="precioBase" />
                 </nz-form-control>
               </nz-form-item>
             </div>
-          </div> -->
+          </div>
         </div>
       </form>
     </ng-container>

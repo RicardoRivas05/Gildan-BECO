@@ -2,38 +2,39 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EndPointGobalService } from '@shared/services/end-point-gobal.service';
 import { NotificationService } from '@shared/services/notification.service';
-import { dollarShema } from 'src/Core/interfaces/dollar.interface';
+import { combustibleShema } from 'src/Core/interfaces/combustible.interface';
 
 
 @Component({
-  selector: 'app-submit-dollar-modal',
-  templateUrl: './submit-dollar-modal.component.html',
-  styleUrls: ['./submit-dollar-modal.component.css']
+  selector: 'app-submit-combustible-modal',
+  templateUrl: './submit-combustible-modal.component.html',
+  styleUrls: ['./submit-combustible-modal.component.css']
 })
-export class SubmitdollarModalComponent implements OnInit {
-  @Output() DataUpdated: EventEmitter<dollarShema> = new EventEmitter<dollarShema>();
-  @Input() dataPosition!: dollarShema;
+export class SubmitcombustibleModalComponent implements OnInit {
+  @Output() DataUpdated: EventEmitter<combustibleShema> = new EventEmitter<combustibleShema>();
+  @Input() dataPosition!: combustibleShema;
   @Input() disabled: boolean = false;
 
   isVisible = false;
-  dollarIsDisable: boolean = false;
-  listOfData: dollarShema[] = [];
+  combustibleIsDisable: boolean = false;
+  listOfData: combustibleShema[] = [];
   validateForm!: FormGroup;
-  newdollar!: dollarShema;
+  newcombustible!: combustibleShema;
   fechaInicial: Date = new Date();
   fechaFinal: Date = new Date();
 
   url = {
-    get: 'get-dollar',
-    post: 'dollar',
-    delete: 'dollar',
-    update: 'dollar',
+    get: 'get-combustible',
+    post: 'combustible',
+    delete: 'combustible',
+    update: 'combustible',
   };
   EmptyForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    Compra: ['', [Validators.required]],
-    Venta:['',[Validators.required]],
+    precioBase: ['', [Validators.required]],
+    precioBajo: ['', [Validators.required]],
+    precioAlto:['',[Validators.required]],
   });
 
   constructor(
@@ -46,8 +47,9 @@ export class SubmitdollarModalComponent implements OnInit {
   ngOnInit(): void {this.validateForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    Compra: ['', [Validators.required]],
-    Venta:['',[Validators.required]],
+    precioBase: ['', [Validators.required]],
+    precioBajo: ['', [Validators.required]],
+    precioAlto:['',[Validators.required]],
 
   });}
 
@@ -63,12 +65,12 @@ export class SubmitdollarModalComponent implements OnInit {
 
   submitPostForm() {
     if (this.validateForm.valid) {
-      this.newdollar = {
+      this.newcombustible = {
         ...this.validateForm.value,
         estado: true
       };
       this.isVisible = false;
-      this.globalService.Post(this.url.post, this.newdollar).subscribe(
+      this.globalService.Post(this.url.post, this.newcombustible).subscribe(
         (result: any) => {
           console.log("----------", result);
           if (result) {
@@ -97,20 +99,21 @@ export class SubmitdollarModalComponent implements OnInit {
 
   submitUpdateForm() {
     if (this.validateForm.valid) {
-      this.newdollar = {
+      this.newcombustible = {
         ...this.validateForm.value,
         estado: true
       };
       this.isVisible = false;
       this.globalService
-        .Patch(this.url.post, this.dataPosition.id, this.newdollar)
+        .Patch(this.url.post, this.dataPosition.id, this.newcombustible)
         .subscribe(
           (result: any) => {
             if (!result){
-            this.dataPosition.fechaInicial = this.newdollar.fechaInicial;
-            this.dataPosition.fechaInicial = this.newdollar.fechaFinal;
-            this.dataPosition.Compra = this.newdollar.Compra;
-            this.dataPosition.Venta = this.newdollar.Venta;
+            this.dataPosition.fechaInicial = this.newcombustible.fechaInicial;
+            this.dataPosition.fechaInicial = this.newcombustible.fechaFinal;
+            this.dataPosition.precioBase = this.newcombustible.precioBase;
+            this.dataPosition.precioBajo = this.newcombustible.precioBajo;
+            this.dataPosition.precioAlto = this.newcombustible.precioAlto;
             this.notificationService.createMessage(
               'success',
               'La acción se ejecutó con éxito 😎'
@@ -133,19 +136,19 @@ export class SubmitdollarModalComponent implements OnInit {
   }
   }
 
-  editableFrom(data: dollarShema): void{
+  editableFrom(data: combustibleShema): void{
     //console.log(data);
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
-      Compra:[data.Compra,[Validators.required]],
-      Venta:[data.Venta,[Validators.required]],
+      precioBase:[data.precioBase.toString(),[Validators.required]],
+      precioBajo:[data.precioBajo.toString(),[Validators.required]],
+      precioAlto:[data.precioAlto,[Validators.required]],
     })
-    console.log(this.validateForm.value);
   }
 
   fullSchema(){
-    this.newdollar = {
+    this.newcombustible = {
       ... this.validateForm.value,
       estado: true
     }
@@ -156,6 +159,7 @@ export class SubmitdollarModalComponent implements OnInit {
       id: this.dataPosition.id,
       ... this.validateForm.value,
       estado: this.dataPosition.estado
+
     }
   }
 
@@ -183,8 +187,9 @@ export class SubmitdollarModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: ['', [Validators.required]],
       fechaFinal: ['', [Validators.required]],
-      Compra: ['', [Validators.required]],
-      Venta:['',[Validators.required]],
+      precioBase: ['', [Validators.required]],
+      precioBajo: ['', [Validators.required]],
+      precioAlto:['',[Validators.required]],
     })
   }
 }

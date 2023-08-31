@@ -10,6 +10,7 @@ import { ipcComponent } from './components/ipc/ipc.component';
 import { euroComponent } from './components/euro/euro.component';
 import { dollarComponent } from './components/dollar/dollar.component';
 import { horasPuntaComponent } from './components/horasPunta/horasPunta.component';
+import { combustibleComponent } from './components/combustible/combustible.component';
 import { MetersComponent } from "./components/meters/meters.component";
 import { RatesComponent } from './components/rates/rates.component';
 import { InputParametersComponent } from './components/input-parameters/input-parameters.component';
@@ -62,6 +63,10 @@ const routes: Routes = [
       {
         path: 'horasPunta',
         component: horasPuntaComponent
+      },
+      {
+        path: 'combustible',
+        component: combustibleComponent
       },
 
       {

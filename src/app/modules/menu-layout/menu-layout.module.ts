@@ -22,6 +22,7 @@ import { ipcComponent } from './components/ipc/ipc.component';
 import { euroComponent} from './components/euro/euro.component';
 import { dollarComponent } from './components/dollar/dollar.component';
 import { horasPuntaComponent } from './components/horasPunta/horasPunta.component';
+import { combustibleComponent } from './components/combustible/combustible.component';
 import { MetersComponent } from './components/meters/meters.component';
 import { MetersModalComponent } from "./components/meters/meters-modal/meters-modal.component";
 import { VirtualMeterModalComponent } from "./components/meters/virtual-meter-modal/virtual-meter-modal.component";
@@ -67,6 +68,7 @@ import { SubmiteuroModalComponent } from './components/euro/submit-euro-modal/su
 import { SubmitipcModalComponent } from './components/ipc/submit-ipc-modal/submit-ipc-modal.component';
 import { SubmithorasPuntaModalComponent } from './components/horasPunta/submit-horasPunta-modal/submit-horasPunta-modal.component';
 import { SubmitdollarModalComponent } from './components/dollar/submit-dollar-modal/submit-dollar-modal.component';
+import { SubmitcombustibleModalComponent } from './components/combustible/submit-combustible-modal/submit-combustible-modal.component';
 import { SubmitProviderModalComponent } from './components/providers/submit-provider-modal/submit-provider-modal.component';
 import { SubmitClientModalComponent } from './components/clients/submit-client-modal/submit-client-modal.component';
 import { ManualRegistrationModalComponent } from './components/meters/manual-registration-modal/manual-registration-modal.component';
@@ -90,6 +92,7 @@ import { ReportsComponent } from './components/reports/reports.component';
     euroComponent,
     dollarComponent,
     horasPuntaComponent,
+    combustibleComponent,
     MetersComponent,
     MetersModalComponent,
     VirtualMeterModalComponent,
@@ -113,7 +116,9 @@ import { ReportsComponent } from './components/reports/reports.component';
     SubmitipcModalComponent,
     SubmiteuroModalComponent,
     SubmithorasPuntaModalComponent,
+    SubmitcombustibleModalComponent,
     SubmitProviderModalComponent,
+    SubmitClientModalComponent,
     SubmitClientModalComponent,
     ManualRegistrationModalComponent,
     FacturaEHHComponent,
