@@ -5,6 +5,8 @@ import { ReportData } from 'src/Core/interfaces/report.interface';
 import { NotificationService } from '@shared/services/notification.service';
 import { forkJoin } from 'rxjs';
 import * as path from 'path';
+import { ColumnItem } from 'src/Core/interfaces/col-meter-table.interface';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-reports',
@@ -19,6 +21,7 @@ export class ReportsComponent implements OnInit {
   energiaRecibida: boolean = false;
   mostrarTabla: boolean = false;
   resp: ReportData | null = null;
+  resp2: ReportData | null = null;
   pdfData: string = '';
 
   constructor(private reportService: ReportsService) {
@@ -29,12 +32,12 @@ export class ReportsComponent implements OnInit {
 
   onFechaInicialChange(value: Date): void {
     this.fechaInicial = value;
-    console.log("esto es",this.fechaInicial)
+    console.log("esto es", this.fechaInicial)
   }
 
   onFechaFinalChange(value: Date): void {
     this.fechaFinal = value;
-    console.log("esto es",this.fechaFinal)
+    console.log("esto es", this.fechaFinal)
   }
 
   generarReporte(): void {
@@ -52,12 +55,16 @@ export class ReportsComponent implements OnInit {
           )
           .subscribe(
             (resp: any) => {
+              this.resp = resp.inicial[0];
+              this.resp2 = resp.final[1];
+              console.log("los resp ", this.resp, this.resp2)
+
             },
             (error) => {
               console.log('Error en la solicitud HTTP', error);
             }
           );
-      }else{
+      } else {
 
       }
       if (this.energiaRecibida) {
@@ -90,20 +97,16 @@ export class ReportsComponent implements OnInit {
       };
 
       img2.onload = () => {
-        doc.addImage(img2, 160, 10, 20, 10);
+        doc.addImage(img2, 160, 10, 25, 10);
       };
 
       const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
-      const fechaFinFormateada = this.fechaFinal.toLocaleDateString();
-
-
+      const fechaFinal = new Date(this.fechaFinal);
+      fechaFinal.setDate(fechaFinal.getDate() - 1);
+      const fechaFinFormateada = fechaFinal.toLocaleDateString();
       const fechaInicialFormatted = new Date(this.fechaInicial);
       fechaInicialFormatted.setHours(0, 0, 0, 0);
-
       const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
-
-
-
       let legend1 = '';
       let legend2 = '';
       let legend1Width = 0;
@@ -117,7 +120,6 @@ export class ReportsComponent implements OnInit {
       let EnergiaRecibida = '';
       let kwh = 'kwh';
       let EnergiNeta = '';
-      let dataLecturaAnteriorMP = 0;
       let dataLecturaAnterior = 0;
       let dataLecturaActual = 0;
       let dataLecturaAnteriorRec = 0;
@@ -136,7 +138,7 @@ export class ReportsComponent implements OnInit {
       let dataDiferenciaEnergiaNeta = 0;
       let sumMedPrimarios = 0;
       let sumMedSecundarios = 0;
-      let porcentajeTotales =0
+      let porcentajeTotales = 0
       doc.setFontSize(10);
       const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
       const subtitle = `ENERGÍA ELÉCTRICA SUMINISTRADA`;
@@ -146,7 +148,7 @@ export class ReportsComponent implements OnInit {
       const firma1 = `Ing. Roberto Martínez`;
       const firma2 = `Ing. Roldán Bustillo`;
       const firma3 = `Ing. Guillermo González`;
-      const lineafirma= `________________________`;
+      const lineafirma = `________________________`;
       const porEnee = `Por ENEE`;
       const porEnersa = `Por ENERSA`;
       pageWidth = doc.internal.pageSize.getWidth();
@@ -215,65 +217,136 @@ export class ReportsComponent implements OnInit {
                   doc.setFontSize(7);
                   if (elementoInicial.TipoMedidor === 'Principal') {
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                    dataDiferencia =Number(dataDiferencia.toFixed(2));
+                    dataDiferencia = Number(dataDiferencia.toFixed(2));
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataEnergiaNetaAnterior = Number(dataEnergiaNetaAnterior.toFixed(2));
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataenergiaNetaActual = Number(dataenergiaNetaActual.toFixed(2));
                     dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
-                    dataDiferenciaEnergiaNeta =Number(dataDiferenciaEnergiaNeta.toFixed(2));
+                    dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedPrimarios += dataDiferenciaEnergiaNeta;
-                    doc.text(dataNombreMedidor, xPosLegend1, 45 + i * 20);
-                    doc.text(dataSerieMedidor, xPosLegend1 + 40, 45 + i * 20);
-                    doc.text(LAnterior, xPosLegend1, 50 + i * 20);
-                    doc.text(LActual, xPosLegend1 + 23, 50 + i * 20);
-                    doc.text(kwh, xPosLegend1 + 7, 52 + i * 20)
-                    doc.text(kwh, xPosLegend1 + 29, 52 + i * 20)
-                    doc.text(kwh, xPosLegend1 + 49, 52 + i * 20)
-                    doc.text(diferencia, xPosLegend1 + 44, 50 + i * 20);
-                    doc.text(EnergiaEnviada, 10, 55 + i * 20);
-                    doc.text(EnergiaRecibida, 10, 60 + i * 20);
-                    doc.text(calibracion, 10, 65 + i * 20);
-                    doc.text(EnergiNeta, 10, 70 + i * 20);
+                    sumMedPrimarios=Number(sumMedPrimarios.toFixed(2));
 
+                    let canvas = document.createElement('canvas');
+                    canvas.width = 300;
+                    canvas.height = 200;
+                    let ctx = canvas.getContext('2d');
+                    if (ctx) {
+                      ctx.font = "20px Arial";
+                      let margin = 10;
+                      //inicio x            //inicio de Y  //fin de x  // fin de Y
+                      doc.rect(xPosLegend1 - 11 - margin, 42 + i * 15, 83, 16);
+                      //lineas verticales
+                      doc.line(xPosLegend1 - 11 - margin, 46 + i * 15, xPosLegend1 - 11 - margin + 83, 46 + i * 15);
+                      doc.line(xPosLegend1 - 11 - margin, 50 + i * 15, xPosLegend1 - 11 - margin + 83, 50 + i * 15);
+                      doc.line(xPosLegend1 - 11 - margin, 54 + i * 15, xPosLegend1 - 11 - margin + 83, 54 + i * 15);
+
+                      //linea de encima
+                      doc.line(xPosLegend1 -1 , 36 + i * 15, xPosLegend1 - 11 - margin + 83, 36 + i * 15);
+
+                      //lineas horizontales
+
+                        const x = 29;
+                        const y1 = 58; // Coordenada y de inicio de la línea
+                        const y2 = 36; // Coordenada y de fin de la línea (más corta)
+                        //linea inicial
+                        doc.line(x , y1 +i*15,x, y2 + i*15);
+                        //linea final
+                        doc.line(92 , y1 +i*15,92, y2 + i*15);
+                        //segunda linea
+                        doc.line(52 , y1 +i*15,52, y2 + i*15);
+                        //tercer linea
+                        doc.line(73 , y1 +i*15,73, y2 + i*15);
+
+                    } else {
+                      console.error('No se pudo obtener el contexto 2D del canvas');
+                    }
+                    doc.text(dataNombreMedidor, xPosLegend1 - 10, 35 + i * 15);
+                    doc.text(dataSerieMedidor, xPosLegend1 + 30, 35 + i * 15);
+                    doc.text(LAnterior, xPosLegend1, 39 + i * 15);
+                    doc.text(LActual, xPosLegend1 + 23, 39 + i * 15);
+                    doc.text(kwh, xPosLegend1 + 7, 41 + i * 15)
+                    doc.text(kwh, xPosLegend1 + 29, 41 + i * 15)
+                    doc.text(kwh, xPosLegend1 + 49, 41 + i * 15)
+                    doc.text(diferencia, xPosLegend1 + 44, 39 + i * 15);
+                    doc.text(EnergiaEnviada, 10, 45 + i * 15);
+                    doc.text(EnergiaRecibida, 10, 49 + i * 15);
+                    doc.text(calibracion, 10, 53 + i * 15);
+                    doc.text(EnergiNeta, 10, 57 + i * 15);
                     //data
-                    doc.text(dataLecturaAnterior.toString(), xPosLegend1 + 2, 55 + i * 20);
-                    doc.text(dataLecturaActual.toString(), xPosLegend1 + 24, 55 + i * 20);
-                    doc.text(dataDiferencia.toString(), xPosLegend1 + 46, 55 + i * 20);
-                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend1 + 1, 70 + i * 20);
-                    doc.text(dataenergiaNetaActual.toString(), xPosLegend1 + 22, 70 + i * 20);
-                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 46, 70 + i * 20);
+                    doc.text(dataLecturaAnterior.toString(), xPosLegend1 + 2, 45 + i * 15);
+                    doc.text(dataLecturaActual.toString(), xPosLegend1 + 25, 45 + i * 15);
+                    doc.text(dataDiferencia.toString(), xPosLegend1 + 48, 45 + i * 15);
+                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend1 + 2, 57 + i * 15);
+                    doc.text(dataenergiaNetaActual.toString(), xPosLegend1 + 25, 57 + i * 15);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend1 + 47, 57 + i * 15);
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                    dataDiferencia =Number(dataDiferencia.toFixed(2))
+                    dataDiferencia = Number(dataDiferencia.toFixed(2))
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataenergiaNetaActual = Number(dataenergiaNetaActual.toFixed(2));
                     dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
-                    dataDiferenciaEnergiaNeta =Number(dataDiferenciaEnergiaNeta.toFixed(2));
+                    dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedSecundarios += dataDiferenciaEnergiaNeta;
-                    doc.text(dataNombreMedidor, xPosLegend2, 25 + i * 20);
-                    doc.text(dataSerieMedidor, xPosLegend2 + 40, 25 + i * 20);
-                    doc.text(LAnterior, xPosLegend2, 30 + i * 20);
-                    doc.text(LActual, xPosLegend2 + 23, 30 + i * 20);
-                    doc.text(kwh, xPosLegend2 + 7, 32 + i * 20);
-                    doc.text(kwh, xPosLegend2 + 29, 32 + i * 20);
-                    doc.text(kwh, xPosLegend2 + 49, 32 + i * 20);
-                    doc.text(diferencia.toString(), xPosLegend2 + 44, 30 + i * 20);
-                    doc.text(EnergiaEnviada, xPosLegend2 - 20, 35 + i * 20);
-                    doc.text(EnergiaRecibida, xPosLegend2 - 20, 40 + i * 20);
-                    doc.text(calibracion, xPosLegend2 - 20, 45 + i * 20);
-                    doc.text(EnergiNeta, xPosLegend2 - 20, 50 + i * 20);
+
+                    sumMedSecundarios =Number(sumMedSecundarios.toFixed(2));
+                    let canvas = document.createElement('canvas');
+                    canvas.width = 300;
+                    canvas.height = 200;
+                    let ctx = canvas.getContext('2d');
+                    if (ctx) {
+                      ctx.font = "20px Arial";
+                      let margin = 10;
+                      //inicio x            //inicio de Y  //fin de x  // fin de Y
+                      doc.rect(xPosLegend2 - 11 - margin, 27 + i * 15, 83, 16);
+
+                      //lineas verticales
+                      doc.line(xPosLegend2 - 11 - margin, 31 + i * 15, xPosLegend2 - 11 - margin + 83, 31 + i * 15);
+                      doc.line(xPosLegend2 - 11 - margin, 35 + i * 15, xPosLegend2 - 11 - margin + 83, 35 + i * 15);
+                      doc.line(xPosLegend2 - 11 - margin, 39 + i * 15, xPosLegend2 - 11 - margin + 83, 39 + i * 15);
+
+                      //linea de encima
+                      doc.line(xPosLegend2 -1 , 21 + i * 15, xPosLegend2 - 11 - margin + 83, 21 + i * 15);
+
+                      // lineas horizontales
+                        const x = 133;
+                        const y1 = 43; // Coordenada y de inicio de la línea
+                        const y2 = 21; // Coordenada y de fin de la línea (más corta)
+                        //linea inicial
+                        doc.line(x , y1 +i*15,x, y2 + i*15);
+                        //linea final
+                        doc.line(196.1 , y1 +i*15,196.1, y2 + i*15);
+                        //segunda linea
+                        doc.line(156 , y1 +i*15,156, y2 + i*15);
+                        //tercer linea
+                        doc.line(177 , y1 +i*15,177, y2 + i*15);
+
+                    } else {
+                      console.error('No se pudo obtener el contexto 2D del canvas');
+                    }
+                    doc.text(dataNombreMedidor, xPosLegend2 - 10, 20 + i * 15);
+                    doc.text(dataSerieMedidor, xPosLegend2 + 30, 20 + i * 15);
+                    doc.text(LAnterior, xPosLegend2, 24 + i * 15);
+                    doc.text(LActual, xPosLegend2 + 23, 24 + i * 15);
+                    doc.text(kwh, xPosLegend2 + 7, 26 + i * 15);
+                    doc.text(kwh, xPosLegend2 + 29, 26 + i * 15);
+                    doc.text(kwh, xPosLegend2 + 49, 26 + i * 15);
+                    doc.text(diferencia.toString(), xPosLegend2 + 44, 24 + i * 15);
+                    doc.text(EnergiaEnviada, xPosLegend2 - 20, 30 + i * 15);
+                    doc.text(EnergiaRecibida, xPosLegend2 - 20, 34 + i * 15);
+                    doc.text(calibracion, xPosLegend2 - 20, 38 + i * 15);
+                    doc.text(EnergiNeta, xPosLegend2 - 20, 42 + i * 15);
 
                     //data
-                    doc.text(dataLecturaAnterior.toString(), xPosLegend2 + 2, 35 + i * 20);
-                    doc.text(dataLecturaActual.toString(), xPosLegend2 + 25, 35 + i * 20);
-                    doc.text(dataDiferencia.toString(), xPosLegend2 + 46, 35 + i * 20);
-                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend2 + 2, 50 + i * 20);
-                    doc.text(dataenergiaNetaActual.toString(), xPosLegend2 + 25, 50 + i * 20);
-                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 46, 50 + i * 20);
+                    doc.text(dataLecturaAnterior.toString(), xPosLegend2 + 2, 30 + i * 15);
+                    doc.text(dataLecturaActual.toString(), xPosLegend2 + 25, 30 + i * 15);
+                    doc.text(dataDiferencia.toString(), xPosLegend2 + 48, 30 + i * 15);
+                    doc.text(dataEnergiaNetaAnterior.toString(), xPosLegend2 + 2, 42 + i * 15);
+                    doc.text(dataenergiaNetaActual.toString(), xPosLegend2 + 25, 42 + i * 15);
+                    doc.text(dataDiferenciaEnergiaNeta.toString(), xPosLegend2 + 47, 42 + i * 15);
 
                   }
                   doc.setFontSize(10);
@@ -281,16 +354,16 @@ export class ReportsComponent implements OnInit {
               } else {
                 console.log('this.resp es null para el servicio 129');
               }
-              porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios)/sumMedPrimarios).toFixed(4));
+              porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios).toFixed(2));
               doc.setFontSize(6);
-              doc.text(subtitle1, xPosLegend1 - 25, 240)
-              doc.text(subtitle2, xPosLegend2 - 25, 240)
+              doc.text(subtitle1, xPosLegend1 - 21, 185.5)
+              doc.text(subtitle2, xPosLegend2 - 21, 185.5)
               doc.setFontSize(7);
-              doc.text(sumMedPrimarios.toString(), 75, 240);
-              doc.text(sumMedSecundarios.toString(), xPosLegend2 + 46, 240)
-              doc.text(porcentajeTotales.toString() + "%", xPosLegend2-20 ,248)
+              doc.text(sumMedPrimarios.toString(), 76, 185.5);
+              doc.text(sumMedSecundarios.toString(), xPosLegend2 + 45, 185.5)
+              doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 19, 193)
               doc.setFontSize(6)
-              doc.text(subtitle3, xPosLegend1-25, 248);
+              doc.text(subtitle3, xPosLegend1 - 21, 193);
               doc.setFontSize(10);
               // Procesar datos del servicio 139
               if (this.resp) {
@@ -310,24 +383,23 @@ export class ReportsComponent implements OnInit {
                   calibracion = 'Calibracion';
                   EnergiNeta = 'Energia Neta';
                   diferencia = 'Diferencia(A-B)';
-
                   doc.setFontSize(7);
                   if (elementoInicialRec.TipoMedidor === 'Principal') {
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
-                    dataDiferenciaRec = Number(dataDiferenciaRec.toFixed(4));
+                    dataDiferenciaRec = Number(dataDiferenciaRec.toFixed(2));
                     //data
-                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1 + 3, 60 + j * 20);
-                    doc.text(dataLecturaActualRec.toString(), xPosLegend1 + 26, 60 + j * 20);
-                    doc.text(dataDiferenciaRec.toString(), xPosLegend1 + 46, 60 + j * 20);
+                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend1 + 5, 49 + j * 15);
+                    doc.text(dataLecturaActualRec.toString(), xPosLegend1 + 28, 49 + j * 15);
+                    doc.text(dataDiferenciaRec.toString(), xPosLegend1 + 48, 49 + j * 15);
                   } else {
                     //labels para medidores de respaldo
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
-                    dataDiferenciaRec = Number(dataDiferenciaRec.toFixed(4));
+                    dataDiferenciaRec = Number(dataDiferenciaRec.toFixed(2));
 
                     //data
-                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend2 + 3, 40 + j * 20);
-                    doc.text(dataLecturaActualRec.toString(), xPosLegend2 + 27, 40 + j * 20);
-                    doc.text(dataDiferenciaRec.toString(), xPosLegend2 + 46, 40 + j * 20);
+                    doc.text(dataLecturaAnteriorRec.toString(), xPosLegend2 + 3, 34 + j * 15);
+                    doc.text(dataLecturaActualRec.toString(), xPosLegend2 + 28, 34 + j * 15);
+                    doc.text(dataDiferenciaRec.toString(), xPosLegend2 + 48, 34 + j * 15);
                   }
                   doc.setFontSize(10);
                 }
@@ -338,21 +410,36 @@ export class ReportsComponent implements OnInit {
             });
         });
       doc.text(title, xPosTitle, 10);
-      doc.text(subtitle, xPosSubtitle, 20);
-      doc.text(legend1, xPosLegend1, 35);
-      doc.text(legend2, xPosLegend2, 35);
+      doc.text(title, xPosTitle, 10);
+      doc.text(subtitle, xPosSubtitle, 18);
+      doc.text(subtitle, xPosSubtitle, 18);
+      doc.text(legend1, xPosLegend1, 30);
+      doc.text(legend1, xPosLegend1, 30);
+      doc.text(legend2, xPosLegend2, 30);
+      doc.text(legend2, xPosLegend2, 30);
 
-
-      doc.text(lineafirma, xPosLegend1-20, 260);
-      doc.text(lineafirma, xPosLegend1+50, 260);
-      doc.text(lineafirma, xPosLegend1+120, 260);
+      doc.text(lineafirma, xPosLegend1 - 20, 220);
+      doc.text(lineafirma, xPosLegend1 + 50, 220);
+      doc.text(lineafirma, xPosLegend1 + 120, 220);
       doc.setFontSize(8);
-      doc.text(firma1, xPosLegend1-10, 264);
-      doc.text(porEnee, xPosLegend1-4, 267);
-      doc.text(firma2, xPosLegend1+60, 264);
-      doc.text(porEnee, xPosLegend1+66, 267);
-      doc.text(firma3, xPosLegend1+130, 264);
-      doc.text(porEnersa, xPosLegend1+136, 267);
+      doc.text(firma1, xPosLegend1 - 10, 224);
+      doc.text(porEnee, xPosLegend1 - 4, 227);
+      doc.text(firma2, xPosLegend1 + 60, 224);
+      doc.text(porEnee, xPosLegend1 + 66, 227);
+      doc.text(firma3, xPosLegend1 + 130, 224);
+      doc.text(porEnersa, xPosLegend1 + 136, 227);
+
+      //cuadritos
+      doc.rect(xPosLegend1-21, 183, 83, 3);
+      doc.rect(xPosLegend2-21, 183, 83, 3);
+      doc.rect(xPosLegend1-21, 190.5, 115, 3);
+      const x = 73;
+      const y1 = 183;
+      const y2 = 186;
+      //linea inicial
+      doc.line(x , y1,x, y2);
+      doc.line(178 , y1,178, y2);
+      doc.line(x+41 , y1+7.5,x+41, y2+7.5);
       doc.setFontSize(10);
     }
   }

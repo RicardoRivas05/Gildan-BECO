@@ -8,6 +8,7 @@ import { ZonesComponent } from "./components/zones/zones.component";
 import { cpiComponent } from './components/cpi/cpi.component';
 import { ipcComponent } from './components/ipc/ipc.component';
 import { euroComponent } from './components/euro/euro.component';
+import { dollarComponent } from './components/dollar/dollar.component';
 import { horasPuntaComponent } from './components/horasPunta/horasPunta.component';
 import { MetersComponent } from "./components/meters/meters.component";
 import { RatesComponent } from './components/rates/rates.component';
@@ -53,6 +54,10 @@ const routes: Routes = [
       {
         path: 'euro',
         component: euroComponent
+      },
+      {
+        path: 'dollar',
+        component: dollarComponent
       },
       {
         path: 'horasPunta',
