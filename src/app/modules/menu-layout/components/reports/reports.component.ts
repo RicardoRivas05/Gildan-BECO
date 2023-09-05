@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportsService } from './service/reports.service';
 import jsPDF from 'jspdf';
-import { ReportData } from 'src/Core/interfaces/report.interface';
-import { NotificationService } from '@shared/services/notification.service';
 import { forkJoin } from 'rxjs';
-import * as path from 'path';
-import { ColumnItem } from 'src/Core/interfaces/col-meter-table.interface';
-import { DOCUMENT } from '@angular/common';
-
+import { ReportData } from 'src/Core/interfaces/report.interface';
+import { direction } from 'html2canvas/dist/types/css/property-descriptors/direction';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -22,6 +18,10 @@ export class ReportsComponent implements OnInit {
   mostrarTabla: boolean = false;
   resp: ReportData | null = null;
   resp2: ReportData | null = null;
+
+  resp3: any;
+  resp4: any;
+
   pdfData: string = '';
 
   constructor(private reportService: ReportsService) {
@@ -42,49 +42,64 @@ export class ReportsComponent implements OnInit {
 
   generarReporte(): void {
     this.mostrarTabla = true;
+    let fechaInicialFormatted = new Date(this.fechaInicial);
+    fechaInicialFormatted.setHours(0, 0, 0, 0);
+    let fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
     if (this.tipoReporte === 'Energia Sumistrada') {
-      if (this.energiaEntregada) {
-        const fechaInicialFormatted = new Date(this.fechaInicial);
-        fechaInicialFormatted.setHours(0, 0, 0, 0);
-        const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
-        this.reportService
-          .getConsumoMedidores(
-            129,
-            fechaInicialFormatted.toISOString().split('T')[0],
-            fechaFinalFormatted
-          )
-          .subscribe(
-            (resp: any) => {
-              this.resp = resp.inicial[0];
-              this.resp2 = resp.final[1];
-              console.log("los resp ", this.resp, this.resp2)
-
-            },
-            (error) => {
-              console.log('Error en la solicitud HTTP', error);
-            }
-          );
-      } else {
-
-      }
-      if (this.energiaRecibida) {
-        const fechaInicialFormatted = new Date(this.fechaInicial);
-        fechaInicialFormatted.setHours(0, 0, 0, 0);
-        const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
-        this.reportService
-          .getConsumoMedidores(
-            139,
-            fechaInicialFormatted.toISOString().split('T')[0],
-            fechaFinalFormatted
-          )
-          .subscribe((resp: any) => {
+      this.reportService
+        .getConsumoMedidores(
+          129,
+          fechaInicialFormatted.toISOString().split('T')[0],
+          fechaFinalFormatted
+        )
+        .subscribe(
+          (resp: any) => {
             this.resp = resp.inicial[0];
-          });
-      }
+            this.resp2 = resp.final[1];
+            console.log("los resp ", this.resp, this.resp2)
+
+          },
+          (error) => {
+            console.log('Error en la solicitud HTTP', error);
+          }
+        );
+
+      this.reportService
+        .getConsumoMedidores(
+          139,
+          fechaInicialFormatted.toISOString().split('T')[0],
+          fechaFinalFormatted
+        )
+        .subscribe((resp: any) => {
+          this.resp = resp.inicial[0];
+        });
+    } else if (this.tipoReporte === 'Cogeneracion') {
+      this.reportService
+        .getCogeneracion(
+          fechaInicialFormatted.toISOString().split('T')[0],
+          fechaFinalFormatted
+        )
+        .subscribe(
+          (resp: any) => {
+            this.resp = resp.diferencialDel;
+
+            console.log("los resp ", resp)
+
+          },
+          (error) => {
+            console.log('Error en la solicitud HTTP', error);
+          }
+        );
     }
   }
-
   crearPDF() {
+    let fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
+    let fechaFinal = new Date(this.fechaFinal);
+    fechaFinal.setDate(fechaFinal.getDate() - 1);
+    let fechaFinFormateada = fechaFinal.toLocaleDateString();
+    let fechaInicialFormatted = new Date(this.fechaInicial);
+    fechaInicialFormatted.setHours(0, 0, 0, 0);
+    let fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
     if (this.tipoReporte == 'Energia Sumistrada' && this.resp) {
       const doc = new jsPDF();
       const img = new Image();
@@ -93,20 +108,20 @@ export class ReportsComponent implements OnInit {
       img2.src = 'assets/Images/enee.png';
 
       img.onload = () => {
-        doc.addImage(img, 25, 10, 25, 10);
+        doc.addImage(img, 25, 10, 30, 10);
       };
 
       img2.onload = () => {
-        doc.addImage(img2, 160, 10, 25, 10);
+        doc.addImage(img2, 160, 10, 30, 10);
       };
 
-      const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
-      const fechaFinal = new Date(this.fechaFinal);
-      fechaFinal.setDate(fechaFinal.getDate() - 1);
-      const fechaFinFormateada = fechaFinal.toLocaleDateString();
-      const fechaInicialFormatted = new Date(this.fechaInicial);
-      fechaInicialFormatted.setHours(0, 0, 0, 0);
-      const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
+      // const fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
+      // const fechaFinal = new Date(this.fechaFinal);
+      // fechaFinal.setDate(fechaFinal.getDate() - 1);
+      // const fechaFinFormateada = fechaFinal.toLocaleDateString();
+      // const fechaInicialFormatted = new Date(this.fechaInicial);
+      // fechaInicialFormatted.setHours(0, 0, 0, 0);
+      // const fechaFinalFormatted = this.fechaFinal.toISOString().split('T')[0];
       let legend1 = '';
       let legend2 = '';
       let legend1Width = 0;
@@ -225,7 +240,7 @@ export class ReportsComponent implements OnInit {
                     dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
                     dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedPrimarios += dataDiferenciaEnergiaNeta;
-                    sumMedPrimarios=Number(sumMedPrimarios.toFixed(2));
+                    sumMedPrimarios = Number(sumMedPrimarios.toFixed(2));
 
                     let canvas = document.createElement('canvas');
                     canvas.width = 300;
@@ -242,21 +257,21 @@ export class ReportsComponent implements OnInit {
                       doc.line(xPosLegend1 - 11 - margin, 54 + i * 15, xPosLegend1 - 11 - margin + 83, 54 + i * 15);
 
                       //linea de encima
-                      doc.line(xPosLegend1 -1 , 36 + i * 15, xPosLegend1 - 11 - margin + 83, 36 + i * 15);
+                      doc.line(xPosLegend1 - 1, 36 + i * 15, xPosLegend1 - 11 - margin + 83, 36 + i * 15);
 
                       //lineas horizontales
 
-                        const x = 29;
-                        const y1 = 58; // Coordenada y de inicio de la línea
-                        const y2 = 36; // Coordenada y de fin de la línea (más corta)
-                        //linea inicial
-                        doc.line(x , y1 +i*15,x, y2 + i*15);
-                        //linea final
-                        doc.line(92 , y1 +i*15,92, y2 + i*15);
-                        //segunda linea
-                        doc.line(52 , y1 +i*15,52, y2 + i*15);
-                        //tercer linea
-                        doc.line(73 , y1 +i*15,73, y2 + i*15);
+                      const x = 29;
+                      const y1 = 58; // Coordenada y de inicio de la línea
+                      const y2 = 36; // Coordenada y de fin de la línea (más corta)
+                      //linea inicial
+                      doc.line(x, y1 + i * 15, x, y2 + i * 15);
+                      //linea final
+                      doc.line(92, y1 + i * 15, 92, y2 + i * 15);
+                      //segunda linea
+                      doc.line(52, y1 + i * 15, 52, y2 + i * 15);
+                      //tercer linea
+                      doc.line(73, y1 + i * 15, 73, y2 + i * 15);
 
                     } else {
                       console.error('No se pudo obtener el contexto 2D del canvas');
@@ -292,7 +307,7 @@ export class ReportsComponent implements OnInit {
                     dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedSecundarios += dataDiferenciaEnergiaNeta;
 
-                    sumMedSecundarios =Number(sumMedSecundarios.toFixed(2));
+                    sumMedSecundarios = Number(sumMedSecundarios.toFixed(2));
                     let canvas = document.createElement('canvas');
                     canvas.width = 300;
                     canvas.height = 200;
@@ -309,20 +324,20 @@ export class ReportsComponent implements OnInit {
                       doc.line(xPosLegend2 - 11 - margin, 39 + i * 15, xPosLegend2 - 11 - margin + 83, 39 + i * 15);
 
                       //linea de encima
-                      doc.line(xPosLegend2 -1 , 21 + i * 15, xPosLegend2 - 11 - margin + 83, 21 + i * 15);
+                      doc.line(xPosLegend2 - 1, 21 + i * 15, xPosLegend2 - 11 - margin + 83, 21 + i * 15);
 
                       // lineas horizontales
-                        const x = 133;
-                        const y1 = 43; // Coordenada y de inicio de la línea
-                        const y2 = 21; // Coordenada y de fin de la línea (más corta)
-                        //linea inicial
-                        doc.line(x , y1 +i*15,x, y2 + i*15);
-                        //linea final
-                        doc.line(196.1 , y1 +i*15,196.1, y2 + i*15);
-                        //segunda linea
-                        doc.line(156 , y1 +i*15,156, y2 + i*15);
-                        //tercer linea
-                        doc.line(177 , y1 +i*15,177, y2 + i*15);
+                      const x = 133;
+                      const y1 = 43; // Coordenada y de inicio de la línea
+                      const y2 = 21; // Coordenada y de fin de la línea (más corta)
+                      //linea inicial
+                      doc.line(x, y1 + i * 15, x, y2 + i * 15);
+                      //linea final
+                      doc.line(196.1, y1 + i * 15, 196.1, y2 + i * 15);
+                      //segunda linea
+                      doc.line(156, y1 + i * 15, 156, y2 + i * 15);
+                      //tercer linea
+                      doc.line(177, y1 + i * 15, 177, y2 + i * 15);
 
                     } else {
                       console.error('No se pudo obtener el contexto 2D del canvas');
@@ -430,17 +445,100 @@ export class ReportsComponent implements OnInit {
       doc.text(porEnersa, xPosLegend1 + 136, 227);
 
       //cuadritos
-      doc.rect(xPosLegend1-21, 183, 83, 3);
-      doc.rect(xPosLegend2-21, 183, 83, 3);
-      doc.rect(xPosLegend1-21, 190.5, 115, 3);
+      doc.rect(xPosLegend1 - 21, 183, 83, 3);
+      doc.rect(xPosLegend2 - 21, 183, 83, 3);
+      doc.rect(xPosLegend1 - 21, 190.5, 115, 3);
       const x = 73;
       const y1 = 183;
       const y2 = 186;
       //linea inicial
-      doc.line(x , y1,x, y2);
-      doc.line(178 , y1,178, y2);
-      doc.line(x+41 , y1+7.5,x+41, y2+7.5);
+      doc.line(x, y1, x, y2);
+      doc.line(178, y1, 178, y2);
+      doc.line(x + 41, y1 + 7.5, x + 41, y2 + 7.5);
       doc.setFontSize(10);
+    } else if (this.tipoReporte === 'Cogeneracion') {
+      const doc = new jsPDF();
+      let stuDel=0;
+      let stuRec = 0;
+      let diferencia = 0;
+
+      let cogPrincipalDelArray: number[] = [];
+      let cogRespaldoDelArray: number[] = [];
+
+      let cogPrincipalRecArray: number[] = [];
+      let cogRespaldoRecArray: number[] = [];
+
+      const promediosCogDel: number[] = [];
+      const promediosCogRec: number[] = [];
+
+      let promedioCogDel =0;
+      let promedioCogRec =0;
+
+      let promedioDel = 0;
+      let promedioRec = 0;
+      this.reportService.getCogeneracion(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted).subscribe(
+        (resp3: any) => {
+          console.log("Respuesta 1 ", resp3);
+          let yOffset = 15; // Inicio de la primera página
+          const lineHeight = 10; // Altura de línea
+
+          for(let i=0; i<resp3.medidoresSTUDel.length && i< resp3.medidoresSTURec.length; i++){
+            if (resp3.medidoresSTUDel[i].TipoMedidor==='Principal' && resp3.medidoresSTURec[i].TipoMedidor==='Principal'){
+              stuDel = resp3.medidoresSTUDel[i].Value;
+              stuRec = resp3.medidoresSTURec[i].Value;
+            }
+            diferencia = stuDel - stuRec;
+
+            if (yOffset + lineHeight > doc.internal.pageSize.height) {
+              doc.addPage();
+              yOffset = 15; // Reiniciar la posición vertical
+            }
+            // doc.text(resp3.medidoresSTU[i].Value.toString(), 10, yOffset);
+            // doc.text(resp4.medidoresSTU[i].Value.toString(), 90, yOffset);
+            //doc.text(diferencia.toString(), 10, yOffset);
+            yOffset += lineHeight;
+          }
+
+          for (let j = 0; j < resp3.cogeneracionDel.length && j < resp3.cogeneracionRec.length; j++) {
+            if (resp3.cogeneracionDel[j].TipoMedidor === 'Principal' && resp3.cogeneracionRec[j].TipoMedidor === 'Principal') {
+              cogPrincipalDelArray.push(resp3.cogeneracionDel[j].Value);
+              cogPrincipalRecArray.push(resp3.cogeneracionRec[j].Value);
+            }
+          }
+          for (let j = 0; j < resp3.cogeneracionDel.length && j < resp3.cogeneracionRec.length; j++) {
+            if (resp3.cogeneracionDel[j].TipoMedidor === 'Respaldo' && resp3.cogeneracionRec[j].TipoMedidor === 'Respaldo') {
+              cogRespaldoDelArray.push(resp3.cogeneracionDel[j].Value);
+              cogRespaldoRecArray.push(resp3.cogeneracionRec[j].Value);
+            }
+          }
+          // Asegúrate de que los arreglos tengan la misma longitud antes de realizar la operación
+          if (cogPrincipalDelArray.length === cogRespaldoDelArray.length) {
+
+            for (let i = 0; i < cogPrincipalDelArray.length; i++) {
+              promedioCogDel = (cogPrincipalDelArray[i] + cogRespaldoDelArray[i]) / 2;
+              promedioCogRec = (cogPrincipalRecArray[i] + cogRespaldoRecArray[i])/2;
+              promediosCogDel.push(promedioCogDel);
+              promediosCogRec.push(promedioCogRec);
+            }
+
+            for (let i = 0; i < promediosCogDel.length && i< promediosCogRec.length; i++) {
+              promedioDel = promediosCogDel[i];
+              promedioRec = promediosCogRec[i];
+              console.log("Valor del promedio Del", promedioDel);
+              console.log("Valor del promedio Del", promedioRec);
+            }
+
+          } else {
+            console.log("Los arreglos no tienen la misma longitud, no se pueden calcular promedios.");
+          }
+          //window.open(doc.output('bloburl'));
+
+        },
+        (error) => {
+          console.log('Error en la solicitud HTTP', error);
+        }
+      );
     }
   }
+
 }

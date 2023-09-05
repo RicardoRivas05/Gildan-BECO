@@ -13,23 +13,15 @@
     <label for="tipoReporte">Tipo de Reporte:</label>
     <select [(ngModel)]="tipoReporte">
       <option value="Energia Sumistrada">Energia Sumistrada</option>
-      <option value="2">Reporte 2</option>
+      <option value="Cogeneracion">Cogeneracion</option>
       <option value="3">Reporte 3</option>
       <option value="4">Reporte 4</option>
     </select>
   </div>
 
-  <div *ngIf="tipoReporte === 'Energia Sumistrada'" class="checkbox-group">
-    <label class="checkbox-label">
-      <input type="checkbox" [(ngModel)]="energiaEntregada" value="129"> Energía Entregada
-    </label>
-    <label class="checkbox-label">
-      <input type="checkbox" [(ngModel)]="energiaRecibida" value="139"> Energía Recibida
-    </label>
-  </div>
 
   <button class="btn-generar" (click)="generarReporte()">Generar Reporte</button>
-  <div *ngIf="tipoReporte === 'Energia Sumistrada'" class="checkbox-group">
+  <div class="checkbox-group">
     <div *ngIf="mostrarTabla" class="tabla-container">
       <table class="tabla-reportes">
         <thead>
@@ -56,6 +48,5 @@
       </table>
     </div>
   </div>
-
 </div>
 

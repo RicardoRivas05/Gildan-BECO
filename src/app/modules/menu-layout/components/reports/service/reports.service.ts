@@ -14,4 +14,8 @@ export class ReportsService {
   getConsumoMedidores(id: number, fechaIncial: string, fechaFinal: string): Observable<ReportData> {
     return this.http.get<ReportData>(`${this.url}/get-report/${id}/${fechaIncial}/${fechaFinal}/`);
   }
+
+  getCogeneracion(fechaInicial:string, fechaFinal:string):Observable<ReportData>{
+    return this.http.get<ReportData>(`${this.url}/get-cogeneracion/${fechaInicial}/${fechaFinal}/`)
+  }
 }
