@@ -114,13 +114,22 @@ export class horasPuntaComponent implements OnInit {
     },
 
     {
-      name: 'Valor',
+      name: 'Horas Punta',
       sortOrder: null,
-      sortFn: (a: horasPuntaShema, b: horasPuntaShema) => a.valor - b.valor,
+      sortFn: (a: horasPuntaShema, b: horasPuntaShema) => a.horas - b.horas,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: number[], item: horasPuntaShema) => list.includes(item.valor)
+      filterFn: (list: number[], item: horasPuntaShema) => list.includes(item.horas)
+    },
+    {
+      name: 'Multiplicador',
+      sortOrder: null,
+      sortFn: (a: horasPuntaShema, b: horasPuntaShema) => a.multiplicador- b.multiplicador,
+      sortDirections: ['ascend', 'descend', null],
+      filterMultiple: true,
+      listOfFilter: [],
+      filterFn: (list: number[], item: horasPuntaShema) => list.includes(item.multiplicador)
     }
   ];
 

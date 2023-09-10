@@ -173,17 +173,10 @@ export class MetersModalComponent implements OnInit {
     this.dataPosition.sourceId = this.validateForm.value.sourceId;
     this.dataPosition.codigo = this.validateForm.value.codigo;
     this.dataPosition.descripcion = this.validateForm.value.descripcion;
-
     this.dataPosition.lecturaMax = this.validateForm.value.lecturaMax;
-
     this.dataPosition.TipoMedidorId = this.validateForm.value.TipoMedidorId;
     this.dataPosition.observacion = this.validateForm.value.observacion;
     this.dataPosition.tipo = this.validateForm.value.tipo;
-
-
-    //console.log(this.validateForm.value);
-    //console.log(this.dataPosition);
-
   }
 
 

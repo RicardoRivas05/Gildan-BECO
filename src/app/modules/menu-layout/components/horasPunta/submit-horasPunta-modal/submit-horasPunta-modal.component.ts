@@ -28,7 +28,8 @@ export class SubmithorasPuntaModalComponent implements OnInit {
   EmptyForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    valor: ['', [Validators.required]],
+    horas: ['', [Validators.required]],
+    multiplicador: ['', [Validators.required]],
 
   });
 
@@ -41,7 +42,8 @@ export class SubmithorasPuntaModalComponent implements OnInit {
   ngOnInit(): void {this.validateForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    valor : ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    horas : ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    multiplicador : ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });}
 
   submitForm(): void {
@@ -53,6 +55,8 @@ export class SubmithorasPuntaModalComponent implements OnInit {
       this.submitUpdateForm();
     }
   }
+
+
 
   submitPostForm() {
     if (this.validateForm.valid) {
@@ -94,15 +98,17 @@ export class SubmithorasPuntaModalComponent implements OnInit {
         ...this.validateForm.value,
         Estado: true
       };
+
       this.isVisible = false;
       this.globalService
         .Patch(this.url.post, this.dataPosition.Id, this.newhorasPunta)
         .subscribe(
           (result: any) => {
             if (!result){
-            this.dataPosition.fechaInicial = this.newhorasPunta.fechaFinal;
+            this.dataPosition.fechaInicial = this.newhorasPunta.fechaInicial;
             this.dataPosition.fechaFinal = this.newhorasPunta.fechaFinal;
-            this.dataPosition.valor = this.newhorasPunta.valor;
+            this.dataPosition.horas= this.newhorasPunta.horas;
+            this.dataPosition.multiplicador= this.newhorasPunta.multiplicador;
 
             this.notificationService.createMessage(
               'success',
@@ -131,7 +137,8 @@ export class SubmithorasPuntaModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
-      valor: [data.valor, [Validators.required]],
+      horas: [data.horas.toString(), [Validators.required]],
+      multiplicador: [data.multiplicador.toString(), [Validators.required]],
     })
     console.log(this.validateForm.value);
   }
@@ -175,7 +182,8 @@ export class SubmithorasPuntaModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: ['', [Validators.required]],
       fechaFinal: ['', [Validators.required]],
-      valor: ['', [Validators.required]],
+      horas: ['', [Validators.required]],
+      multiplicador: ['', [Validators.required]],
     })
   }
 }

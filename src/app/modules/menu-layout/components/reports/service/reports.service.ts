@@ -18,4 +18,8 @@ export class ReportsService {
   getCogeneracion(fechaInicial:string, fechaFinal:string):Observable<ReportData>{
     return this.http.get<ReportData>(`${this.url}/get-cogeneracion/${fechaInicial}/${fechaFinal}/`)
   }
+
+  getCogeneracion_12(fechaInicial:string, fechaFinal:string):Observable<ReportData>{
+    return this.http.get<ReportData>(`${this.url}/get-cogeneracion_12/${fechaInicial}/${fechaFinal}/`)
+  }
 }

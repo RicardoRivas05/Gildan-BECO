@@ -22,20 +22,20 @@
       </div>
       <li *ngIf="rol == 2  || rol == 1" nz-submenu nzOpen nzTitle="Configuraciones" nzIcon="tool">
         <ul>
-          <div routerLink="clients" nz-menu-item nzMatchRouter>
+          <!-- <div routerLink="clients" nz-menu-item nzMatchRouter>
             <li>
                 <i nz-icon nzType="team"></i>
                 <span >Clientes</span>
             </li>
-          </div>
+          </div> -->
 
 
-          <div routerLink="providers" nz-menu-item nzMatchRouter>
+          <!-- <div routerLink="providers" nz-menu-item nzMatchRouter>
             <li>
                 <i nz-icon nzType="thunderbolt"></i>
                 <span >Generadores</span>
             </li>
-          </div>
+          </div> -->
           <!-- <div routerLink="zones" nz-menu-item nzMatchRouter>
             <li>
                 <i nz-icon nzType="border-horizontal"></i>
@@ -47,6 +47,7 @@
                 <i nz-icon nzType="dashboard"></i>
                 <span >Medidores</span>
             </li>
+
           </div>
 
           <div routerLink="cpi" nz-menu-item nzMatchRouter>
@@ -82,6 +83,12 @@
             <li>
               <span nz-icon nzType="clock-circle" nzTheme="outline"></span>
                 <span >Horas Punta</span>
+            </li>
+          </div>
+          <div routerLink="enee" nz-menu-item nzMatchRouter>
+            <li>
+              <i nz-icon nzType="thunderbolt"></i>
+                <span >Lecturas ENEE</span>
             </li>
           </div>
 

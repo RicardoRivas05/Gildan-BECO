@@ -42,12 +42,22 @@
           </div>
         </div>
         <div nz-row class="row-3">
-          <div nz-col [nzSpan]="24" class="row3-col1">
-            <label>Valor</label>
+          <div nz-col [nzSpan]="12" class="row3-col1">
+            <label>Horas Punta</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input class="inputLarge" nz-input rows="2" placeholder="Valor" formControlName="valor" />
+                  <input nz-input rows="2" placeholder="Horas Punta" formControlName="horas" />
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div nz-col [nzSpan]="12" class="row3-col1">
+            <label>Multiplicador</label>
+            <div nz-row>
+              <nz-form-item>
+                <nz-form-control>
+                  <input nz-input rows="2" placeholder="Multiplicador" formControlName="multiplicador" />
                 </nz-form-control>
               </nz-form-item>
             </div>
