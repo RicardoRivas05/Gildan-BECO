@@ -43,11 +43,11 @@ export class SubmitcpiModalComponent implements OnInit {
 
   ngOnInit(): void {this.validateForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
-    fechaFinal: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    ValorUltimoMes: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    ValorInicial: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    Value: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-    RelacionInflacion: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+    fechaFinal: ['', [Validators.required]],
+    ValorUltimoMes: ['', [Validators.required]],
+    ValorInicial: ['', [Validators.required]],
+    Value: ['', [Validators.required]],
+    RelacionInflacion: ['', [Validators.required]],
   });}
 
   submitForm(): void {
@@ -140,10 +140,10 @@ export class SubmitcpiModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
-      ValorUltimoMes: [data.ValorUltimoMes, [Validators.required]],
-      ValorInicial: [data.ValorInicial, [Validators.required]],
-      Value: [data.Value, [Validators.required]],
-      RelacionInflacion: [data.RelacionInflacion, [Validators.required]],
+      ValorUltimoMes: [data.ValorUltimoMes.toString(), [Validators.required]],
+      ValorInicial: [data.ValorInicial.toString(), [Validators.required]],
+      Value: [data.Value.toString(), [Validators.required]],
+      RelacionInflacion: [data.RelacionInflacion.toString(), [Validators.required]],
     })
     console.log(this.validateForm.value);
   }

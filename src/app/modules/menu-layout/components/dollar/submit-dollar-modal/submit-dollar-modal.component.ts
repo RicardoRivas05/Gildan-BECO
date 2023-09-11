@@ -138,8 +138,8 @@ export class SubmitdollarModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
-      Compra:[data.Compra,[Validators.required]],
-      Venta:[data.Venta,[Validators.required]],
+      Compra:[data.Compra.toString(),[Validators.required]],
+      Venta:[data.Venta.toString(),[Validators.required]],
     })
     console.log(this.validateForm.value);
   }

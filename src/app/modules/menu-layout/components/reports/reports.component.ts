@@ -33,12 +33,12 @@ export class ReportsComponent implements OnInit {
 
   onFechaInicialChange(value: Date): void {
     this.fechaInicial = value;
-    console.log("esto es", this.fechaInicial)
+    console.log("esto es iinicial", this.fechaInicial)
   }
 
   onFechaFinalChange(value: Date): void {
     this.fechaFinal = value;
-    console.log("esto es", this.fechaFinal)
+    console.log("esto es fina", this.fechaFinal)
   }
 
   generarReporte(): void {
@@ -48,11 +48,12 @@ export class ReportsComponent implements OnInit {
   crearPDF() {
     let fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
     let fechaFinal = new Date(this.fechaFinal);
+    let fechaFinal1 = new Date(this.fechaFinal);
     fechaFinal.setDate(fechaFinal.getDate() - 1);
     let fechaFinFormateada = fechaFinal.toLocaleDateString();
     let fechaInicialFormatted = new Date(this.fechaInicial);
     fechaInicialFormatted.setHours(0, 0, 0, 0);
-    let fechaFinalFormatted = fechaFinal.toISOString().split('T')[0];
+    let fechaFinalFormatted = fechaFinal1.toISOString().split('T')[0];
 
     if (this.tipoReporte == 'Energia Sumistrada') {
       const doc = new jsPDF();
@@ -447,7 +448,6 @@ export class ReportsComponent implements OnInit {
             }
           }
 
-
           for (const timestamp in stuRecByTimestamp) {
             if (stuRecByTimestamp.hasOwnProperty(timestamp)) {
               sumaStuRec = stuRecByTimestamp[timestamp];
@@ -694,7 +694,6 @@ export class ReportsComponent implements OnInit {
                 dataActivoRespaldoFinalEnee = dataPuntaRespaldoFinalEnee + dataRestoRespaldoFinalEnee;
                 dataActivoRespaldoFinalEnee = Number(dataActivoRespaldoFinalEnee.toFixed(4));
 
-
                 dataDiferenciaPuntaRespaldoEnee = dataPuntaRespaldoFinalEnee -dataPuntaRespaldoInicialEnee;
                 dataDiferenciaPuntaRespaldoEnee = Number(dataDiferenciaPuntaRespaldoEnee.toFixed(4));
                 dataDiferenciaRestoRespaldoEnee = dataRestoRespaldoFinalEnee - dataRestoRespaldoInicialEnee;
@@ -738,9 +737,6 @@ export class ReportsComponent implements OnInit {
               dataTotalActivoEnee = dataPromedioActivoEnee * dataFactor;
 
             }
-
-
-
             const startX = 10;
             const startY = 137;
 
@@ -755,11 +751,6 @@ export class ReportsComponent implements OnInit {
             doc.text(dataTotalPuntaEnee.toString(), 10 * startX + 43, startY + 38.5);
             doc.text(dataTotalRestoEnee.toString(), 13 * startX + 33, startY + 38.5);
             doc.text(dataTotalActivoEnee.toString(), 15 * startX + 35, startY + 38.5);
-
-
-
-
-
 
           }
 
@@ -848,7 +839,6 @@ export class ReportsComponent implements OnInit {
                 doc.rect(startX + cellWidth * 7 - 111, startY + 15, cellWidth - 18, cellHeight - 5); // Celda 8
                 doc.rect(startX + cellWidth * 7 - 111, startY + 20, cellWidth - 18, cellHeight - 5); // Celda 8
                 doc.rect(startX + cellWidth * 7 - 111, startY + 30, cellWidth - 18, cellHeight - 5); // Celda 8
-
 
                 let fechaInicial = new Date(dataFechaIncial);
                 let fechaInicio = fechaInicial.toISOString().split('T')[0];
@@ -998,8 +988,6 @@ export class ReportsComponent implements OnInit {
               dataTotalKwPunta = dataTotalPunta - dataTotalPuntaEnee;
               dataPotenciaFirme = dataTotalKwPunta/dataHpuntaPeriodo;
               dataPotenciaFirme= Number(dataPotenciaFirme.toFixed(4));
-
-
               dataEnergiaNetaMes = dataTotalActivo - dataTotalActivoEnee;
             }
             // Definir las coordenadas de inicio para la tabla
@@ -1171,8 +1159,6 @@ export class ReportsComponent implements OnInit {
       doc.text(porEnee,25, 278);
       doc.text(porEnee,93, 278);
       doc.text(porEnee,168, 278);
-
-
     }
   }
 }

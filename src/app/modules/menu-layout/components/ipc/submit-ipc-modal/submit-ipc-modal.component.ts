@@ -140,10 +140,10 @@ export class SubmitipcModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
-      ValorInicial:[data.ValorInicial,[Validators.required]],
-      ValorUltimoMes:[data.ValorUltimoMes,[Validators.required]],
-      Value: [data.Value, [Validators.required]],
-      RelacionInflacion:[data.RelacionInflacion, [Validators.required]],
+      ValorInicial:[data.ValorInicial.toString(),[Validators.required]],
+      ValorUltimoMes:[data.ValorUltimoMes.toString(),[Validators.required]],
+      Value: [data.Value.toString(), [Validators.required]],
+      RelacionInflacion:[data.RelacionInflacion.toString(), [Validators.required]],
     })
     console.log(this.validateForm.value);
   }
