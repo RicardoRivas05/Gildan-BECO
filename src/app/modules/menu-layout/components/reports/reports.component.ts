@@ -48,12 +48,11 @@ export class ReportsComponent implements OnInit {
   crearPDF() {
     let fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
     let fechaFinal = new Date(this.fechaFinal);
-    let fechaFinal1 = new Date(this.fechaFinal);
     fechaFinal.setDate(fechaFinal.getDate() - 1);
     let fechaFinFormateada = fechaFinal.toLocaleDateString();
     let fechaInicialFormatted = new Date(this.fechaInicial);
     fechaInicialFormatted.setHours(0, 0, 0, 0);
-    let fechaFinalFormatted = fechaFinal1.toISOString().split('T')[0];
+    let fechaFinalFormatted = fechaFinal.toISOString().split('T')[0];
 
     if (this.tipoReporte == 'Energia Sumistrada') {
       const doc = new jsPDF();
@@ -605,16 +604,36 @@ export class ReportsComponent implements OnInit {
 
       let dataTotalPuntaEnee=0;
       let dataTotalRestoEnee=0;
+      let dataPuntaInicialEnee=0;
+      let dataRestoInicialEnee=0;
+      let dataPuntaFinalEnee=0;
+      let dataRestoFinalEnee=0;
       let dataTotalActivoEnee=0;
-
-
+      let dataTotalActivoInicialEnee=0;
+      let dataTotalActivoFinalEnee=0;
       let dataTotalKwPunta=0;
       let dataEnergiaNetaMes=0;
+      let dataDiferenciaPuntaEnee=0
+      let dataDiferenciaRestoEnee=0;
+      let dataDiferenciaActivoEnee=0;
 
+      let dataPuntaRespaldoInicialEnee=0;
+      let dataPuntaRespaldoFinalEnee=0;
+      let dataRestoRespaldoInicialEnee=0;
+      let dataRestoRespaldoFinalEnee=0;
+      let dataActivoRespaldoInicialEnee=0;
+      let dataActivoRespaldoFinalEnee=0;
+      let dataDiferenciaPuntaRespaldoEnee=0;
+      let dataDiferenciaRestoRespaldoEnee=0;
+      let dataDiferenciaActivoRespaldoEnee=0
 
+      let dataPromedioPuntaEnee=0;
+      let dataPromedioRestoEnee=0;
+      let dataPromedioActivoEnee=0
 
-
-
+      let dataPorcentPuntaEnee=0;
+      let dataPorcentRestoEnee=0;
+      let dataPorcentActivoEnee = 0;
 
       this.reportService.getCogeneracion_12(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted).subscribe(
         (response: any) => {
@@ -625,7 +644,127 @@ export class ReportsComponent implements OnInit {
             dataMultiplicador = response.horaPunta[0].multiplicador;
             dataHpuntaPeriodo = dataHorasPunta * dataMultiplicador;
           }
+          //lecturas manuales enee
+          if(response){
+            for(let i=0; i<response.lecturasEnee.length; i++){
+              const horasPuntaInicialEnee=response.lecturasEnee[i].puntaInicial;
+              const horasPuntaFinalEnee = response.lecturasEnee[i].puntaFinal
+              const horasRestoInicialEnee = response.lecturasEnee[i].restoInicial;
+              const horasRestoFinalEnee = response.lecturasEnee[i].restoFinal;
 
+              if(response.lecturasEnee[i].tipoMedidor==='Principal'){
+                dataPuntaInicialEnee = horasPuntaInicialEnee;
+                dataRestoInicialEnee = horasRestoInicialEnee;
+                dataPuntaFinalEnee = horasPuntaFinalEnee;
+                dataRestoFinalEnee = horasRestoFinalEnee;
+
+                dataTotalActivoInicialEnee = dataPuntaInicialEnee + dataRestoInicialEnee;
+                dataTotalActivoFinalEnee = dataPuntaFinalEnee + dataRestoFinalEnee;
+
+                dataDiferenciaPuntaEnee = dataPuntaFinalEnee - dataPuntaInicialEnee;
+                dataDiferenciaPuntaEnee = Number(dataDiferenciaPuntaEnee.toFixed(4))
+                dataDiferenciaRestoEnee = dataRestoFinalEnee - dataRestoInicialEnee;
+                dataDiferenciaRestoEnee = Number(dataDiferenciaRestoEnee.toFixed(4));
+                dataDiferenciaActivoEnee = dataTotalActivoFinalEnee - dataTotalActivoInicialEnee;
+                dataDiferenciaActivoEnee = Number(dataDiferenciaActivoEnee.toFixed(4));
+                // Definir las coordenadas de inicio para la tabla de generacion Principal
+                const startX = 10;
+                const startY = 37;
+                doc.setFontSize(7)
+                //data principal cuadro1
+                doc.text(dataPuntaInicialEnee.toString(),10 * startX + 40, startY + 18.5);
+                doc.text(dataRestoInicialEnee.toString(),13 * startX + 30, startY + 18.5);
+                doc.text(dataTotalActivoInicialEnee.toString(),15 * startX + 33, startY + 18.5);
+                doc.text(dataPuntaFinalEnee.toString(),10 * startX + 40, startY + 23.5);
+                doc.text(dataRestoFinalEnee.toString(),13 * startX + 30, startY + 23.5);
+                doc.text(dataTotalActivoFinalEnee.toString(),15 * startX + 33, startY + 23.5);
+
+                doc.text(dataDiferenciaPuntaEnee.toString(),10 * startX + 40, startY + 33.5);
+                doc.text(dataDiferenciaRestoEnee.toString(),13 * startX + 30, startY + 33.5);
+                doc.text(dataDiferenciaActivoEnee.toString(),15 * startX + 33, startY + 33.5);
+
+              }else{
+                dataPuntaRespaldoInicialEnee = response.lecturasEnee[i].puntaInicial;;
+                dataPuntaRespaldoFinalEnee = response.lecturasEnee[i].puntaFinal;
+                dataRestoRespaldoInicialEnee = response.lecturasEnee[i].restoInicial;
+                dataRestoRespaldoFinalEnee = response.lecturasEnee[i].restoFinal;
+
+                dataActivoRespaldoInicialEnee = dataPuntaRespaldoInicialEnee + dataRestoRespaldoInicialEnee;
+                dataActivoRespaldoInicialEnee =Number(dataActivoRespaldoInicialEnee.toFixed(4));
+                dataActivoRespaldoFinalEnee = dataPuntaRespaldoFinalEnee + dataRestoRespaldoFinalEnee;
+                dataActivoRespaldoFinalEnee = Number(dataActivoRespaldoFinalEnee.toFixed(4));
+
+
+                dataDiferenciaPuntaRespaldoEnee = dataPuntaRespaldoFinalEnee -dataPuntaRespaldoInicialEnee;
+                dataDiferenciaPuntaRespaldoEnee = Number(dataDiferenciaPuntaRespaldoEnee.toFixed(4));
+                dataDiferenciaRestoRespaldoEnee = dataRestoRespaldoFinalEnee - dataRestoRespaldoInicialEnee;
+                dataDiferenciaRestoRespaldoEnee = Number(dataDiferenciaRestoRespaldoEnee.toFixed(4));
+                dataDiferenciaActivoRespaldoEnee = dataActivoRespaldoFinalEnee - dataActivoRespaldoInicialEnee;
+                dataDiferenciaActivoRespaldoEnee = Number(dataDiferenciaActivoRespaldoEnee.toFixed(4));
+
+                // Definir las coordenadas de inicio para la tabla de generacion Principal
+                const startX = 10;
+                const startY = 87;
+                doc.setFontSize(7)
+                doc.text(dataPuntaRespaldoInicialEnee.toString(),10 * startX + 40, startY + 18.5);
+                doc.text(dataRestoRespaldoInicialEnee.toString(),13 * startX + 30, startY + 18.5);
+                doc.text(dataActivoRespaldoInicialEnee.toString(),15 * startX + 33, startY + 18.5);
+
+                doc.text(dataPuntaRespaldoFinalEnee.toString(),10 * startX + 40, startY + 23.5);
+                doc.text(dataRestoRespaldoFinalEnee.toString(),13 * startX + 30, startY + 23.5);
+                doc.text(dataActivoRespaldoFinalEnee.toString(),15 * startX + 33, startY + 23.5);
+
+                doc.text(dataDiferenciaPuntaRespaldoEnee.toString(),10 * startX + 40, startY + 33.5);
+                doc.text(dataDiferenciaRestoRespaldoEnee.toString(),13 * startX + 30, startY + 33.5);
+                doc.text(dataDiferenciaActivoRespaldoEnee.toString(),15 * startX + 33, startY + 33.5);
+              }
+
+              dataPromedioPuntaEnee = (dataDiferenciaPuntaEnee + dataDiferenciaPuntaRespaldoEnee)/2;
+              dataPromedioPuntaEnee = Number(dataPromedioPuntaEnee.toFixed(4));
+              dataPromedioRestoEnee = (dataDiferenciaRestoEnee + dataDiferenciaRestoRespaldoEnee)/2;
+              dataPromedioRestoEnee = Number(dataPromedioRestoEnee.toFixed(4));
+              dataPromedioActivoEnee = Number(dataDiferenciaActivoEnee + dataDiferenciaActivoRespaldoEnee)/2;
+              dataPromedioActivoEnee = Number(dataPromedioActivoEnee.toFixed(4));
+
+              dataPorcentPuntaEnee =Math.abs((dataDiferenciaPuntaEnee/dataPromedioActivoEnee-1));
+              dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
+              dataPorcentRestoEnee = Math.abs((dataDiferenciaRestoEnee / dataPromedioRestoEnee-1));
+              dataPorcentRestoEnee = Number(dataPorcentRestoEnee.toFixed(4));
+              dataPorcentActivoEnee = Math.abs((dataDiferenciaActivoEnee / dataPromedioActivoEnee-1));
+              dataPorcentActivoEnee = Number(dataPorcentActivoEnee.toFixed(4));
+
+              dataTotalPuntaEnee = dataPromedioPuntaEnee * dataFactor;
+              dataTotalRestoEnee = dataPromedioRestoEnee * dataFactor;
+              dataTotalActivoEnee = dataPromedioActivoEnee * dataFactor;
+
+            }
+
+
+
+            const startX = 10;
+            const startY = 137;
+
+            doc.text(dataPromedioPuntaEnee.toString(), 10 * startX + 42, startY + 18.5);
+            doc.text(dataPromedioRestoEnee.toString(), 13 * startX + 30, startY + 18.5);
+            doc.text(dataPromedioActivoEnee.toString(), 15 * startX + 33, startY + 18.5);
+
+            doc.text(dataPorcentPuntaEnee.toString() + '%', 10 * startX + 43, startY + 23.5);
+            doc.text(dataPorcentRestoEnee.toString()+ '%', 13 * startX + 33, startY + 23.5);
+            doc.text(dataPorcentActivoEnee.toString()+ '%', 15 * startX + 35, startY + 23.5);
+
+            doc.text(dataTotalPuntaEnee.toString(), 10 * startX + 43, startY + 38.5);
+            doc.text(dataTotalRestoEnee.toString(), 13 * startX + 33, startY + 38.5);
+            doc.text(dataTotalActivoEnee.toString(), 15 * startX + 35, startY + 38.5);
+
+
+
+
+
+
+          }
+
+
+          //lectura medidores pme
           if (response) {
             for (let i = 0; i < response.medidoresPuntaInicial.length && i < response.medidoresRestoInicial.length && i < response.medidoresPuntaFinal.length && i < response.medidoresRestoFinal.length; i++) {
               const horasPuntaInicial = response.medidoresPuntaInicial[i]
@@ -988,7 +1127,7 @@ export class ReportsComponent implements OnInit {
             doc.text(TotalMesTxt,start_X + cellWidth_ + 48 ,start_Y+3.5);//2.1
             doc.text(dataHpuntaPeriodo.toString(),start_X + cellWidth_ + 55 ,start_Y+8.5);//2.2
             doc.text(dataHorasPunta.toString(),start_X + cellWidth_ + 56 ,start_Y+13.5);//2.3
-            doc.text(dataTotalKwPunta.toString(),start_X + cellWidth_ + 52 ,start_Y+19);//2.4
+            doc.text(dataTotalKwPunta.toString(),start_X + cellWidth_ + 50 ,start_Y+19);//2.4
             doc.text(dataPotenciaFirme.toString(),start_X + cellWidth_ + 50 ,start_Y+27.5);//2.4
 
             //cuadro5

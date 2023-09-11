@@ -26,7 +26,7 @@ import { combustibleComponent } from './components/combustible/combustible.compo
 import { MetersComponent } from './components/meters/meters.component';
 import { MetersModalComponent } from "./components/meters/meters-modal/meters-modal.component";
 import { VirtualMeterModalComponent } from "./components/meters/virtual-meter-modal/virtual-meter-modal.component";
-
+import { eneeComponent } from './components/enee/enee.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -78,6 +78,7 @@ import { UsersComponent } from './components/users/users.component';
 import { SubmitUserModalComponent } from './components/users/submit-user-modal/submit-user-modal.component';
 import { CredentialUserModalComponent } from './components/users/credential-user-modal/credential-user-modal.component';
 import { ReportsComponent } from './components/reports/reports.component';
+import { SubmiteneeModalComponent } from './components/enee/submit-enee-modal/submit-enee-modal.component';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import { ReportsComponent } from './components/reports/reports.component';
     cpiComponent,
     ipcComponent,
     euroComponent,
+    eneeComponent,
     dollarComponent,
     horasPuntaComponent,
     combustibleComponent,
@@ -115,6 +117,7 @@ import { ReportsComponent } from './components/reports/reports.component';
     SubmitcpiModalComponent,
     SubmitipcModalComponent,
     SubmiteuroModalComponent,
+    SubmiteneeModalComponent,
     SubmithorasPuntaModalComponent,
     SubmitcombustibleModalComponent,
     SubmitProviderModalComponent,

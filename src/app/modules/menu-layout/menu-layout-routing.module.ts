@@ -1,3 +1,4 @@
+import { eneeComponent } from './components/enee/enee.component';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -67,6 +68,10 @@ const routes: Routes = [
       {
         path: 'combustible',
         component: combustibleComponent
+      },
+      {
+        path: 'lecturasEnee',
+        component: eneeComponent
       },
 
       {
