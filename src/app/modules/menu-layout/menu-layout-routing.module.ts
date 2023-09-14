@@ -21,6 +21,7 @@ import { EspecialChargesComponent } from './components/especial-charges/especial
 import { ReportComponent } from './components/report/report.component';
 import { UsersComponent } from './components/users/users.component';
 import { ReportsComponent } from './components/reports/reports.component';
+import { feriadosHnComponent } from './components/feriadosHn/feriadosHn.component';
 
 
 const routes: Routes = [
@@ -64,6 +65,10 @@ const routes: Routes = [
       {
         path: 'horasPunta',
         component: horasPuntaComponent
+      },
+      {
+        path: 'feriadosHn',
+        component: feriadosHnComponent
       },
       {
         path: 'combustible',

@@ -79,6 +79,8 @@ import { SubmitUserModalComponent } from './components/users/submit-user-modal/s
 import { CredentialUserModalComponent } from './components/users/credential-user-modal/credential-user-modal.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { SubmiteneeModalComponent } from './components/enee/submit-enee-modal/submit-enee-modal.component';
+import { feriadosHnComponent } from './components/feriadosHn/feriadosHn.component';
+import { SubmitferiadosHnModalComponent } from './components/feriadosHn/submit-feriadosHn-modal/submit-feriadosHn-modal.component';
 
 
 @NgModule({
@@ -88,6 +90,7 @@ import { SubmiteneeModalComponent } from './components/enee/submit-enee-modal/su
     ClientsComponent,
     ProvidersComponent,
     ZonesComponent,
+    feriadosHnComponent,
     cpiComponent,
     ipcComponent,
     euroComponent,
@@ -117,6 +120,7 @@ import { SubmiteneeModalComponent } from './components/enee/submit-enee-modal/su
     SubmitcpiModalComponent,
     SubmitipcModalComponent,
     SubmiteuroModalComponent,
+    SubmitferiadosHnModalComponent,
     SubmiteneeModalComponent,
     SubmithorasPuntaModalComponent,
     SubmitcombustibleModalComponent,
