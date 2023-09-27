@@ -22,4 +22,8 @@ export class ReportsService {
   getCogeneracion_12(fechaInicial:string, fechaFinal:string):Observable<ReportData>{
     return this.http.get<ReportData>(`${this.url}/get-cogeneracion_12/${fechaInicial}/${fechaFinal}/`)
   }
+
+  getEnersa227(fechaInicial:string, fechaFinal:string):Observable<ReportData>{
+    return this.http.get<ReportData>(`${this.url}/get-enersa227/${fechaInicial}/${fechaFinal}/`)
+  }
 }
