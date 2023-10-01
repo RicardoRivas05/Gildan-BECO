@@ -10,12 +10,8 @@
     </button>
   </ng-template>
 
-  <nz-modal
-    [(nzVisible)]="isVisible"
-    nzTitle="Ingrese los datos del combustible"
-    (nzOnCancel)="handleCancel()"
-    (nzOnOk)="submitForm()"
-  >
+  <nz-modal [(nzVisible)]="isVisible" nzTitle="Ingrese el indice del combustible" (nzOnCancel)="handleCancel()"
+    (nzOnOk)="submitForm()">
     <ng-container *nzModalContent>
       <form nz-form [formGroup]="validateForm" nzLayout="vertical">
         <div nz-row class="row-1">
@@ -46,16 +42,16 @@
 
         <div nz-row class="row-2">
           <div nz-col [nzSpan]="12" class="row2-col1">
-            <label>Precio Bajo</label>
+            <label>Indice Combustible</label>
             <div nz-row>
               <nz-form-item>
                 <nz-form-control>
-                  <input nz-input rows="1" placeholder="Precio bajo del combustible" formControlName="precioBajo" />
+                  <input nz-input rows="1" placeholder="Indice del combustible" formControlName="indiceCombustible" />
                 </nz-form-control>
               </nz-form-item>
             </div>
           </div>
-          <div nz-col [nzSpan]="12" class="row2-col1">
+          <!-- <div nz-col [nzSpan]="12" class="row2-col1">
             <label>Precio Alto</label>
             <div nz-row>
               <nz-form-item>
@@ -64,9 +60,9 @@
                 </nz-form-control>
               </nz-form-item>
             </div>
-          </div>
+          </div> -->
         </div>
-        <div nz-row class="row-2">
+        <!-- <div nz-row class="row-2">
           <div nz-col [nzSpan]="12" class="row2-col1">
             <label>Precio Base</label>
             <div nz-row>
@@ -77,7 +73,7 @@
               </nz-form-item>
             </div>
           </div>
-        </div>
+        </div> -->
       </form>
     </ng-container>
   </nz-modal>

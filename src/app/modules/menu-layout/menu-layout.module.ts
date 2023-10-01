@@ -22,6 +22,7 @@ import { ipcComponent } from './components/ipc/ipc.component';
 import { euroComponent} from './components/euro/euro.component';
 import { dollarComponent } from './components/dollar/dollar.component';
 import { horasPuntaComponent } from './components/horasPunta/horasPunta.component';
+import { variablesContratoComponent } from './components/contratos/contratocomponent';
 import { combustibleComponent } from './components/combustible/combustible.component';
 import { MetersComponent } from './components/meters/meters.component';
 import { MetersModalComponent } from "./components/meters/meters-modal/meters-modal.component";
@@ -67,6 +68,7 @@ import { SubmitcpiModalComponent } from './components/cpi/submit-cpi-modal/submi
 import { SubmiteuroModalComponent } from './components/euro/submit-euro-modal/submit-euro-modal.component';
 import { SubmitipcModalComponent } from './components/ipc/submit-ipc-modal/submit-ipc-modal.component';
 import { SubmithorasPuntaModalComponent } from './components/horasPunta/submit-horasPunta-modal/submit-horasPunta-modal.component';
+import { SubmitvariablesContratoModalComponent } from './components/contratos/submit-contrato-modal/submit-contrato-modal.component';
 import { SubmitdollarModalComponent } from './components/dollar/submit-dollar-modal/submit-dollar-modal.component';
 import { SubmitcombustibleModalComponent } from './components/combustible/submit-combustible-modal/submit-combustible-modal.component';
 import { SubmitProviderModalComponent } from './components/providers/submit-provider-modal/submit-provider-modal.component';
@@ -97,6 +99,7 @@ import { SubmitferiadosHnModalComponent } from './components/feriadosHn/submit-f
     eneeComponent,
     dollarComponent,
     horasPuntaComponent,
+    variablesContratoComponent,
     combustibleComponent,
     MetersComponent,
     MetersModalComponent,
@@ -123,6 +126,7 @@ import { SubmitferiadosHnModalComponent } from './components/feriadosHn/submit-f
     SubmitferiadosHnModalComponent,
     SubmiteneeModalComponent,
     SubmithorasPuntaModalComponent,
+    SubmitvariablesContratoModalComponent,
     SubmitcombustibleModalComponent,
     SubmitProviderModalComponent,
     SubmitClientModalComponent,

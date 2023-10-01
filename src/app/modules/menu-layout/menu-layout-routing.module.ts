@@ -11,6 +11,7 @@ import { ipcComponent } from './components/ipc/ipc.component';
 import { euroComponent } from './components/euro/euro.component';
 import { dollarComponent } from './components/dollar/dollar.component';
 import { horasPuntaComponent } from './components/horasPunta/horasPunta.component';
+import { variablesContratoComponent } from './components/contratos/contratocomponent';
 import { combustibleComponent } from './components/combustible/combustible.component';
 import { MetersComponent } from "./components/meters/meters.component";
 import { RatesComponent } from './components/rates/rates.component';
@@ -66,6 +67,11 @@ const routes: Routes = [
         path: 'horasPunta',
         component: horasPuntaComponent
       },
+      {
+        path: 'variablesContrato',
+        component: variablesContratoComponent
+      },
+
       {
         path: 'feriadosHn',
         component: feriadosHnComponent

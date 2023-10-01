@@ -29,9 +29,10 @@ export class combustibleComponent implements OnInit {
   EmptyForm =this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    precioBase: ['', [Validators.required]],
-    precioBajo: ['', [Validators.required]],
-    precioAlto:['',[Validators.required]],
+    // precioBase: ['', [Validators.required]],
+    // precioBajo: ['', [Validators.required]],
+    // precioAlto:['',[Validators.required]],
+    indiceCombustible:['',[Validators.required]],
   })
   constructor(
     private globalService: EndPointGobalService,
@@ -113,42 +114,51 @@ export class combustibleComponent implements OnInit {
       filterFn: (list: Date[], item: combustibleShema) => list.some(date => date.getTime() === item.fechaFinal.getTime()),
     },
     {
-      name: 'Precio Base',
+      name: 'Indice Combustible',
       sortOrder: null,
-      sortFn: (a: combustibleShema, b: combustibleShema) => a.precioBase- b.precioBase,
+      sortFn: (a: combustibleShema, b: combustibleShema) => a.indiceCombustible- b.indiceCombustible,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: number[], item: combustibleShema) => list.includes(item.precioBase)
+      filterFn: (list: number[], item: combustibleShema) => list.includes(item.indiceCombustible)
     },
-    {
-      name: 'Precio Bajo',
-      sortOrder: null,
-      sortFn: (a: combustibleShema, b: combustibleShema) => a.precioBajo - b.precioBajo,
-      sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: (list: number[], item: combustibleShema) => list.includes(item.precioBajo)
-    },
-    {
-      name: 'Precio Alto',
-      sortOrder: null,
-      sortFn: (a: combustibleShema, b: combustibleShema) => a.precioAlto - b.precioAlto,
-      sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: (list: number[], item: combustibleShema) => list.includes(item.precioAlto)
-    },
+    // {
+    //   name: 'Precio Base',
+    //   sortOrder: null,
+    //   sortFn: (a: combustibleShema, b: combustibleShema) => a.precioBase- b.precioBase,
+    //   sortDirections: ['ascend', 'descend', null],
+    //   filterMultiple: true,
+    //   listOfFilter: [],
+    //   filterFn: (list: number[], item: combustibleShema) => list.includes(item.precioBase)
+    // },
+    // {
+    //   name: 'Precio Bajo',
+    //   sortOrder: null,
+    //   sortFn: (a: combustibleShema, b: combustibleShema) => a.precioBajo - b.precioBajo,
+    //   sortDirections: ['ascend', 'descend', null],
+    //   filterMultiple: true,
+    //   listOfFilter: [],
+    //   filterFn: (list: number[], item: combustibleShema) => list.includes(item.precioBajo)
+    // },
+    // {
+    //   name: 'Precio Alto',
+    //   sortOrder: null,
+    //   sortFn: (a: combustibleShema, b: combustibleShema) => a.precioAlto - b.precioAlto,
+    //   sortDirections: ['ascend', 'descend', null],
+    //   filterMultiple: true,
+    //   listOfFilter: [],
+    //   filterFn: (list: number[], item: combustibleShema) => list.includes(item.precioAlto)
+    // },
 
-    {
-      name: 'Promedio',
-      sortOrder: null,
-      sortFn: (a: combustibleShema, b: combustibleShema) => a.promedio - b.promedio,
-      sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: (list: number[], item: combustibleShema) => list.includes(item.promedio)
-    },
+    // {
+    //   name: 'Promedio',
+    //   sortOrder: null,
+    //   sortFn: (a: combustibleShema, b: combustibleShema) => a.promedio - b.promedio,
+    //   sortDirections: ['ascend', 'descend', null],
+    //   filterMultiple: true,
+    //   listOfFilter: [],
+    //   filterFn: (list: number[], item: combustibleShema) => list.includes(item.promedio)
+    // },
 
   ];
 

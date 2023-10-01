@@ -32,9 +32,11 @@ export class SubmitcombustibleModalComponent implements OnInit {
   EmptyForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    precioBase: ['', [Validators.required]],
-    precioBajo: ['', [Validators.required]],
-    precioAlto:['',[Validators.required]],
+    // precioBase: ['', [Validators.required]],
+    // precioBajo: ['', [Validators.required]],
+    // precioAlto:['',[Validators.required]],
+    indiceCombustible:['',[Validators.required]],
+
   });
 
   constructor(
@@ -47,9 +49,11 @@ export class SubmitcombustibleModalComponent implements OnInit {
   ngOnInit(): void {this.validateForm = this.fb.group({
     fechaInicial: ['', [Validators.required]],
     fechaFinal: ['', [Validators.required]],
-    precioBase: ['', [Validators.required]],
-    precioBajo: ['', [Validators.required]],
-    precioAlto:['',[Validators.required]],
+    // precioBase: ['', [Validators.required]],
+    // precioBajo: ['', [Validators.required]],
+    // precioAlto:['',[Validators.required]],
+    indiceCombustible:['',[Validators.required]],
+
 
   });}
 
@@ -111,9 +115,10 @@ export class SubmitcombustibleModalComponent implements OnInit {
             if (!result){
             this.dataPosition.fechaInicial = this.newcombustible.fechaInicial;
             this.dataPosition.fechaInicial = this.newcombustible.fechaFinal;
-            this.dataPosition.precioBase = this.newcombustible.precioBase;
-            this.dataPosition.precioBajo = this.newcombustible.precioBajo;
-            this.dataPosition.precioAlto = this.newcombustible.precioAlto;
+            // this.dataPosition.precioBase = this.newcombustible.precioBase;
+            // this.dataPosition.precioBajo = this.newcombustible.precioBajo;
+            // this.dataPosition.precioAlto = this.newcombustible.precioAlto;
+            this.dataPosition.indiceCombustible = this.newcombustible.indiceCombustible;
             this.notificationService.createMessage(
               'success',
               'La acción se ejecutó con éxito 😎'
@@ -141,9 +146,10 @@ export class SubmitcombustibleModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: [data.fechaInicial, [Validators.required]],
       fechaFinal: [data.fechaFinal, [Validators.required]],
-      precioBase:[data.precioBase.toString(),[Validators.required]],
-      precioBajo:[data.precioBajo.toString(),[Validators.required]],
-      precioAlto:[data.precioAlto,[Validators.required]],
+      indiceCombustible:[data.indiceCombustible.toString(),[Validators.required]],
+      // precioBase:[data.precioBase.toString(),[Validators.required]],
+      // precioBajo:[data.precioBajo.toString(),[Validators.required]],
+      // precioAlto:[data.precioAlto,[Validators.required]],
     })
   }
 
@@ -187,9 +193,10 @@ export class SubmitcombustibleModalComponent implements OnInit {
     this.validateForm = this.fb.group({
       fechaInicial: ['', [Validators.required]],
       fechaFinal: ['', [Validators.required]],
-      precioBase: ['', [Validators.required]],
-      precioBajo: ['', [Validators.required]],
-      precioAlto:['',[Validators.required]],
+      // precioBase: ['', [Validators.required]],
+      // precioBajo: ['', [Validators.required]],
+      // precioAlto:['',[Validators.required]],
+      indiceCombustible:['',[Validators.required]],
     })
   }
 }

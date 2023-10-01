@@ -1,18 +1,18 @@
-<h1>Indice del Combustible</h1>
+<h1>Contratos</h1>
 <br>
 <div nz-row class="row-1">
 
   <div nz-col nzSpan="5">
-    <div *ngIf="!combustibleIsDisable ; else enableClients">
-      <button nz-button [nzType]="'primary'" (click)="Getcombustible(0, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Deshabilitados</span></button>
+    <div *ngIf="!variablesContratoIsDisable ; else enableClients">
+      <button nz-button [nzType]="'primary'" (click)="GetvariablesContrato(0, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Deshabilitados</span></button>
     </div>
     <ng-template #enableClients>
-      <button nz-button [nzType]="'primary'" (click)="Getcombustible(1, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Habilitados</span></button>
+      <button nz-button [nzType]="'primary'" (click)="GetvariablesContrato(1, true)"><span nz-icon nzType="filter" nzTheme="outline"></span><span>Mostrar Habilitados</span></button>
     </ng-template>
 
   </div>
 
-  <app-submit-combustible-modal  (DataUpdated)="updateTable($event)"></app-submit-combustible-modal>
+  <app-submit-variablesContrato-modal  (DataUpdated)="updateTable($event)"></app-submit-variablesContrato-modal>
 
 </div>
 <br>
@@ -61,17 +61,23 @@
                 </ng-template>
               </div>
               <div nz-col nzOffset="1">
-                <app-submit-combustible-modal  [dataPosition]="data"></app-submit-combustible-modal>
+                <app-submit-variablesContrato-modal  [dataPosition]="data"></app-submit-variablesContrato-modal>
               </div>
             </div>
           </td>
 
-          <td>{{ data.fechaInicial  | date:'yyyy-MM-dd':'UTC' }}</td>
-          <td>{{ data.fechaFinal| date:'yyyy-MM-dd':'UTC'}}</td>
-          <td>{{ data.indiceCombustible}}</td>
-          <!-- <td>{{ data.precioBajo}}</td> -->
-          <!-- <td>{{ data.precioAlto}}</td> -->
-          <!-- <td>{{ ((data.precioAlto + data.precioBajo) / 2).toFixed(2)}}</td> -->
+            <td>{{data.fechaInicial | date:'yyyy-MM-dd':'UTC'}}</td>
+            <td>{{ data.fechaFinal | date:'yyyy-MM-dd':'UTC' }}</td>
+            <td>{{ data.nombreContrato}}</td>
+            <td>{{ data.cpcf}}</td>
+            <td>{{ data.cfc}}</td>
+            <td>{{ data.fdr}}</td>
+            <td>{{ data.cpomD}}</td>
+            <td>{{ data.cpomL}}</td>
+            <td>{{ data.cvci}}</td>
+            <td>{{ data.cvco1}}</td>
+            <td>{{ data.cvco2}}</td>
+            <td>{{ data.otrosCargos}}</td>
           </tr>
         </tbody>
       </nz-table>
