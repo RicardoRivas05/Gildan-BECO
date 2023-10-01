@@ -1245,9 +1245,6 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-
-
-
                 doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+18.5);
                 doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+18.5);
                 doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+18.5);
@@ -1264,19 +1261,98 @@ export class ReportsComponent implements OnInit {
               }
               if (primario06.length===30){
                 doc.setFillColor(247, 205, 89);
-                doc.setFontSize(6)
-                doc.rect(startX, startY*7 + 10.5,15 ,cellHeight,'F');
-                doc.text(sumaB1primaria.toString(), startX+1,startY * 7+13.5);
-                // totalSumPrimaria
+                doc.rect(startX, startY*7 + 10.5,169 ,cellHeight,'F');
 
+                doc.setFontSize(5)
+                doc.setFont("helvetica", "bold");
+
+                let sumaB1primariaF = formatoHn(sumaB1primaria);
+                let sumaB2PrimariaF = formatoHn(sumaB2Primaria)
+                let totalSumPrimariaF = formatoHn(totalSumPrimaria);
+                let sumaB1RespaldoF = formatoHn(sumaB1Respaldo);
+                let sumaB2RespaldoF = formatoHn(sumaB2Respaldo);
+                let totalSumRespaldoF = formatoHn(totalSumRespaldo);
+                let sumTotalHpuntaF = formatoHn(sumTotalHpunta);
+                let sumFueraHpuntaF = formatoHn(sumFueraHpunta);
+                let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
+                let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
+
+                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+13.5);
+                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+13.5);
+                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+13.5);
+
+
+                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+13.5);
+                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+13.5);
+                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+13.5);
+                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+13.5);
+                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+13.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+13.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+13.5);
 
 
               }
               if (primario06.length===29){
-                doc.rect(startX, startY*7+5.5 ,15 ,cellHeight);
+                doc.setFillColor(247, 205, 89);
+                doc.rect(startX, startY*7 + 5.5,169 ,cellHeight,'F');
+
+                doc.setFontSize(5)
+                doc.setFont("helvetica", "bold");
+
+                let sumaB1primariaF = formatoHn(sumaB1primaria);
+                let sumaB2PrimariaF = formatoHn(sumaB2Primaria)
+                let totalSumPrimariaF = formatoHn(totalSumPrimaria);
+                let sumaB1RespaldoF = formatoHn(sumaB1Respaldo);
+                let sumaB2RespaldoF = formatoHn(sumaB2Respaldo);
+                let totalSumRespaldoF = formatoHn(totalSumRespaldo);
+                let sumTotalHpuntaF = formatoHn(sumTotalHpunta);
+                let sumFueraHpuntaF = formatoHn(sumFueraHpunta);
+                let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
+                let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
+
+                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+8.5);
+                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+8.5);
+                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+8.5);
+
+
+                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+8.5);
+                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+8.5);
+                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+8.5);
+                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+8.5);
+                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+8.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+8.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+8.5);
               }
               if (primario06.length===28){
-                doc.rect(startX+1, startY*7,15 ,cellHeight);
+                doc.setFillColor(247, 205, 89);
+                doc.rect(startX, startY*7,169 ,cellHeight,'F');
+
+                doc.setFontSize(5)
+                doc.setFont("helvetica", "bold");
+
+                let sumaB1primariaF = formatoHn(sumaB1primaria);
+                let sumaB2PrimariaF = formatoHn(sumaB2Primaria)
+                let totalSumPrimariaF = formatoHn(totalSumPrimaria);
+                let sumaB1RespaldoF = formatoHn(sumaB1Respaldo);
+                let sumaB2RespaldoF = formatoHn(sumaB2Respaldo);
+                let totalSumRespaldoF = formatoHn(totalSumRespaldo);
+                let sumTotalHpuntaF = formatoHn(sumTotalHpunta);
+                let sumFueraHpuntaF = formatoHn(sumFueraHpunta);
+                let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
+                let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
+
+                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+3.5);
+                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+3.5);
+                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+3.5);
+
+
+                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+3.5);
+                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+3.5);
+                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+3.5);
+                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+3.5);
+                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+3.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+3.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+3.5);
               }
               doc.setFontSize(7)
 
