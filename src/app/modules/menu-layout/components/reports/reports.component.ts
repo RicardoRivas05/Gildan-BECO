@@ -77,8 +77,6 @@ export class ReportsComponent implements OnInit {
     return diasDelMes;
   }
 
-
-
   obtenerCantidadDiasMes(fecha: any) {
     const month = fecha.getMonth() + 1; // Sumamos 1 porque los meses en JavaScript son indexados desde 0
     const year = fecha.getFullYear();
@@ -88,13 +86,11 @@ export class ReportsComponent implements OnInit {
     return cantidadDias;
   }
 
-
   obtenerNombreDiaDeSemana(fecha: any) {
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const diaSemana = fecha.getDay();
     return diasSemana[diaSemana];
   }
-
 
   generateLocalTime(date: Date): Date[] {
     const result: Date[] = [];
@@ -134,6 +130,7 @@ export class ReportsComponent implements OnInit {
     let fechaFinal1 = new Date(this.fechaFinal);
     fechaFinal.setDate(fechaFinal.getDate() - 1);
     let fechaFinFormateada = fechaFinal.toLocaleDateString();
+    console.log("mmmmmmmm", fechaFinal1)
     let fechaInicialFormatted = new Date(this.fechaInicial);
     fechaInicialFormatted.setHours(0, 0, 0, 0);
     let fechaFinalFormatted = fechaFinal1.toISOString().split('T')[0];
@@ -146,8 +143,8 @@ export class ReportsComponent implements OnInit {
 
     let sumaB1primaria = 0;
     let sumaB2Primaria = 0;
-    let sumaB1Respaldo=0;
-    let sumaB2Respaldo= 0;
+    let sumaB1Respaldo = 0;
+    let sumaB2Respaldo = 0;
 
     let totalSumPrimaria = 0;
     let totalSumRespaldo = 0;
@@ -210,10 +207,10 @@ export class ReportsComponent implements OnInit {
       let sumMedPrimarios = 0;
       let sumMedSecundarios = 0;
       let porcentajeTotales = 0
-      const formatoHn= (number:any) => {
+      const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
-        return number.toString().replace(exp,rep);
+        return number.toString().replace(exp, rep);
       }
       doc.setFontSize(10);
       const title = `PERIODO DE FACTURACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
@@ -348,7 +345,7 @@ export class ReportsComponent implements OnInit {
                     doc.text(calibracion, 10, 53 + i * 15);
                     doc.text(EnergiNeta, 10, 57 + i * 15);
                     //data
-                    let dataLecturaAnteriorF =  formatoHn(dataLecturaAnterior);
+                    let dataLecturaAnteriorF = formatoHn(dataLecturaAnterior);
                     let dataLecturaActualF = formatoHn(dataLecturaActual);
                     let dataDiferenciaF = formatoHn(dataDiferencia);
                     let dataEnergiaNetaAnteriorF = formatoHn(dataEnergiaNetaAnterior);
@@ -538,10 +535,10 @@ export class ReportsComponent implements OnInit {
       doc.line(x + 41, y1 + 7.5, x + 41, y2 + 7.5);
       doc.setFontSize(10);
     } else if (this.tipoReporte === 'Resumen') {
-      const formatoHn= (number:any) => {
+      const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
-        return number.toString().replace(exp,rep);
+        return number.toString().replace(exp, rep);
       }
       const doc = new jsPDF();
       const asignacionPorDia: AsignacionPorDia[] = [];
@@ -796,11 +793,11 @@ export class ReportsComponent implements OnInit {
             //console.log("Asignacion por dia ", asignacionPorDia);
             //console.log("sumaaa energia ", totalEnergiaMedidaKwh);
             //total cogeneracion
-            let sumaTotalCogeneracion=0
+            let sumaTotalCogeneracion = 0
             for (let i = 0; i < totalEnergiaMedidaKwh.length; i++) {
               let totalCogeneracion = totalEnergiaMedidaKwh[i].sumaEnergy;
               totalCogeneracion = Number(totalCogeneracion.toFixed(2));
-              sumaTotalCogeneracion +=totalCogeneracion;
+              sumaTotalCogeneracion += totalCogeneracion;
               sumaTotalCogeneracion = Number(sumaTotalCogeneracion.toFixed(2));
               doc.setFontSize(6);
               let totalCogeneracionF = formatoHn(totalCogeneracion);
@@ -1132,9 +1129,9 @@ export class ReportsComponent implements OnInit {
                 doc.text(totalBRespaldoF.toString(), 105, 38.5 + i * 5);
               }
 
-              console.log("SSSSUMMM",sumaB1primaria);
+              console.log("SSSSUMMM", sumaB1primaria);
               //total entregado
-              let sumTotalEntregado =0;
+              let sumTotalEntregado = 0;
               if (sumaBloquesPrimaria.length === sumaBloquesRespaldo.length || sumaBloquesPrimaria.length === totalEnergiaMedidaKwh.length) {
                 for (let i = 0; i < sumaBloquesPrimaria.length && i < sumaBloquesRespaldo.length && i < totalEnergiaMedidaKwh.length; i++) {
                   let totalEntregado = sumaBloquesPrimaria[i] + sumaBloquesRespaldo[i] + totalEnergiaMedidaKwh[i].sumaEnergy;
@@ -1227,9 +1224,9 @@ export class ReportsComponent implements OnInit {
               doc.setFont("helvetica", "normal");
 
 
-              if(primario06.length===31){
+              if (primario06.length === 31) {
                 doc.setFillColor(247, 205, 89);
-                doc.rect(startX, startY*7 + 15.5,169 ,cellHeight,'F');
+                doc.rect(startX, startY * 7 + 15.5, 169, cellHeight, 'F');
 
                 doc.setFontSize(5)
                 doc.setFont("helvetica", "bold");
@@ -1245,23 +1242,23 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+18.5);
-                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+18.5);
-                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+18.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 18.5);
+                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 18.5);
+                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 18.5);
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+18.5);
-                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+18.5);
-                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+18.5);
-                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+18.5);
-                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+18.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+18.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+18.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 18.5);
+                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 18.5);
+                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 18.5);
+                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 18.5);
+                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 18.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 18.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 18.5);
 
               }
-              if (primario06.length===30){
+              if (primario06.length === 30) {
                 doc.setFillColor(247, 205, 89);
-                doc.rect(startX, startY*7 + 10.5,169 ,cellHeight,'F');
+                doc.rect(startX, startY * 7 + 10.5, 169, cellHeight, 'F');
 
                 doc.setFontSize(5)
                 doc.setFont("helvetica", "bold");
@@ -1277,24 +1274,24 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+13.5);
-                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+13.5);
-                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+13.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 13.5);
+                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 13.5);
+                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 13.5);
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+13.5);
-                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+13.5);
-                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+13.5);
-                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+13.5);
-                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+13.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+13.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+13.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 13.5);
+                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 13.5);
+                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 13.5);
+                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 13.5);
+                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 13.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 13.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 13.5);
 
 
               }
-              if (primario06.length===29){
+              if (primario06.length === 29) {
                 doc.setFillColor(247, 205, 89);
-                doc.rect(startX, startY*7 + 5.5,169 ,cellHeight,'F');
+                doc.rect(startX, startY * 7 + 5.5, 169, cellHeight, 'F');
 
                 doc.setFontSize(5)
                 doc.setFont("helvetica", "bold");
@@ -1310,22 +1307,22 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+8.5);
-                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+8.5);
-                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+8.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 8.5);
+                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 8.5);
+                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 8.5);
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+8.5);
-                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+8.5);
-                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+8.5);
-                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+8.5);
-                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+8.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+8.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+8.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 8.5);
+                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 8.5);
+                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 8.5);
+                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 8.5);
+                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 8.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 8.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 8.5);
               }
-              if (primario06.length===28){
+              if (primario06.length === 28) {
                 doc.setFillColor(247, 205, 89);
-                doc.rect(startX, startY*7,169 ,cellHeight,'F');
+                doc.rect(startX, startY * 7, 169, cellHeight, 'F');
 
                 doc.setFontSize(5)
                 doc.setFont("helvetica", "bold");
@@ -1341,18 +1338,18 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX+1,startY * 7+3.5);
-                doc.text(sumaB2PrimariaF.toString(), startX+16,startY * 7+3.5);
-                doc.text(totalSumPrimariaF.toString(), startX+31,startY * 7+3.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 3.5);
+                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 3.5);
+                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 3.5);
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX+50,startY * 7+3.5);
-                doc.text(sumaB2RespaldoF.toString(), startX+65,startY * 7+3.5);
-                doc.text(totalSumRespaldoF.toString(), startX+80,startY * 7+3.5);
-                doc.text(sumTotalHpuntaF.toString(), startX+98,startY * 7+3.5);
-                doc.text(sumFueraHpuntaF.toString(), startX+113,startY * 7+3.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX+133,startY * 7+3.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX+155,startY * 7+3.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 3.5);
+                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 3.5);
+                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 3.5);
+                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 3.5);
+                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 3.5);
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 3.5);
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 3.5);
               }
               doc.setFontSize(7)
 
@@ -1407,7 +1404,7 @@ export class ReportsComponent implements OnInit {
               totalSumHpunta = Number(totalSumHpunta.toFixed(2));
 
               let sumTotalHpuntaF = formatoHn(sumTotalHpunta);
-              let sumFueraHpuntaF  = formatoHn(sumFueraHpunta);
+              let sumFueraHpuntaF = formatoHn(sumFueraHpunta);
               let totalSumHpuntaF = formatoHn(totalSumHpunta);
               doc.setFontSize(6.5);
               doc.rect(startX * 3 + 1, startY * 9 + 15, 20, cellHeight);//1
@@ -1580,10 +1577,10 @@ export class ReportsComponent implements OnInit {
       let dataPorcentActivoEnee = 0;
 
 
-      const formatoHn= (number:any) => {
+      const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
-        return number.toString().replace(exp,rep);
+        return number.toString().replace(exp, rep);
       }
 
       this.reportService.getCogeneracion_12(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted).subscribe(
@@ -1626,8 +1623,8 @@ export class ReportsComponent implements OnInit {
                 let dataTotalActivoInicialEneeF = formatoHn(dataTotalActivoInicialEnee);
                 let dataPuntaFinalEneeF = formatoHn(dataPuntaFinalEnee);
                 let dataRestoFinalEneeF = formatoHn(dataRestoFinalEnee);
-                let dataTotalActivoFinalEneeF =formatoHn(dataTotalActivoFinalEnee);
-                let dataDiferenciaPuntaEneeF =formatoHn(dataDiferenciaPuntaEnee);
+                let dataTotalActivoFinalEneeF = formatoHn(dataTotalActivoFinalEnee);
+                let dataDiferenciaPuntaEneeF = formatoHn(dataDiferenciaPuntaEnee);
                 let dataDiferenciaRestoEneeF = formatoHn(dataDiferenciaRestoEnee);
                 let dataDiferenciaActivoEneeF = formatoHn(dataDiferenciaActivoEnee);
 
@@ -1650,7 +1647,7 @@ export class ReportsComponent implements OnInit {
                 dataActivoRespaldoInicialEnee = dataPuntaRespaldoInicialEnee + dataRestoRespaldoInicialEnee;
                 dataActivoRespaldoInicialEnee = Number(dataActivoRespaldoInicialEnee.toFixed(2));
                 dataActivoRespaldoFinalEnee = dataPuntaRespaldoFinalEnee + dataRestoRespaldoFinalEnee;
-                dataActivoRespaldoFinalEnee = Number(dataActivoRespaldoFinalEnee.toFixed(4));
+                dataActivoRespaldoFinalEnee = Number(dataActivoRespaldoFinalEnee.toFixed(2));
 
                 dataDiferenciaPuntaRespaldoEnee = dataPuntaRespaldoFinalEnee - dataPuntaRespaldoInicialEnee;
                 dataDiferenciaPuntaRespaldoEnee = Number(dataDiferenciaPuntaRespaldoEnee.toFixed(2));
@@ -1668,9 +1665,9 @@ export class ReportsComponent implements OnInit {
                 let dataActivoRespaldoInicialEneeF = formatoHn(dataActivoRespaldoInicialEnee);
                 let dataPuntaRespaldoFinalEneeF = formatoHn(dataPuntaRespaldoFinalEnee);
                 let dataRestoRespaldoFinalEneeF = formatoHn(dataRestoRespaldoFinalEnee);
-                let dataActivoRespaldoFinalEneeF =formatoHn(dataActivoRespaldoFinalEnee);
+                let dataActivoRespaldoFinalEneeF = formatoHn(dataActivoRespaldoFinalEnee);
                 let dataDiferenciaRestoRespaldoEneeF = formatoHn(dataDiferenciaRestoRespaldoEnee);
-                let dataDiferenciaPuntaRespaldoEneeF =formatoHn(dataDiferenciaPuntaRespaldoEnee);
+                let dataDiferenciaPuntaRespaldoEneeF = formatoHn(dataDiferenciaPuntaRespaldoEnee);
                 let dataDiferenciaActivoRespaldoEneeF = formatoHn(dataDiferenciaActivoRespaldoEnee);
 
                 doc.text(dataPuntaRespaldoInicialEneeF.toString(), 10 * startX + 40, startY + 18.5);
@@ -1701,7 +1698,7 @@ export class ReportsComponent implements OnInit {
               dataPorcentActivoEnee = Number(dataPorcentActivoEnee.toFixed(4));
 
               dataTotalPuntaEnee = dataPromedioPuntaEnee * dataFactor;
-              dataTotalPuntaEnee= Number(dataTotalPuntaEnee);
+              dataTotalPuntaEnee = Number(dataTotalPuntaEnee);
               dataTotalRestoEnee = dataPromedioRestoEnee * dataFactor;
               dataTotalRestoEnee = Number(dataTotalRestoEnee);
               dataTotalActivoEnee = dataPromedioActivoEnee * dataFactor;
@@ -1837,12 +1834,12 @@ export class ReportsComponent implements OnInit {
                 doc.text(diferenciaLecturasTxt, startX * 9 + cellWidth + 17, startY + 28.5);
 
 
-                let dataLecturaPuntaInicialPrincipalF= formatoHn(dataLecturaPuntaInicialPrincipal);
+                let dataLecturaPuntaInicialPrincipalF = formatoHn(dataLecturaPuntaInicialPrincipal);
                 let dataLecturaPuntaFinalPrincipalF = formatoHn(dataLecturaPuntaFinalPrincipal);
                 let dataDiferenciaPuntaPrincipalF = formatoHn(dataDiferenciaPuntaPrincipal);
                 let dataLecturaRestoInicialPrincipalF = formatoHn(dataLecturaRestoInicialPrincipal);
                 let dataLecturaRestoFinalPrincipalF = formatoHn(dataLecturaRestoFinalPrincipal);
-                let dataDiferenciaRestoPrincipalF= formatoHn(dataDiferenciaRestoPrincipal);
+                let dataDiferenciaRestoPrincipalF = formatoHn(dataDiferenciaRestoPrincipal);
                 let dataTotalActivoInicialPrincipalF = formatoHn(dataTotalActivoInicialPrincipal);
                 let dataTotalActivoFinalPrincipalF = formatoHn(dataTotalActivoFinalPrincipal);
                 let dataDiferenciaActivoPrincipalF = formatoHn(dataDiferenciaActivoPrincipal);
@@ -1870,7 +1867,7 @@ export class ReportsComponent implements OnInit {
                 dataFechaIncial = horasPuntaInicial.Fecha;
                 dataFechaFinal = horasPuntaFinal.Fecha;
                 dataDiferenciaPuntaRespaldo = dataLecturaPuntaFinalRespaldo - dataLecturaPuntaInicialRespaldo;
-                dataDiferenciaPuntaRespaldo=Number(dataDiferenciaPuntaRespaldo.toFixed(2));
+                dataDiferenciaPuntaRespaldo = Number(dataDiferenciaPuntaRespaldo.toFixed(2));
                 dataDiferenciaRestoRespaldo = dataLecturaRestoFinalRespaldo - dataLecturaRestoInicialRespaldo;
                 dataDiferenciaRestoRespaldo = Number(dataDiferenciaRestoRespaldo.toFixed(2));
                 dataTotalActivoInicialRespaldo = dataLecturaPuntaInicialRespaldo + dataLecturaRestoInicialRespaldo;
@@ -1992,7 +1989,7 @@ export class ReportsComponent implements OnInit {
               dataTotalResto = dataPromedioResto * dataFactor;
               dataTotalResto = Number(dataTotalResto.toFixed(2));
               dataTotalActivo = dataPromedioTotalActivo * dataFactor;
-              dataTotalActivo= Number(dataTotalActivo.toFixed(2));
+              dataTotalActivo = Number(dataTotalActivo.toFixed(2));
               dataTotalKwPunta = dataTotalPunta - dataTotalPuntaEnee;
               dataTotalKwPunta = Number(dataTotalKwPunta.toFixed(2));
               dataPotenciaFirme = dataTotalKwPunta / dataHpuntaPeriodo;
@@ -2182,6 +2179,7 @@ export class ReportsComponent implements OnInit {
       doc.text(porEnee, 25, 278);
       doc.text(porEnee, 93, 278);
       doc.text(porEnee, 168, 278);
+
     } else if (this.tipoReporte === 'FACTURA 227') {
 
       let cargoCapacidadFijo = 0;
@@ -2194,7 +2192,7 @@ export class ReportsComponent implements OnInit {
       let cvi = 0;
       let cvOyM = 0;
       let cvOyM2 = 0;
-      let otrosCargos=0;
+      let otrosCargos = 0;
       let cargoOperacionDolares = 0;
       let cargoOperacionLempiras = 0;
       let tasaDolar = 0;
@@ -2206,8 +2204,6 @@ export class ReportsComponent implements OnInit {
       let totalB = 0;
       let totalC = 0;
 
-
-
       const fechaGenerada = new Date();
 
       const nombresMeses = [
@@ -2216,7 +2212,7 @@ export class ReportsComponent implements OnInit {
       const dia = fechaGenerada.getDate();
       const Mes = nombresMeses[fechaGenerada.getMonth()];
       const Anio = fechaGenerada.getFullYear();
-      const fechaConstancia =  ` ${dia}` + ` ${Mes}` + ` ${Anio}`
+      const fechaConstancia = ` ${dia}` + ` ${Mes}` + ` ${Anio}`
 
       const doc = new jsPDF();
       const img = new Image();
@@ -2258,10 +2254,10 @@ export class ReportsComponent implements OnInit {
       let mes = resultado.nombreMes;
 
 
-      const formatoHn= (number:any) => {
+      const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
-        return number.toString().replace(exp,rep);
+        return number.toString().replace(exp, rep);
       }
 
 
@@ -2344,7 +2340,7 @@ export class ReportsComponent implements OnInit {
 
             //cuadros totales
             doc.rect(startY * 3 + 10 * startX - 1, startY * 3 - 10, cellWidth - 36, cellHeight, 'F');
-            doc.rect(startY * 3 + 10 * startX -1, startY * 3 - 5, cellWidth - 36, cellHeight * 4);
+            doc.rect(startY * 3 + 10 * startX - 1, startY * 3 - 5, cellWidth - 36, cellHeight * 4);
             doc.rect(startY * 3 + 10 * startX - 1, startY * 4 - 5, cellWidth - 66, cellHeight);
             doc.rect(startY * 3 + 10 * startX - 1, startY * 4 - 5, cellWidth - 36, cellHeight);
             doc.rect(startY * 3 + 10 * startX - 1, startY * 4, cellWidth - 36, cellHeight * 3);
@@ -2366,7 +2362,7 @@ export class ReportsComponent implements OnInit {
               resultado = cargoOperacionLempiras * capacidadFirmeComprometida * relacionInflacion * (fdr / 100);
               resultado = Number(resultado.toFixed(2));
             }
-            let resultadoF= formatoHn(resultado);
+            let resultadoF = formatoHn(resultado);
 
             if (fdr > 100) {
               totalA = cargoCapacidadFijo * capacidadFirmeComprometida;
@@ -2451,14 +2447,14 @@ export class ReportsComponent implements OnInit {
             doc.setFont("helvetica", "bold");
             doc.text("TOTALES", startY * 4.5 + 8 * startX - 2, startY * 3 - 6);
             doc.setFont("helvetica", "normal");
-            doc.text("US$", startY * 3 + 10 * startX+2, startY * 4 - 1);
-            doc.text("US$", startY * 3 + 10 * startX+2, startY * 5 - 1);
-            doc.text("US$", startY * 3 + 10 * startX+2, startY * 6 + 9);
-            doc.text("US$", startY * 3 + 10 * startX+2, startY * 6 + 14);
-            let totalPagoCapacidadF=formatoHn(totalPagoCapacidad);
-            let totalAf=formatoHn(totalA);
-            let totalBf=formatoHn(totalB);
-            let totalCf=formatoHn(totalC);
+            doc.text("US$", startY * 3 + 10 * startX + 2, startY * 4 - 1);
+            doc.text("US$", startY * 3 + 10 * startX + 2, startY * 5 - 1);
+            doc.text("US$", startY * 3 + 10 * startX + 2, startY * 6 + 9);
+            doc.text("US$", startY * 3 + 10 * startX + 2, startY * 6 + 14);
+            let totalPagoCapacidadF = formatoHn(totalPagoCapacidad);
+            let totalAf = formatoHn(totalA);
+            let totalBf = formatoHn(totalB);
+            let totalCf = formatoHn(totalC);
             doc.text(totalAf.toString(), startY * 4 + 10 * startX - 5, startY * 4 - 1);
             doc.text(totalBf.toString(), startY * 4 + 10 * startX - 5, startY * 5 - 1);
             doc.text(totalCf.toString(), startY * 4 + 10 * startX - 5, startY * 6 + 9);
@@ -2466,98 +2462,98 @@ export class ReportsComponent implements OnInit {
             doc.text(totalPagoCapacidadF.toString(), startY * 4 + 10 * startX - 5, startY * 6 + 14);
             doc.setFont("helvetica", "normal");
             //cuadro2
-            doc.rect(startX, startY*7-5, cellWidth*2+33, cellHeight-4)
-            doc.rect(startX, startY*7-4, cellWidth*2+33, cellHeight)
+            doc.rect(startX, startY * 7 - 5, cellWidth * 2 + 33, cellHeight - 4)
+            doc.rect(startX, startY * 7 - 4, cellWidth * 2 + 33, cellHeight)
 
-            doc.rect(startX*16, startY *7-4, cellWidth - 37, cellHeight*14);
+            doc.rect(startX * 16, startY * 7 - 4, cellWidth - 37, cellHeight * 14);
 
-            for(let i=0;i<4; i++){
+            for (let i = 0; i < 4; i++) {
               //descripcion
-              doc.rect(startX, startY*7+1 +i * 5, cellWidth, cellHeight)
+              doc.rect(startX, startY * 7 + 1 + i * 5, cellWidth, cellHeight)
               //enersa
-              doc.rect(startY * 3 + 4 * startX - 10, startY * 7 +1 + i * 5, cellWidth - 60, cellHeight);
-              doc.rect(startY * 3 + 4 * startX - 10, startY * 7 +1+ i * 5, cellWidth - 35, cellHeight);
-              doc.rect(startY * 3 + 4 * startX - 10, startY * 7 +1+ i * 5, cellWidth - 10, cellHeight);
+              doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + i * 5, cellWidth - 60, cellHeight);
+              doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + i * 5, cellWidth - 35, cellHeight);
+              doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + i * 5, cellWidth - 10, cellHeight);
             }
 
-            doc.rect(startX, startY*7+1+20, cellWidth*2-10, cellHeight)
+            doc.rect(startX, startY * 7 + 1 + 20, cellWidth * 2 - 10, cellHeight)
 
-            for(let i=0; i<9; i++){
-              doc.rect(startX, startY*7+1+25 +i*5, cellWidth, cellHeight)
+            for (let i = 0; i < 9; i++) {
+              doc.rect(startX, startY * 7 + 1 + 25 + i * 5, cellWidth, cellHeight)
             }
 
-            doc.rect(startY * 3 + 4 * startX - 10,  startY*7+1+25, cellWidth - 60, cellHeight);
-            doc.rect(startY * 3 + 4 * startX - 10,  startY*7+1+40, cellWidth - 60, cellHeight);
-            doc.rect(startY * 3 + 4 * startX - 10,  startY*7+1+60, cellWidth - 60, cellHeight);
-            doc.rect(startY * 3 + 4 * startX - 10,  startY*7+1+65, cellWidth - 60, cellHeight);
-            doc.rect(startY * 3 + 4 * startX - 10,  startY*7+1+70, cellWidth - 60, cellHeight);
+            doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + 25, cellWidth - 60, cellHeight);
+            doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + 40, cellWidth - 60, cellHeight);
+            doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + 60, cellWidth - 60, cellHeight);
+            doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + 65, cellWidth - 60, cellHeight);
+            doc.rect(startY * 3 + 4 * startX - 10, startY * 7 + 1 + 70, cellWidth - 60, cellHeight);
 
             //total
-            for(let i = 0 ; i< 9;i++){
-              doc.rect(startY * 3 + 4 * startX+10,  startY*7+1+25 + i*5, cellWidth - 55, cellHeight);
-              doc.rect(startY * 3 + 4 * startX+10 ,  startY*7+1+25 + i*5, cellWidth - 30, cellHeight);
+            for (let i = 0; i < 9; i++) {
+              doc.rect(startY * 3 + 4 * startX + 10, startY * 7 + 1 + 25 + i * 5, cellWidth - 55, cellHeight);
+              doc.rect(startY * 3 + 4 * startX + 10, startY * 7 + 1 + 25 + i * 5, cellWidth - 30, cellHeight);
 
             }
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+66, cellWidth - 37, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+66, cellWidth - 65, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+71, cellWidth - 37, cellHeight);
-            doc.rect(startY * 4 + 3 * startX ,  startY*7+71, cellWidth - 30, cellHeight);
-            doc.rect(startX, startY*7+71, cellWidth, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 66, cellWidth - 37, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 66, cellWidth - 65, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 71, cellWidth - 37, cellHeight);
+            doc.rect(startY * 4 + 3 * startX, startY * 7 + 71, cellWidth - 30, cellHeight);
+            doc.rect(startX, startY * 7 + 71, cellWidth, cellHeight);
 
-            doc.rect(startX, startY*7+76, cellWidth*2-10, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+76, cellWidth - 37, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+76, cellWidth - 65, cellHeight);
+            doc.rect(startX, startY * 7 + 76, cellWidth * 2 - 10, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 76, cellWidth - 37, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 76, cellWidth - 65, cellHeight);
 
-            doc.rect(startX, startY*7+81, cellWidth*2-10, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+81, cellWidth - 37, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+81, cellWidth - 65, cellHeight);
+            doc.rect(startX, startY * 7 + 81, cellWidth * 2 - 10, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 81, cellWidth - 37, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 81, cellWidth - 65, cellHeight);
 
-            doc.rect(startX, startY*7+86, cellWidth*2-10, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+86, cellWidth - 37, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+86, cellWidth - 65, cellHeight);
+            doc.rect(startX, startY * 7 + 86, cellWidth * 2 - 10, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 86, cellWidth - 37, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 86, cellWidth - 65, cellHeight);
 
-            doc.rect(startX, startY*7+91, cellWidth*2-10, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+91, cellWidth - 37, cellHeight);
-            doc.rect(startY * 6 + 4 * startX ,  startY*7+91, cellWidth - 65, cellHeight);
+            doc.rect(startX, startY * 7 + 91, cellWidth * 2 - 10, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 91, cellWidth - 37, cellHeight);
+            doc.rect(startY * 6 + 4 * startX, startY * 7 + 91, cellWidth - 65, cellHeight);
 
 
             //data
             doc.setFont("helvetica", "bold");
-            doc.text("D. Cargo Variable Contractual", startX+2,startY*7);
+            doc.text("D. Cargo Variable Contractual", startX + 2, startY * 7);
             doc.setFont("helvetica", "normal");
-            doc.text("Producción Mensual de Energía Primaria", startX+8,startY*7+10);
-            doc.text("Producción Mensual de Energía Respaldo", startX+8,startY*7+15);
+            doc.text("Producción Mensual de Energía Primaria", startX + 8, startY * 7 + 10);
+            doc.text("Producción Mensual de Energía Respaldo", startX + 8, startY * 7 + 15);
             doc.setFont("helvetica", "bold");
-            doc.text("Total energía Primaria + Respaldo", startX+8,startY*7+20);
+            doc.text("Total energía Primaria + Respaldo", startX + 8, startY * 7 + 20);
             doc.setFont("helvetica", "normal");
-            doc.text("1. Cargo Variable por Energía", startX+2,startY*7+25);
-            doc.text("a. Cargo Variable de Combustible (CVCi)", startX+4,startY*7+30);
-            doc.text("Relación de Combustible", startX+8,startY*7+35);
+            doc.text("1. Cargo Variable por Energía", startX + 2, startY * 7 + 25);
+            doc.text("a. Cargo Variable de Combustible (CVCi)", startX + 4, startY * 7 + 30);
+            doc.text("Relación de Combustible", startX + 8, startY * 7 + 35);
             doc.setFontSize(9.3);
-            doc.text("Cargo Variable de Combustible del mes (CVCn)", startX+8,startY*7+40);
-            doc.text("b. Cargo Variable de O&M (CVO&M1i y CVO&M2i)", startX+4,startY*7+45);
+            doc.text("Cargo Variable de Combustible del mes (CVCn)", startX + 8, startY * 7 + 40);
+            doc.text("b. Cargo Variable de O&M (CVO&M1i y CVO&M2i)", startX + 4, startY * 7 + 45);
             doc.setFontSize(10);
-            doc.text("Relación Euro (50% del CVO&M)", startX+3,startY*7+50);
-            doc.text("Relación inflación CPI", startX+3,startY*7+55);
+            doc.text("Relación Euro (50% del CVO&M)", startX + 3, startY * 7 + 50);
+            doc.text("Relación inflación CPI", startX + 3, startY * 7 + 55);
             doc.setFontSize(9.3);
-            doc.text("Cargo Variable de O&M (CVO&M1n y CVO&M2n)", startX+3,startY*7+60);
+            doc.text("Cargo Variable de O&M (CVO&M1n y CVO&M2n)", startX + 3, startY * 7 + 60);
             doc.setFontSize(10);
-            doc.text("Cargo variable contractual", startX+4,startY*7+65);
+            doc.text("Cargo variable contractual", startX + 4, startY * 7 + 65);
 
-            doc.text("Total Cargo Variable Energía", startX+4,startY*7+70);
+            doc.text("Total Cargo Variable Energía", startX + 4, startY * 7 + 70);
             doc.setFont("helvetica", "bold");
-            doc.text("2. Total Energía Suministrada", startX+2,startY*7+75);
+            doc.text("2. Total Energía Suministrada", startX + 2, startY * 7 + 75);
             doc.setFont("helvetica", "normal");
 
 
-            doc.text("kWh", startX*9+6,startY*7+10);
-            doc.text("kWh", startX*9+6,startY*7+15);
-            doc.text("kWh", startX*9+6,startY*7+20);
-            doc.text("US$/kWh", startX*9+3,startY*7+30);
-            doc.text("US$/kWh", startX*9+3,startY*7+45);
-            doc.text("US$/kWh", startX*9+3,startY*7+65);
-            doc.text("US$", startX*9+6,startY*7+70);
-            doc.text("kWh", startX*9+6,startY*7+75);
+            doc.text("kWh", startX * 9 + 6, startY * 7 + 10);
+            doc.text("kWh", startX * 9 + 6, startY * 7 + 15);
+            doc.text("kWh", startX * 9 + 6, startY * 7 + 20);
+            doc.text("US$/kWh", startX * 9 + 3, startY * 7 + 30);
+            doc.text("US$/kWh", startX * 9 + 3, startY * 7 + 45);
+            doc.text("US$/kWh", startX * 9 + 3, startY * 7 + 65);
+            doc.text("US$", startX * 9 + 6, startY * 7 + 70);
+            doc.text("kWh", startX * 9 + 6, startY * 7 + 75);
 
 
 
@@ -2566,205 +2562,162 @@ export class ReportsComponent implements OnInit {
             let respaldoB1 = JSON.parse(localStorage.getItem('respaldoB1') || '{}');
             let respaldoB2 = JSON.parse(localStorage.getItem('respaldoB2') || '{}');
 
-            let sumaCVE1=0;
-            let sumaCVE2=0;
-            let CVCn =0;
-            let CVCn2 =0;
-            let CVOyM1=0;
-            let CVOyM2=0;
-            let cvc=0;
-            let cvc2=0;
-            let totalCargoEnergia1=0
-            let totalCargoEnergia2=0
-            let totalCargoVariableEnergia=0;
-            let totalEnergiaSuministrada=0;
+            let sumaCVE1 = 0;
+            let sumaCVE2 = 0;
+            let CVCn = 0;
+            let CVCn2 = 0;
+            let CVOyM1 = 0;
+            let CVOyM2 = 0;
+            let cvc = 0;
+            let cvc2 = 0;
+            let totalCargoEnergia1 = 0
+            let totalCargoEnergia2 = 0
+            let totalCargoVariableEnergia = 0;
+            let totalEnergiaSuministrada = 0;
 
-            let cargoVariableOfertado=0.0693;
-            let cargoVariableOperacionMantenimientoOfertado=0.0146;
+            let cargoVariableOfertado = 0.0693;
+            let cargoVariableOperacionMantenimientoOfertado = 0.0146;
             let cargoReferencia = 13.25;
 
-            let precioEnergiaSuministrada=0;
-            let precioCapacidadSuministrada=0;
+            let precioEnergiaSuministrada = 0;
+            let precioCapacidadSuministrada = 0;
             let totalFacturar = 0;
 
-            sumaCVE1 = primariaB1+respaldoB1;
-            sumaCVE1 =Number(sumaCVE1.toFixed(2));
+            sumaCVE1 = primariaB1 + respaldoB1;
+            sumaCVE1 = Number(sumaCVE1.toFixed(2));
             sumaCVE2 = primariaB2 + respaldoB2;
-            sumaCVE2 =Number(sumaCVE2.toFixed(2));
-            CVCn = cvi*indiceCombustible;
+            sumaCVE2 = Number(sumaCVE2.toFixed(2));
+            CVCn = cvi * indiceCombustible;
             CVCn = Number(CVCn.toFixed(8));
-            CVOyM1 = 0.50*cvOyM * cpiRelacionInfalcion + 0.50*cvOyM *euro* cpiRelacionInfalcion;
+            CVOyM1 = 0.50 * cvOyM * cpiRelacionInfalcion + 0.50 * cvOyM * euro * cpiRelacionInfalcion;
             CVOyM1 = Number(CVOyM1.toFixed(8));
-
-            CVOyM2 = 0.50*cvOyM2 * cpiRelacionInfalcion + 0.50*cvOyM2 *euro* cpiRelacionInfalcion;
+            CVOyM2 = 0.50 * cvOyM2 * cpiRelacionInfalcion + 0.50 * cvOyM2 * euro * cpiRelacionInfalcion;
             CVOyM2 = Number(CVOyM2.toFixed(8));
-
             cvc = CVCn + CVOyM1;
             cvc = Number(cvc.toFixed(8));
             cvc2 = CVCn + CVOyM2;
             cvc2 = Number(cvc2.toFixed(8));
             totalCargoEnergia1 = sumaCVE1 * cvc;
             totalCargoEnergia1 = Number(totalCargoEnergia1.toFixed(2));
-            let totalCargoEnergia1F=formatoHn(totalCargoEnergia1);
+            let totalCargoEnergia1F = formatoHn(totalCargoEnergia1);
             totalCargoEnergia2 = sumaCVE2 * cvc2;
             totalCargoEnergia2 = Number(totalCargoEnergia2.toFixed(2));
-            let totalCargoEnergia2F=formatoHn(totalCargoEnergia2);
+            let totalCargoEnergia2F = formatoHn(totalCargoEnergia2);
             totalEnergiaSuministrada = sumaCVE1 + sumaCVE2;
             totalEnergiaSuministrada = Number(totalEnergiaSuministrada.toFixed(2));
-
-
-            totalCargoVariableEnergia = totalCargoEnergia1 +totalCargoEnergia2;
+            totalCargoVariableEnergia = totalCargoEnergia1 + totalCargoEnergia2;
             totalCargoVariableEnergia = Number(totalCargoVariableEnergia.toFixed(2));
             let totalCargoVariableEnergiaF = formatoHn(totalCargoVariableEnergia);
-
-            let cargoVariableCombustible= 0;
-            cargoVariableCombustible =cargoVariableOfertado*indiceCombustible;
-            let cargoVariableOperacionMantenimiento = cpiRelacionInfalcion*cargoVariableOperacionMantenimientoOfertado;
-            let cargoVariableMes=0;
-
-            cargoVariableMes = cargoVariableCombustible+cargoVariableOperacionMantenimiento;
-
+            let cargoVariableCombustible = 0;
+            cargoVariableCombustible = cargoVariableOfertado * indiceCombustible;
+            let cargoVariableOperacionMantenimiento = cpiRelacionInfalcion * cargoVariableOperacionMantenimientoOfertado;
+            let cargoVariableMes = 0;
+            cargoVariableMes = cargoVariableCombustible + cargoVariableOperacionMantenimiento;
             precioEnergiaSuministrada = totalEnergiaSuministrada * cargoVariableMes
-
             precioEnergiaSuministrada = Number(precioEnergiaSuministrada.toFixed(2));
-
-            console.log("****************************** " , precioEnergiaSuministrada);
-
-
-
-            precioCapacidadSuministrada = capacidadFirmeComprometida * (fdr/100) * cargoReferencia;
+            console.log("****************************** ", precioEnergiaSuministrada);
+            precioCapacidadSuministrada = capacidadFirmeComprometida * (fdr / 100) * cargoReferencia;
             precioCapacidadSuministrada = Number(precioCapacidadSuministrada.toFixed(2));
-
             totalFacturar = precioEnergiaSuministrada + precioCapacidadSuministrada;
+            totalFacturar = Number(totalFacturar.toFixed(2));
 
-            totalFacturar=Number(totalFacturar.toFixed(2));
-
-
-            let sumaCargos=0
-            sumaCargos = totalPagoCapacidad+totalCargoVariableEnergia+otrosCargos;
-            let totalPagarDolares=0
-            if(sumaCargos> totalFacturar){
+            let sumaCargos = 0
+            sumaCargos = totalPagoCapacidad + totalCargoVariableEnergia + otrosCargos;
+            let totalPagarDolares = 0
+            if (sumaCargos > totalFacturar) {
               totalPagarDolares = totalFacturar;
-            }else{
-              totalPagarDolares= sumaCargos;
+            } else {
+              totalPagarDolares = sumaCargos;
             }
-            totalPagarDolares=Number(totalPagarDolares.toFixed(2));
+            totalPagarDolares = Number(totalPagarDolares.toFixed(2));
             let totalPagarDolaresFormatted = formatoHn(totalPagarDolares);
 
-
-
-            let primariaB1F=formatoHn(primariaB1);
-            let primariaB2F=formatoHn(primariaB2);
-            let respaldoB1F=formatoHn(respaldoB1);
-            let respaldoB2F=formatoHn(respaldoB2)
-            let sumaCVE1f= formatoHn(sumaCVE1);
+            let primariaB1F = formatoHn(primariaB1);
+            let primariaB2F = formatoHn(primariaB2);
+            let respaldoB1F = formatoHn(respaldoB1);
+            let respaldoB2F = formatoHn(respaldoB2)
+            let sumaCVE1f = formatoHn(sumaCVE1);
             let sumaCVE2f = formatoHn(sumaCVE2);
 
 
             doc.setFont("helvetica", "bold");
-            doc.text("CVE1", startX*12-2,startY*7+5);
+            doc.text("CVE1", startX * 12 - 2, startY * 7 + 5);
             doc.setFontSize(9);
-            doc.text(primariaB1F.toString(),startX*12-8, startY*7+10);
-            doc.text(respaldoB1F.toString(),startX*12-8, startY*7+15);
-            doc.text(sumaCVE1f.toString(),startX*12-8, startY*7+20);
+            doc.text(primariaB1F.toString(), startX * 12 - 8, startY * 7 + 10);
+            doc.text(respaldoB1F.toString(), startX * 12 - 8, startY * 7 + 15);
+            doc.text(sumaCVE1f.toString(), startX * 12 - 8, startY * 7 + 20);
             doc.setFont("helvetica", "normal");
 
-            doc.text(cvi.toString(),startX*12-8, startY*7+30);
-            doc.text(indiceCombustible.toString(),startX*12-8, startY*7+35);
-            doc.text(CVCn.toString(),startX*12-8, startY*7+40);
-            doc.text(cvOyM.toString(),startX*12-8, startY*7+45);
-            doc.text(euro.toString(),startX*12-8, startY*7+50);
-            doc.text(cpiRelacionInfalcion.toString(),startX*12-8, startY*7+55);
-            doc.text(CVOyM1.toString(),startX*12-8, startY*7+60);
-            doc.text(cvc.toString(),startX*12-8, startY*7+65);
+            doc.text(cvi.toString(), startX * 12 - 8, startY * 7 + 30);
+            doc.text(indiceCombustible.toString(), startX * 12 - 8, startY * 7 + 35);
+            doc.text(CVCn.toString(), startX * 12 - 8, startY * 7 + 40);
+            doc.text(cvOyM.toString(), startX * 12 - 8, startY * 7 + 45);
+            doc.text(euro.toString(), startX * 12 - 8, startY * 7 + 50);
+            doc.text(cpiRelacionInfalcion.toString(), startX * 12 - 8, startY * 7 + 55);
+            doc.text(CVOyM1.toString(), startX * 12 - 8, startY * 7 + 60);
+            doc.text(cvc.toString(), startX * 12 - 8, startY * 7 + 65);
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoEnergia1F.toString(),startX*12-8, startY*7+70);
+            doc.text(totalCargoEnergia1F.toString(), startX * 12 - 8, startY * 7 + 70);
             doc.setFont("helvetica", "normal");
 
             doc.setFont("helvetica", "bold");
-            doc.text("CVE2", startX*13+12,startY*7+5);
-            doc.text(primariaB2F.toString(),startX*13+7, startY*7+10);
-            doc.text(respaldoB2F.toString(),startX*13+7, startY*7+15);
-            doc.text(sumaCVE2f.toString(),startX*13+7, startY*7+20);
+            doc.text("CVE2", startX * 13 + 12, startY * 7 + 5);
+            doc.text(primariaB2F.toString(), startX * 13 + 7, startY * 7 + 10);
+            doc.text(respaldoB2F.toString(), startX * 13 + 7, startY * 7 + 15);
+            doc.text(sumaCVE2f.toString(), startX * 13 + 7, startY * 7 + 20);
             doc.setFont("helvetica", "normal");
-            doc.text(cvi.toString(),startX*13+7, startY*7+30);
-            doc.text(indiceCombustible.toString(),startX*13+7, startY*7+35);
-            doc.text(CVCn.toString(),startX*13+7, startY*7+40);
-            doc.text(cvOyM2.toString(),startX*13+7, startY*7+45);
-            doc.text(euro.toString(),startX*13+7, startY*7+50);
-            doc.text(cpiRelacionInfalcion.toString(),startX*13+7, startY*7+55);
-            doc.text(CVOyM2.toString(),startX*13+7, startY*7+60);
-            doc.text(cvc2.toString(),startX*13+7, startY*7+65);
+            doc.text(cvi.toString(), startX * 13 + 7, startY * 7 + 30);
+            doc.text(indiceCombustible.toString(), startX * 13 + 7, startY * 7 + 35);
+            doc.text(CVCn.toString(), startX * 13 + 7, startY * 7 + 40);
+            doc.text(cvOyM2.toString(), startX * 13 + 7, startY * 7 + 45);
+            doc.text(euro.toString(), startX * 13 + 7, startY * 7 + 50);
+            doc.text(cpiRelacionInfalcion.toString(), startX * 13 + 7, startY * 7 + 55);
+            doc.text(CVOyM2.toString(), startX * 13 + 7, startY * 7 + 60);
+            doc.text(cvc2.toString(), startX * 13 + 7, startY * 7 + 65);
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoEnergia2F.toString(),startX*13+7, startY*7+70);
+            doc.text(totalCargoEnergia2F.toString(), startX * 13 + 7, startY * 7 + 70);
 
 
             //total
             let totalEnergiaSuministradaF = formatoHn(totalEnergiaSuministrada);
-            doc.text(totalEnergiaSuministradaF.toString(),startX*12+5, startY*7+75);
+            doc.text(totalEnergiaSuministradaF.toString(), startX * 12 + 5, startY * 7 + 75);
             doc.setFont("helvetica", "normal");
 
 
-            doc.text("US$",startX*16+4, startY*7+70);
+            doc.text("US$", startX * 16 + 4, startY * 7 + 70);
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoVariableEnergiaF.toString(),startX*18, startY*7+70);
+            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18, startY * 7 + 70);
             doc.setFont("helvetica", "bold");
-            doc.text("TOTAL A PAGAR POR CARGOS DE ENERGÍA, DÓLARES DE EEUU ($)", startX+12,startY*7+80);
-            doc.text(totalCargoVariableEnergiaF.toString(),startX*18, startY*7+80);
-            doc.text("US$",startX*16+4, startY*7+80);
-            doc.text("TOTAL OTROS CARGOS O CRÉDITOS, en Lempiras (L)", startX+2,startY*7+85);
+            doc.text("TOTAL A PAGAR POR CARGOS DE ENERGÍA, DÓLARES DE EEUU ($)", startX + 12, startY * 7 + 80);
+            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18, startY * 7 + 80);
+            doc.text("US$", startX * 16 + 4, startY * 7 + 80);
+            doc.text("TOTAL OTROS CARGOS O CRÉDITOS, en Lempiras (L)", startX + 2, startY * 7 + 85);
             doc.setFont("helvetica", "bold");
-            doc.text(otrosCargos.toString(),startX*18, startY*7+85);
-            doc.text("L",startX*16+6, startY*7+85);
-            doc.text("TOTAL OTROS CARGOS", startX+2,startY*7+90);
+            doc.text(otrosCargos.toString(), startX * 18, startY * 7 + 85);
+            doc.text("L", startX * 16 + 6, startY * 7 + 85);
+            doc.text("TOTAL OTROS CARGOS", startX + 2, startY * 7 + 90);
             doc.setFont("helvetica", "bold");
-            doc.text(otrosCargos.toString(),startX*18, startY*7+90);
-            doc.text("US$",startX*16+4, startY*7+90);
+            doc.text(otrosCargos.toString(), startX * 18, startY * 7 + 90);
+            doc.text("US$", startX * 16 + 4, startY * 7 + 90);
 
-
             doc.setFont("helvetica", "bold");
-            doc.text("TOTAL A PAGAR EN DOLARES DE EEUU($).", startX*5,startY*7+95);
-            doc.text(totalPagarDolaresFormatted.toString(),startX*18, startY*7+95);
+            doc.text("TOTAL A PAGAR EN DOLARES DE EEUU($).", startX * 5, startY * 7 + 95);
+            doc.text(totalPagarDolaresFormatted.toString(), startX * 18, startY * 7 + 95);
 
-            doc.text("US$",startX*16+4, startY*7+95);
+            doc.text("US$", startX * 16 + 4, startY * 7 + 95);
             doc.setFont("helvetica", "normal");
-
-
-
             doc.setFont("helvetica", "bold");
-            doc.text("Nota 1: Emitir cheque certificado o transferencia bancaria a favor de ENERSA S. A.", startX+2,startY*7+105);
-            doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX+2,startY*7+110);
-            doc.text("aplicado sobre la facturación, según el Contrato No. "+nombreContrato, startX+2,startY*7+115);
-
-
-
-            doc.text("__________________________________________", startX+8,startY*7+130);
-            doc.text("Firma y Sello", startX*5,startY*7+135);
-
-
-            doc.text(fechaConstancia, startX*14,startY*7+128);
-            doc.text("__________________________________________", startX*12,startY*7+130);
-            doc.text("Fecha", startX*15+5,startY*7+135);
-
-
-
-
-
-
-
-
-
-
-
-
-
+            doc.text("Nota 1: Emitir cheque certificado o transferencia bancaria a favor de ENERSA S. A.", startX + 2, startY * 7 + 105);
+            doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 110);
+            doc.text("aplicado sobre la facturación, según el Contrato No. " + nombreContrato, startX + 2, startY * 7 + 115);
+            doc.text("__________________________________________", startX + 8, startY * 7 + 130);
+            doc.text("Firma y Sello", startX * 5, startY * 7 + 135);
+            doc.text(fechaConstancia, startX * 14, startY * 7 + 128);
+            doc.text("__________________________________________", startX * 12, startY * 7 + 130);
+            doc.text("Fecha", startX * 15 + 5, startY * 7 + 135);
             window.open(doc.output('bloburl'));
           } else { console.log("NO DATA FOR FACTURA...") }
-
-
         });
-
-
     }
   }
 }
