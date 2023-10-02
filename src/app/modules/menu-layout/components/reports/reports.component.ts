@@ -199,7 +199,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 35, 10);
+        doc.addImage(img, 10, 10, 31, 10);
       };
 
       img2.onload = () => {
@@ -1466,7 +1466,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 35, 15);
+        doc.addImage(img, 10, 10, 40, 15);
       };
 
       img2.onload = () => {
@@ -4088,7 +4088,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 35, 15);
+        doc.addImage(img, 10, 10, 40, 15);
       };
 
       img2.onload = () => {
