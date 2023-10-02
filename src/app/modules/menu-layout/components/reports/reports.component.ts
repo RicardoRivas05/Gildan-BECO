@@ -127,13 +127,13 @@ export class ReportsComponent implements OnInit {
   crearPDF() {
     let fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
     let fechaFinal = new Date(this.fechaFinal);
-    let fechaFinal1 = new Date(this.fechaFinal);
     fechaFinal.setDate(fechaFinal.getDate() - 1);
     let fechaFinFormateada = fechaFinal.toLocaleDateString();
-    console.log("mmmmmmmm", fechaFinal1)
     let fechaInicialFormatted = new Date(this.fechaInicial);
     fechaInicialFormatted.setHours(0, 0, 0, 0);
-    let fechaFinalFormatted = fechaFinal1.toISOString().split('T')[0];
+
+    let fechaFinalFormatted = new Date(this.fechaFinal);
+      fechaFinalFormatted.setHours(0, 0, 0, 0);
     const diasDelMesInicial = this.getDiasDelMes(this.fechaInicial);
     // console.log("DIA EN MES ", diasDelMesInicial);
     const fechaLocalTime = new Date(this.fechaInicial);
@@ -249,7 +249,7 @@ export class ReportsComponent implements OnInit {
         .getConsumoMedidores(
           129,
           fechaInicialFormatted.toISOString().split('T')[0],
-          fechaFinalFormatted
+          fechaFinalFormatted.toISOString().split('T')[0]
         )
         .subscribe((resp129: any) => {
           console.log('Esto trae el backend del servicio 129', resp129);
@@ -259,7 +259,7 @@ export class ReportsComponent implements OnInit {
             .getConsumoMedidores(
               139,
               fechaInicialFormatted.toISOString().split('T')[0],
-              fechaFinalFormatted
+              fechaFinalFormatted.toISOString().split('T')[0]
             )
             .subscribe((resp139: any) => {
               console.log('Esto trae el backend del servicio 139', resp139);
@@ -622,7 +622,7 @@ export class ReportsComponent implements OnInit {
       const bloque2Respaldo: number[] = [];
       const sumaBloquesRespaldo: number[] = [];
 
-      this.reportService.getCogeneracion(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted).subscribe(
+      this.reportService.getCogeneracion(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (resp3: any) => {
           console.log("Respuesta 1 ", resp3);
           if (resp3) {
@@ -1583,7 +1583,7 @@ export class ReportsComponent implements OnInit {
         return number.toString().replace(exp, rep);
       }
 
-      this.reportService.getCogeneracion_12(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted).subscribe(
+      this.reportService.getCogeneracion_12(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (response: any) => {
           console.log("Respuesta 1 ", response);
 
@@ -2262,7 +2262,7 @@ export class ReportsComponent implements OnInit {
 
 
 
-      this.reportService.getEnersa227(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted).subscribe(
+      this.reportService.getEnersa227(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (response: any) => {
           console.log("this es..", response);
 
