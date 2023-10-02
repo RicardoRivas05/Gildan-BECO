@@ -1,7 +1,9 @@
 export interface euroShema{
   id: number;
-  fechaInicial: Date;
-  fechaFinal: Date;
+  // fechaInicial: Date;
+  // fechaFinal: Date;
+  fechaInicial: string;
+  fechaFinal: string;
   ValorInicial:number,
   ValorUltimoMes:number
   Valor: number;

@@ -98,20 +98,20 @@ export class eneeComponent implements OnInit {
     {
       name: 'Fecha Inicial',
       sortOrder: null,
-      sortFn: (a: eneeShema, b: eneeShema) => a.fechaInicial.getTime() - b.fechaInicial.getTime(),
+      sortFn: (a: eneeShema, b: eneeShema) => a.fechaInicial.localeCompare(b.fechaInicial),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: eneeShema) => list.some(date => date.getTime() === item.fechaInicial.getTime()),
+      filterFn: (list: string[], item: eneeShema) => list.some(fechaInicial => item.fechaInicial.indexOf(fechaInicial) !== -1)
     },
     {
       name: 'Fecha Final',
       sortOrder: null,
-      sortFn: (a: eneeShema, b: eneeShema) => a.fechaFinal.getTime() - b.fechaFinal.getTime(),
+      sortFn: (a: eneeShema, b: eneeShema) => a.fechaFinal.localeCompare(b.fechaFinal),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: eneeShema) => list.some(date => date.getTime() === item.fechaFinal.getTime()),
+      filterFn: (list: string[], item: eneeShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
       name: 'Punta Inicial',

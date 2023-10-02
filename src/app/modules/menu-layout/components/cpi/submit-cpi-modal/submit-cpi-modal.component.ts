@@ -137,9 +137,15 @@ export class SubmitcpiModalComponent implements OnInit {
 
   editableFrom(data: cpiShema): void{
     //console.log(data);
+    let fechaInicialParts = data.fechaInicial.split('-').map(part => parseInt(part, 10));
+    let fechaFinalParts = data.fechaFinal.split('-').map(part => parseInt(part, 10));
+
+    let fechaInicialUTC = new Date(fechaInicialParts[0], fechaInicialParts[1] - 1, fechaInicialParts[2]);
+    let fechaFinalUTC = new Date(fechaFinalParts[0], fechaFinalParts[1] - 1, fechaFinalParts[2]);
+
     this.validateForm = this.fb.group({
-      fechaInicial: [data.fechaInicial, [Validators.required]],
-      fechaFinal: [data.fechaFinal, [Validators.required]],
+      fechaInicial: [fechaInicialUTC, [Validators.required]],
+      fechaFinal: [fechaFinalUTC, [Validators.required]],
       ValorUltimoMes: [data.ValorUltimoMes.toString(), [Validators.required]],
       ValorInicial: [data.ValorInicial.toString(), [Validators.required]],
       Value: [data.Value.toString(), [Validators.required]],

@@ -98,20 +98,20 @@ export class combustibleComponent implements OnInit {
     {
       name: 'Fecha Inicial',
       sortOrder: null,
-      sortFn: (a: combustibleShema, b: combustibleShema) => a.fechaInicial.getTime() - b.fechaInicial.getTime(),
+      sortFn: (a: combustibleShema, b: combustibleShema) => a.fechaInicial.localeCompare(b.fechaInicial),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: combustibleShema) => list.some(date => date.getTime() === item.fechaInicial.getTime()),
+      filterFn: (list: string[], item: combustibleShema) => list.some(fechaInicial => item.fechaInicial.indexOf(fechaInicial) !== -1)
     },
     {
       name: 'Fecha Final',
       sortOrder: null,
-      sortFn: (a: combustibleShema, b: combustibleShema) => a.fechaFinal.getTime() - b.fechaFinal.getTime(),
+      sortFn: (a: combustibleShema, b: combustibleShema) => a.fechaFinal.localeCompare(b.fechaFinal),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: combustibleShema) => list.some(date => date.getTime() === item.fechaFinal.getTime()),
+      filterFn: (list: string[], item: combustibleShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
       name: 'Indice Combustible',

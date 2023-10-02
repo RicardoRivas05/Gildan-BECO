@@ -1,7 +1,7 @@
 export interface combustibleShema{
   id: number;
-  fechaInicial: Date;
-  fechaFinal: Date;
+  fechaInicial: string;
+  fechaFinal:string;
   // precioBajo:number,
   // precioAlto:number;
   // promedio:number

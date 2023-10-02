@@ -121,10 +121,19 @@ export class SubmitferiadosHnModalComponent implements OnInit {
   }
   }
 
+
+
+
+
+
   editableFrom(data: feriadosHnShema): void{
     //console.log(data);
+    let fechaParts = data.fecha.split('-').map(part => parseInt(part, 10));
+
+    let fechaUTC = new Date(fechaParts[0], fechaParts[1] - 1, fechaParts[2]);
+
     this.validateForm = this.fb.group({
-    fecha: [data.fecha, [Validators.required]],
+    fecha: [fechaUTC, [Validators.required]],
     descripcion: [data.descripcion, [Validators.required]],
     })
     console.log(this.validateForm.value);

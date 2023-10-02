@@ -1,6 +1,7 @@
 export interface feriadosHnShema {
     id: number;
-    fecha: Date;
-    descripcion: string
+    // fecha: Date;
+    fecha: string;
+    descripcion: string;
     estado : boolean;
   }

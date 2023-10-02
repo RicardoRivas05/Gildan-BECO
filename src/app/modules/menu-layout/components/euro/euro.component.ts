@@ -99,20 +99,20 @@ export class euroComponent implements OnInit {
     {
       name: 'Fecha Inicial',
       sortOrder: null,
-      sortFn: (a: euroShema, b: euroShema) => a.fechaInicial.getTime() - b.fechaInicial.getTime(),
+      sortFn: (a: euroShema, b: euroShema) => a.fechaInicial.localeCompare(b.fechaInicial),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: euroShema) => list.some(date => date.getTime() === item.fechaInicial.getTime()),
+      filterFn: (list: string[], item: euroShema) => list.some(fechaInicial => item.fechaInicial.indexOf(fechaInicial) !== -1)
     },
     {
       name: 'Fecha Final',
       sortOrder: null,
-      sortFn: (a: euroShema, b: euroShema) => a.fechaFinal.getTime() - b.fechaFinal.getTime(),
+      sortFn: (a: euroShema, b: euroShema) => a.fechaFinal.localeCompare(b.fechaFinal),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: euroShema) => list.some(date => date.getTime() === item.fechaFinal.getTime()),
+      filterFn: (list: string[], item: euroShema) => list.some(fechaFinal => item.fechaFinal.indexOf(fechaFinal) !== -1)
     },
     {
       name: 'Valor Inicial',

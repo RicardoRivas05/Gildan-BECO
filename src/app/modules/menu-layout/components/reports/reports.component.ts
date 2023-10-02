@@ -685,6 +685,7 @@ export class ReportsComponent implements OnInit {
               //console.log("promedio ",promedioCogDel)
             } else {
               console.log("Los arreglos no tienen la misma longitud, no se pueden calcular promedios.");
+
             }
 
             if (promediosCogDel.length === promediosCogRec.length) {

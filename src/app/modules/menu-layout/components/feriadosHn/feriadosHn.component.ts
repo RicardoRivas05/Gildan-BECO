@@ -95,15 +95,18 @@ export class feriadosHnComponent implements OnInit {
   }
 
 
+
+
+
   listOfColumns: ColumnItem[] = [
     {
       name: 'Fecha',
       sortOrder: null,
-      sortFn: (a: feriadosHnShema, b: feriadosHnShema) => a.fecha.getTime() - b.fecha.getTime(),
+      sortFn: (a: feriadosHnShema, b: feriadosHnShema) => a.fecha.localeCompare(b.fecha),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [],
-      filterFn: (list: Date[], item: feriadosHnShema) => list.some(date => date.getTime() === item.fecha.getTime()),
+      filterFn: (list: string[], item: feriadosHnShema) => list.some(fecha => item.fecha.indexOf(fecha) !== -1)
     },
 
 
