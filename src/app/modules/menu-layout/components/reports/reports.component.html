@@ -29,7 +29,8 @@
             <th>Fecha Inicial</th>
             <th>Fecha Final</th>
             <th>Nombre del Reporte</th>
-            <th>Descargar PDF</th>
+            <th>Ver Reporte</th>
+            <th>Descargar Reporte</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +41,13 @@
             <td>
               <button class="btn-generar-pdf" (click)="crearPDF()">
                 <i class="pdf-icon"></i>
-                Descargar PDF
+                Visualizar Reporte
+              </button>
+            </td>
+            <td>
+              <button class="btn-generar-pdf" (click)="descargarPDF()">
+                <i class="pdf-icon"></i>
+                Descargar Reporte
               </button>
             </td>
           </tr>
