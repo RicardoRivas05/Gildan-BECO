@@ -165,7 +165,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 40, 10);
+        doc.addImage(img, 10, 10, 35, 10);
       };
 
       img2.onload = () => {
@@ -494,14 +494,14 @@ export class ReportsComponent implements OnInit {
                     doc.text(dataDiferenciaRecF.toString(), xPosLegend2 + 48, 34 + j * 15);
                   }
                   // doc.setFontSize(10);
-                  window.open(doc.output('bloburl'))
+                  //window.open(doc.output('bloburl'))
                 }
               } else {
                 console.log('this.resp es null para el servicio 139');
                 this.validateError = true;
                 this.notification.createNotification('error', 'Falló', `${resp139.content} 😓`);
               }
-              // window.open(doc.output('bloburl'))
+              window.open(doc.output('bloburl'))
             });
         });
       doc.text(title, xPosTitle, 10);
