@@ -45,17 +45,18 @@ export class ReportsComponent implements OnInit {
 
   onFechaInicialChange(value: Date): void {
     this.fechaInicial = value;
+    this.mostrarTabla = false;
     console.log("esto es inicial", this.fechaInicial)
   }
 
   onFechaFinalChange(value: Date): void {
     this.fechaFinal = value;
+    this.mostrarTabla = false;
     console.log("esto es final", this.fechaFinal)
   }
 
   generarReporte(): void {
     this.mostrarTabla = true;
-
   }
 
   // Función para obtener los días del mes a partir de una fecha
@@ -125,6 +126,7 @@ export class ReportsComponent implements OnInit {
   }
 
   crearPDF() {
+    this.mostrarTabla = false;
     let fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
     let fechaFinal = new Date(this.fechaFinal);
     fechaFinal.setDate(fechaFinal.getDate() - 1);
@@ -153,6 +155,39 @@ export class ReportsComponent implements OnInit {
     let sumTotalHpunta = 0;
     let sumFueraHpunta = 0;
     let totalSumHpunta = 0;
+
+    function obtenerAnioYNombreMes(fecha: any) {
+      const meses = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+      ];
+
+      const anio = fecha.getFullYear();
+      const mes = fecha.getMonth();
+      const nombreMes = meses[mes];
+
+      return {
+        anio,
+        nombreMes
+      };
+    }
+
+
+    const fecha = new Date(fechaInicialFormatted);
+      const resultado = obtenerAnioYNombreMes(fecha);
+      let anio = resultado.anio;
+      let mes = resultado.nombreMes;
+
     if (this.tipoReporte == 'Energia Sumistrada') {
       const doc = new jsPDF();
       const img = new Image();
@@ -354,8 +389,8 @@ export class ReportsComponent implements OnInit {
                     doc.text(dataLecturaActualF.toString(), xPosLegend1 + 25, 45 + i * 15);
                     doc.text(dataDiferenciaF.toString(), xPosLegend1 + 48, 45 + i * 15);
                     doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend1 + 2, 57 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 25, 57 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 47, 57 + i * 15);
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 24, 57 + i * 15);
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 45, 57 + i * 15);
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
@@ -420,11 +455,11 @@ export class ReportsComponent implements OnInit {
                     let dataenergiaNetaActualF = formatoHn(dataenergiaNetaActual);
                     let dataDiferenciaEnergiaNetaF = formatoHn(dataDiferenciaEnergiaNeta);
                     doc.text(dataLecturaAnteriorF.toString(), xPosLegend2 + 2, 30 + i * 15);
-                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 25, 30 + i * 15);
-                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 48, 30 + i * 15);
+                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 24, 30 + i * 15);
+                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 47, 30 + i * 15);
                     doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend2 + 2, 42 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 25, 42 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 47, 42 + i * 15);
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 24, 42 + i * 15);
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 45, 42 + i * 15);
 
                   }
                   doc.setFontSize(10);
@@ -434,8 +469,6 @@ export class ReportsComponent implements OnInit {
                 console.log('this.resp es null para el servicio 129');
                 this.validateError = true;
                 this.notification.createNotification('error', 'Falló', `${resp129.content} 😓`);
-
-
               }
               porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios).toFixed(4));
               doc.setFontSize(6);
@@ -444,8 +477,8 @@ export class ReportsComponent implements OnInit {
               doc.setFontSize(7);
               let sumMedPrimariosF = formatoHn(sumMedPrimarios);
               let sumMedSecundariosF = formatoHn(sumMedSecundarios);
-              doc.text(sumMedPrimariosF.toString(), 76, 185.5);
-              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 45, 185.5)
+              doc.text(sumMedPrimariosF.toString(), 74, 185.5);
+              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 44.5, 185.5)
               doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 19, 193)
               doc.setFontSize(6)
               doc.text(subtitle3, xPosLegend1 - 21, 193);
@@ -492,8 +525,7 @@ export class ReportsComponent implements OnInit {
                     doc.text(dataLecturaActualRecF.toString(), xPosLegend2 + 28, 34 + j * 15);
                     doc.text(dataDiferenciaRecF.toString(), xPosLegend2 + 48, 34 + j * 15);
                   }
-                  // doc.setFontSize(10);
-                  //window.open(doc.output('bloburl'))
+
                 }
               } else {
                 console.log('this.resp es null para el servicio 139');
@@ -608,11 +640,7 @@ export class ReportsComponent implements OnInit {
       let intervaloInsercion3 = 27;
       let intervaloInsercion4 = 28;
       const feriadosHn: string[] = [];
-
       const u288: number[] = [];
-
-
-
       const bloque1Primaria: number[] = [];
       const bloque2Primaria: number[] = [];
       const sumaBloquesPrimaria: number[] = [];
@@ -1091,10 +1119,7 @@ export class ReportsComponent implements OnInit {
                 doc.text(bloque1PrimF.toString(), 25.5, 38.5 + i * 5);
                 doc.text(bloque2PrimF.toString(), 41, 38.5 + i * 5);
                 doc.text(totalBPrimariaF.toString(), 56, 38.5 + i * 5);
-
-
               }
-
             } else {
               console.log("La suma de la energia primaria 06+22:24 no puede ser procesada")
             }
@@ -1384,9 +1409,6 @@ export class ReportsComponent implements OnInit {
               doc.text(sumPrimariaRespaldoF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 28.5);
               doc.setFont("helvetica", "normal");
 
-
-
-
               //cuadro ultimo
               doc.rect(startX + 15, startY * 9 + 15, 16, cellHeight + 10);//cogeneracion cuadro
               doc.text("Cogeneración", startX + 15.5, startY * 9 + 23.5);
@@ -1397,7 +1419,6 @@ export class ReportsComponent implements OnInit {
               doc.text("Fuera Hrs Punta", startX + 32, startY * 9 + 23.5);
               doc.rect(startX + 31, startY * 9 + 25, 20, cellHeight);//cuadro total hpunta
               doc.text("Total", startX + 33, startY * 9 + 28.5);
-
 
               //data ultimo cuadro
               totalSumHpunta = sumTotalHpunta + sumFueraHpunta;
@@ -1416,10 +1437,7 @@ export class ReportsComponent implements OnInit {
               doc.setFont("helvetica", "normal");
 
 
-
-
-
-              window.open(doc.output('bloburl'));
+              window.open(doc.output('bloburl'))
 
             } else {
               console.log("La suma de la energía respaldo 06+22:24 no puede ser procesada");
@@ -1456,7 +1474,7 @@ export class ReportsComponent implements OnInit {
       };
 
       img3.onload = () => {
-        doc.addImage(img3, 10, 280, 193, 15);
+        doc.addImage(img3, 10, 259, 193, 18);
       };
       let tittle = `LECTURAS DE ENERGIA COGENERACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
       let lecturasPrincipalTxt = '1. LECTURAS Y DIFERENCIA DE ENERGIA MEDIDOR PRINCIPAL';
@@ -1615,7 +1633,7 @@ export class ReportsComponent implements OnInit {
                 dataDiferenciaActivoEnee = Number(dataDiferenciaActivoEnee.toFixed(2));
                 // Definir las coordenadas de inicio para la tabla de generacion Principal
                 const startX = 10;
-                const startY = 37;
+                const startY = 32;
                 doc.setFontSize(7)
                 //data principal cuadro1
                 let dataPuntaInicialEneeF = formatoHn(dataPuntaInicialEnee);
@@ -1658,7 +1676,7 @@ export class ReportsComponent implements OnInit {
 
                 // Definir las coordenadas de inicio para la tabla de generacion Principal
                 const startX = 10;
-                const startY = 87;
+                const startY = 77;
                 doc.setFontSize(7)
                 let dataPuntaRespaldoInicialEneeF = formatoHn(dataPuntaRespaldoInicialEnee);
                 let dataRestoRespaldoInicialEneeF = formatoHn(dataRestoRespaldoInicialEnee);
@@ -1706,7 +1724,7 @@ export class ReportsComponent implements OnInit {
 
             }
             const startX = 10;
-            const startY = 137;
+            const startY = 122;
 
             let dataPromedioPuntaEneeF = formatoHn(dataPromedioPuntaEnee);
             let dataPromedioRestoEneeF = formatoHn(dataPromedioRestoEnee);
@@ -1755,7 +1773,7 @@ export class ReportsComponent implements OnInit {
                 dataDiferenciaActivoPrincipal = dataTotalActivoFinalPrincipal - dataTotalActivoInicialPrincipal;
                 // Definir las coordenadas de inicio para la tabla de generacion Principal
                 const startX = 10;
-                const startY = 37;
+                const startY = 32;
                 // Definir el ancho y alto de las celdas
                 const cellWidth = 40;
                 const cellHeight = 10;
@@ -1878,7 +1896,7 @@ export class ReportsComponent implements OnInit {
                 dataDiferenciaActivoRespaldo = Number(dataDiferenciaActivoRespaldo.toFixed(2));
                 // Definir las coordenadas de inicio para la tabla de generacion Respaldo
                 const startX1 = 10;
-                const startY1 = 87;
+                const startY1 = 77;
                 // Definir el ancho y alto de las celdas
                 const cellWidth1 = 40;
                 const cellHeight1 = 10;
@@ -1999,7 +2017,7 @@ export class ReportsComponent implements OnInit {
             }
             // Definir las coordenadas de inicio para la tabla
             const startX = 10;
-            const startY = 137;
+            const startY = 122;
             // Definir el ancho y alto de las celdas
             const cellWidth = 40;
             const cellHeight = 10;
@@ -2105,7 +2123,7 @@ export class ReportsComponent implements OnInit {
             //cuadro4
             // Definir las coordenadas de inicio para la tabla
             const start_X = 10;
-            const start_Y = 186;
+            const start_Y = 166;
             // Definir el ancho y alto de las celdas
             const cellWidth_ = 40;
             const cellHeight_ = 10;
@@ -2137,7 +2155,7 @@ export class ReportsComponent implements OnInit {
             doc.text(dataPotenciaFirmeF.toString(), start_X + cellWidth_ + 54, start_Y + 27.5);//2.4
 
             //cuadro5
-            const startY1 = 226;
+            const startY1 = 205;
             doc.rect(start_X, startY1, cellWidth_ + 35, cellHeight_); //celda1
             doc.rect(start_X, startY1 + 10, cellWidth_ + 35, cellHeight_ + 3); //celda1.1
             doc.rect(start_X + cellWidth_ + 35, startY1, cellWidth_ + 10, cellHeight_); //celda2
@@ -2151,34 +2169,35 @@ export class ReportsComponent implements OnInit {
 
 
             // Abrir el PDF en una nueva ventana o descargarlo
-            window.open(doc.output('bloburl'));
+            window.open(doc.output('bloburl'))
           } else {
             console.log("No hay mediciones")
           }
 
         });
-      doc.setFontSize(10);
       const pageWidth = doc.internal.pageSize.width;
       // Obtener el ancho del texto
       const textWidth = (doc.getStringUnitWidth(tittle) * 10) / doc.internal.scaleFactor;
       // Calcular la posición X para centrar el texto
       const centerX = (pageWidth - textWidth) / 2;
+      doc.setFontSize(10);
       doc.text(tittle, centerX, 25);
-      doc.text(lecturasPrincipalTxt, 10, 35);
-      doc.text(lecturasRespaldoTxt, 10, 85);
-      doc.text(promedioMedidoresTxt, 10, 135);
-      doc.text(capacidadTxt, 10, 190);
-      doc.text(energiaNetaTxt, 11, 230);
-      doc.text(fechaConstancia, 11, 255);
-      doc.text(lineafirma, 11, 270);
-      doc.text(lineafirma, 77, 270);
-      doc.text(lineafirma, 151, 270);
-      doc.text(firma1, 20, 275);
-      doc.text(firma2, 90, 275);
-      doc.text(firma3, 160, 275);
-      doc.text(porEnee, 25, 278);
-      doc.text(porEnee, 93, 278);
-      doc.text(porEnee, 168, 278);
+      doc.setFontSize(9);
+      doc.text(lecturasPrincipalTxt, 10, 30);
+      doc.text(lecturasRespaldoTxt, 10, 75);
+      doc.text(promedioMedidoresTxt, 10, 120);
+      doc.text(capacidadTxt, 10, 170);
+      doc.text(energiaNetaTxt, 11, 209);
+      doc.text(fechaConstancia, 11, 236);
+      doc.text(lineafirma, 11, 248);
+      doc.text(lineafirma, 77, 248);
+      doc.text(lineafirma, 151, 248);
+      doc.text(firma1, 20, 253);
+      doc.text(firma2, 90, 253);
+      doc.text(firma3, 160, 253);
+      doc.text(porEnee, 25, 256);
+      doc.text(porEnee, 93, 256);
+      doc.text(porEnee, 168, 256);
 
     } else if (this.tipoReporte === 'FACTURA 227') {
 
@@ -2707,15 +2726,16 @@ export class ReportsComponent implements OnInit {
             doc.text("US$", startX * 16 + 4, startY * 7 + 95);
             doc.setFont("helvetica", "normal");
             doc.setFont("helvetica", "bold");
-            doc.text("Nota 1: Emitir cheque certificado o transferencia bancaria a favor de ENERSA S. A.", startX + 2, startY * 7 + 105);
-            doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 110);
-            doc.text("aplicado sobre la facturación, según el Contrato No. " + nombreContrato, startX + 2, startY * 7 + 115);
-            doc.text("__________________________________________", startX + 8, startY * 7 + 130);
-            doc.text("Firma y Sello", startX * 5-2, startY * 7 + 135);
+            doc.text("Nota 1: Emitir cheque certificado o transferencia bancaria a favor de ENERSA S. A.", startX + 2, startY * 7 + 103);
+            doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 108);
+            doc.text("aplicado sobre la facturación, según el Contrato " + nombreContrato, startX + 2, startY * 7 + 115);
+            doc.text("__________________________________________", startX + 8, startY * 7 + 128);
+            doc.text("Firma y Sello", startX * 5-2, startY * 7 + 133);
             doc.text(fechaConstancia, startX * 15-3, startY * 7 + 128);
-            doc.text("__________________________________________", startX * 12, startY * 7 + 130);
-            doc.text("Fecha", startX * 15 + 5, startY * 7 + 135);
-            window.open(doc.output('bloburl'));
+            doc.text("__________________________________________", startX * 12, startY * 7 + 128);
+            doc.text("Fecha", startX * 15 + 5, startY * 7 + 133);
+            doc.save('Factura ENERSA-ENEE '+ mes +" " +anio);
+            window.open(doc.output('bloburl'))
           } else { console.log("NO DATA FOR FACTURA...") }
         });
     }
@@ -2726,10 +2746,8 @@ export class ReportsComponent implements OnInit {
 
 
 
-
-
-
   descargarPDF() {
+    this.mostrarTabla = false;
     let fechaInicioFormateada = this.fechaInicial.toLocaleDateString();
     let fechaFinal = new Date(this.fechaFinal);
     fechaFinal.setDate(fechaFinal.getDate() - 1);
@@ -2802,7 +2820,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 35, 10);
+        doc.addImage(img, 10, 10, 30, 10);
       };
 
       img2.onload = () => {
@@ -2992,8 +3010,8 @@ export class ReportsComponent implements OnInit {
                     doc.text(dataLecturaActualF.toString(), xPosLegend1 + 25, 45 + i * 15);
                     doc.text(dataDiferenciaF.toString(), xPosLegend1 + 48, 45 + i * 15);
                     doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend1 + 2, 57 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 25, 57 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 47, 57 + i * 15);
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 24, 57 + i * 15);
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 45, 57 + i * 15);
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
@@ -3058,11 +3076,11 @@ export class ReportsComponent implements OnInit {
                     let dataenergiaNetaActualF = formatoHn(dataenergiaNetaActual);
                     let dataDiferenciaEnergiaNetaF = formatoHn(dataDiferenciaEnergiaNeta);
                     doc.text(dataLecturaAnteriorF.toString(), xPosLegend2 + 2, 30 + i * 15);
-                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 25, 30 + i * 15);
-                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 48, 30 + i * 15);
+                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 24, 30 + i * 15);
+                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 47, 30 + i * 15);
                     doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend2 + 2, 42 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 25, 42 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 47, 42 + i * 15);
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 24, 42 + i * 15);
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 45, 42 + i * 15);
 
                   }
                   doc.setFontSize(10);
@@ -3072,8 +3090,6 @@ export class ReportsComponent implements OnInit {
                 console.log('this.resp es null para el servicio 129');
                 this.validateError = true;
                 this.notification.createNotification('error', 'Falló', `${resp129.content} 😓`);
-
-
               }
               porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios).toFixed(4));
               doc.setFontSize(6);
@@ -3082,8 +3098,8 @@ export class ReportsComponent implements OnInit {
               doc.setFontSize(7);
               let sumMedPrimariosF = formatoHn(sumMedPrimarios);
               let sumMedSecundariosF = formatoHn(sumMedSecundarios);
-              doc.text(sumMedPrimariosF.toString(), 76, 185.5);
-              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 45, 185.5)
+              doc.text(sumMedPrimariosF.toString(), 74, 185.5);
+              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 44.5, 185.5)
               doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 19, 193)
               doc.setFontSize(6)
               doc.text(subtitle3, xPosLegend1 - 21, 193);
@@ -4080,7 +4096,7 @@ export class ReportsComponent implements OnInit {
       };
 
       img3.onload = () => {
-        doc.addImage(img3, 10, 280, 193, 15);
+        doc.addImage(img3, 10, 261, 193, 18);
       };
       let tittle = `LECTURAS DE ENERGIA COGENERACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
       let lecturasPrincipalTxt = '1. LECTURAS Y DIFERENCIA DE ENERGIA MEDIDOR PRINCIPAL';
@@ -4125,9 +4141,9 @@ export class ReportsComponent implements OnInit {
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
       const dia = fechaGenerada.getDate();
-      const mes = nombresMeses[fechaGenerada.getMonth()];
-      const anio = fechaGenerada.getFullYear();
-      const fechaConstancia = lugar + ` ${dia}` + ` ${mes}` + ` ${anio}`
+      const Mes = nombresMeses[fechaGenerada.getMonth()];
+      const Anio = fechaGenerada.getFullYear();
+      const fechaConstancia = lugar + ` ${dia}` + ` ${Mes}` + ` ${Anio}`
       //data de medidores enersa
       let dataNombreMedidor = '';
       let dataLecturaPuntaInicialPrincipal = 0;
@@ -4239,7 +4255,7 @@ export class ReportsComponent implements OnInit {
                 dataDiferenciaActivoEnee = Number(dataDiferenciaActivoEnee.toFixed(2));
                 // Definir las coordenadas de inicio para la tabla de generacion Principal
                 const startX = 10;
-                const startY = 37;
+                const startY = 32;
                 doc.setFontSize(7)
                 //data principal cuadro1
                 let dataPuntaInicialEneeF = formatoHn(dataPuntaInicialEnee);
@@ -4282,7 +4298,7 @@ export class ReportsComponent implements OnInit {
 
                 // Definir las coordenadas de inicio para la tabla de generacion Principal
                 const startX = 10;
-                const startY = 87;
+                const startY = 77;
                 doc.setFontSize(7)
                 let dataPuntaRespaldoInicialEneeF = formatoHn(dataPuntaRespaldoInicialEnee);
                 let dataRestoRespaldoInicialEneeF = formatoHn(dataRestoRespaldoInicialEnee);
@@ -4330,7 +4346,7 @@ export class ReportsComponent implements OnInit {
 
             }
             const startX = 10;
-            const startY = 137;
+            const startY = 122;
 
             let dataPromedioPuntaEneeF = formatoHn(dataPromedioPuntaEnee);
             let dataPromedioRestoEneeF = formatoHn(dataPromedioRestoEnee);
@@ -4379,7 +4395,7 @@ export class ReportsComponent implements OnInit {
                 dataDiferenciaActivoPrincipal = dataTotalActivoFinalPrincipal - dataTotalActivoInicialPrincipal;
                 // Definir las coordenadas de inicio para la tabla de generacion Principal
                 const startX = 10;
-                const startY = 37;
+                const startY = 32;
                 // Definir el ancho y alto de las celdas
                 const cellWidth = 40;
                 const cellHeight = 10;
@@ -4502,7 +4518,7 @@ export class ReportsComponent implements OnInit {
                 dataDiferenciaActivoRespaldo = Number(dataDiferenciaActivoRespaldo.toFixed(2));
                 // Definir las coordenadas de inicio para la tabla de generacion Respaldo
                 const startX1 = 10;
-                const startY1 = 87;
+                const startY1 = 77;
                 // Definir el ancho y alto de las celdas
                 const cellWidth1 = 40;
                 const cellHeight1 = 10;
@@ -4623,7 +4639,7 @@ export class ReportsComponent implements OnInit {
             }
             // Definir las coordenadas de inicio para la tabla
             const startX = 10;
-            const startY = 137;
+            const startY = 122;
             // Definir el ancho y alto de las celdas
             const cellWidth = 40;
             const cellHeight = 10;
@@ -4729,7 +4745,7 @@ export class ReportsComponent implements OnInit {
             //cuadro4
             // Definir las coordenadas de inicio para la tabla
             const start_X = 10;
-            const start_Y = 186;
+            const start_Y = 166;
             // Definir el ancho y alto de las celdas
             const cellWidth_ = 40;
             const cellHeight_ = 10;
@@ -4761,7 +4777,7 @@ export class ReportsComponent implements OnInit {
             doc.text(dataPotenciaFirmeF.toString(), start_X + cellWidth_ + 54, start_Y + 27.5);//2.4
 
             //cuadro5
-            const startY1 = 226;
+            const startY1 = 205;
             doc.rect(start_X, startY1, cellWidth_ + 35, cellHeight_); //celda1
             doc.rect(start_X, startY1 + 10, cellWidth_ + 35, cellHeight_ + 3); //celda1.1
             doc.rect(start_X + cellWidth_ + 35, startY1, cellWidth_ + 10, cellHeight_); //celda2
@@ -4781,28 +4797,29 @@ export class ReportsComponent implements OnInit {
           }
 
         });
-      doc.setFontSize(10);
       const pageWidth = doc.internal.pageSize.width;
       // Obtener el ancho del texto
       const textWidth = (doc.getStringUnitWidth(tittle) * 10) / doc.internal.scaleFactor;
       // Calcular la posición X para centrar el texto
       const centerX = (pageWidth - textWidth) / 2;
+      doc.setFontSize(10);
       doc.text(tittle, centerX, 25);
-      doc.text(lecturasPrincipalTxt, 10, 35);
-      doc.text(lecturasRespaldoTxt, 10, 85);
-      doc.text(promedioMedidoresTxt, 10, 135);
-      doc.text(capacidadTxt, 10, 190);
-      doc.text(energiaNetaTxt, 11, 230);
-      doc.text(fechaConstancia, 11, 255);
-      doc.text(lineafirma, 11, 270);
-      doc.text(lineafirma, 77, 270);
-      doc.text(lineafirma, 151, 270);
-      doc.text(firma1, 20, 275);
-      doc.text(firma2, 90, 275);
-      doc.text(firma3, 160, 275);
-      doc.text(porEnee, 25, 278);
-      doc.text(porEnee, 93, 278);
-      doc.text(porEnee, 168, 278);
+      doc.setFontSize(9);
+      doc.text(lecturasPrincipalTxt, 10, 30);
+      doc.text(lecturasRespaldoTxt, 10, 75);
+      doc.text(promedioMedidoresTxt, 10, 120);
+      doc.text(capacidadTxt, 10, 170);
+      doc.text(energiaNetaTxt, 11, 209);
+      doc.text(fechaConstancia, 11, 236);
+      doc.text(lineafirma, 11, 248);
+      doc.text(lineafirma, 77, 248);
+      doc.text(lineafirma, 151, 248);
+      doc.text(firma1, 20, 253);
+      doc.text(firma2, 90, 253);
+      doc.text(firma3, 160, 253);
+      doc.text(porEnee, 25, 256);
+      doc.text(porEnee, 93, 256);
+      doc.text(porEnee, 168, 256);
 
     } else if (this.tipoReporte === 'FACTURA 227') {
 
@@ -4937,7 +4954,7 @@ export class ReportsComponent implements OnInit {
 
             doc.setFontSize(10);
             doc.text("CENTRAL TERMOELÉCTRICA CHOLOMA III - HONDURAS", startX, startY + 10);
-            doc.text("Contrato No. " + nombreContrato, startX, startY + 15);
+            doc.text("Contrato " + nombreContrato, startX, startY + 15);
             doc.text("Periodo de Facturación: " + mes + " " + anio, startX, startY * 2);
             doc.text("FACTURA No.  " + correlativo, startX * 16, startY + 10);
 
@@ -5331,17 +5348,18 @@ export class ReportsComponent implements OnInit {
             doc.text("US$", startX * 16 + 4, startY * 7 + 95);
             doc.setFont("helvetica", "normal");
             doc.setFont("helvetica", "bold");
-            doc.text("Nota 1: Emitir cheque certificado o transferencia bancaria a favor de ENERSA S. A.", startX + 2, startY * 7 + 105);
-            doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 110);
-            doc.text("aplicado sobre la facturación, según el Contrato No. " + nombreContrato, startX + 2, startY * 7 + 115);
-            doc.text("__________________________________________", startX + 8, startY * 7 + 130);
-            doc.text("Firma y Sello", startX * 5-2, startY * 7 + 135);
+            doc.text("Nota 1: Emitir cheque certificado o transferencia bancaria a favor de ENERSA S. A.", startX + 2, startY * 7 + 103);
+            doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 108);
+            doc.text("aplicado sobre la facturación, según el Contrato " + nombreContrato, startX + 2, startY * 7 + 115);
+            doc.text("__________________________________________", startX + 8, startY * 7 + 128);
+            doc.text("Firma y Sello", startX * 5-2, startY * 7 + 133);
             doc.text(fechaConstancia, startX * 15-3, startY * 7 + 128);
-            doc.text("__________________________________________", startX * 12, startY * 7 + 130);
-            doc.text("Fecha", startX * 15 + 5, startY * 7 + 135);
+            doc.text("__________________________________________", startX * 12, startY * 7 + 128);
+            doc.text("Fecha", startX * 15 + 5, startY * 7 + 133);
             doc.save('Factura ENERSA-ENEE '+ mes +" " +anio);
           } else { console.log("NO DATA FOR FACTURA...") }
         });
     }
   }
+
 }
