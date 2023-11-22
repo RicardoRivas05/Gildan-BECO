@@ -2291,9 +2291,8 @@ export class ReportsComponent implements OnInit {
       const img = new Image();
       img.src = 'assets/Images/Logo.jpeg';
       img.onload = () => {
-        doc.addImage(img, 10, 15, 40, 10);
+        doc.addImage(img, 10, 15, 45, 10);
       };
-
 
       function obtenerAnioYNombreMes(fecha: any) {
         const meses = [
@@ -2326,14 +2325,11 @@ export class ReportsComponent implements OnInit {
       let anio = resultado.anio;
       let mes = resultado.nombreMes;
 
-
       const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
         return number.toString().replace(exp, rep);
       }
-
-
 
       this.reportService.getEnersa227(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (response: any) => {
@@ -2373,10 +2369,7 @@ export class ReportsComponent implements OnInit {
             for (let i = 0; i < response.euro.length; i++) {
               euro = response.euro[i].RelacionInflacion;
             }
-
             let capacidadFirmeComprometidaf = formatoHn(capacidadFirmeComprometida);
-
-
             // Definir las coordenadas de inicio para la tabla
             const startX = 10;
             const startY = 20;
@@ -2455,9 +2448,7 @@ export class ReportsComponent implements OnInit {
             totalPagoCapacidad = totalA + totalB + totalC;
             totalPagoCapacidad = Number(totalPagoCapacidad.toFixed(2));
 
-
             //data
-
             doc.setFont("helvetica", "bold");
             //parte descripcion
             doc.text("DESCRIPCIÓN", startY + 2 * startX - 2, startY * 3 - 6);
@@ -2493,26 +2484,26 @@ export class ReportsComponent implements OnInit {
             doc.setFontSize(9);
             doc.text("US$/kW-mes", startY * 3 + 4.5 * startX - 14, startY * 3 + 4);
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 9);
-            doc.text(cargoCapacidadFijo.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 4);
-            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 9);
-            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 14);
+            doc.text(cargoCapacidadFijo.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 4, { align: 'right' });
+            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 9, { align: 'right' });
+            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 24, startY * 3 + 14, { align: 'right' });
             doc.text("US$/kW-mes", startY * 3 + 4.5 * startX - 14, startY * 3 + 19);
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 24);
-            doc.text(cargoOperacionDolares.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 19);
-            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 24);
-            doc.text(cpiRelacionInfalcion.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 29);
-            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 34);
+            doc.text(cargoOperacionDolares.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 19, { align: 'right' });
+            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 24, { align: 'right' });
+            doc.text(cpiRelacionInfalcion.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 29, { align: 'right' });
+            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 24, startY * 3 + 34, { align: 'right' });
             doc.text("L/kW-mes", startY * 3 + 4.5 * startX - 14, startY * 3 + 39);
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 44);
-            doc.text(cargoOperacionLempiras.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 39);
-            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 44);
+            doc.text(cargoOperacionLempiras.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 39, { align: 'right' });
+            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 44, { align: 'right' });
 
-            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 25, startY * 3 + 49, { align: 'right' });
+            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 49, { align: 'right' });
             //alinear
-            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 54);
+            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 24, startY * 3 + 54, { align: 'right' });
 
-            doc.text(resultadoF.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 59);
-            doc.text(tasaDolar.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 64);
+            doc.text(resultadoF.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 59, { align: 'right' });
+            doc.text(tasaDolar.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 64, { align: 'right' });
             doc.text("L", startY * 3 + 4.5 * startX - 8, startY * 3 + 59);
             doc.text("L/$", startY * 3 + 4.5 * startX - 8, startY * 3 + 64);
 
@@ -2530,11 +2521,11 @@ export class ReportsComponent implements OnInit {
             let totalAf = formatoHn(totalA);
             let totalBf = formatoHn(totalB);
             let totalCf = formatoHn(totalC);
-            doc.text(totalAf.toString(), startY * 4 + 10 * startX - 5, startY * 4 - 1);
-            doc.text(totalBf.toString(), startY * 4 + 10 * startX - 5, startY * 5 - 1);
-            doc.text(totalCf.toString(), startY * 4 + 10 * startX - 5, startY * 6 + 9);
+            doc.text(totalAf.toString(), startY * 4 + 10 * startX +21, startY * 4 - 1, { align: 'right' });
+            doc.text(totalBf.toString(), startY * 4 + 10 * startX +21, startY * 5 - 1, { align: 'right' });
+            doc.text(totalCf.toString(), startY * 4 + 10 * startX +21, startY * 6 + 9, { align: 'right' });
             doc.setFont("helvetica", "bold");
-            doc.text(totalPagoCapacidadF.toString(), startY * 4 + 10 * startX - 5, startY * 6 + 14);
+            doc.text(totalPagoCapacidadF.toString(), startY * 4 + 10 * startX +21, startY * 6 + 14, { align: 'right' });
             doc.setFont("helvetica", "normal");
             //cuadro2
             doc.rect(startX, startY * 7 - 5, cellWidth * 2 + 33, cellHeight - 4)
@@ -2718,66 +2709,64 @@ export class ReportsComponent implements OnInit {
             doc.setFont("helvetica", "bold");
             doc.text("CVE1", startX * 12 - 2, startY * 7 + 5);
             doc.setFontSize(9);
-            doc.text(primariaB1F.toString(), startX * 12 - 8, startY * 7 + 10);
-            doc.text(respaldoB1F.toString(), startX * 12 - 8, startY * 7 + 15);
-            doc.text(sumaCVE1f.toString(), startX * 12 - 8, startY * 7 + 20);
+            doc.text(primariaB1F.toString(), startX * 12 +14.5, startY * 7 + 10, { align: 'right' });
+            doc.text(respaldoB1F.toString(), startX * 12 +14.5, startY * 7 + 15, { align: 'right' });
+            doc.text(sumaCVE1f.toString(), startX * 12 +14.5, startY * 7 + 20, { align: 'right' });
             doc.setFont("helvetica", "normal");
 
-            doc.text(cvi.toString(), startX * 12 - 8, startY * 7 + 30);
-            doc.text(indiceCombustible.toString(), startX * 12 - 8, startY * 7 + 35);
-            doc.text(CVCn.toString(), startX * 12 - 8, startY * 7 + 40);
-            doc.text(cvOyM.toString(), startX * 12 - 8, startY * 7 + 45);
-            doc.text(euro.toString(), startX * 12 - 8, startY * 7 + 50);
-            doc.text(cpiRelacionInfalcion.toString(), startX * 12 - 8, startY * 7 + 55);
-            doc.text(CVOyM1.toString(), startX * 12 - 8, startY * 7 + 60);
-            doc.text(cvc.toString(), startX * 12 - 8, startY * 7 + 65);
+            doc.text(cvi.toString(), startX * 12 +14.5, startY * 7 + 30, { align: 'right' });
+            doc.text(indiceCombustible.toString(), startX * 12 +14.5, startY * 7 + 35, { align: 'right' });
+            doc.text(CVCn.toString(), startX * 12 +14.5, startY * 7 + 40, { align: 'right' });
+            doc.text(cvOyM.toString(), startX * 12 +14.5, startY * 7 + 45, { align: 'right' });
+            doc.text(euro.toString(), startX * 12 +14.5, startY * 7 + 50, { align: 'right' });
+            doc.text(cpiRelacionInfalcion.toString(), startX * 12 +14.5, startY * 7 + 55, { align: 'right' });
+            doc.text(CVOyM1.toString(), startX * 12 +14.5, startY * 7 + 60, { align: 'right' });
+            doc.text(cvc.toString(), startX * 12 +14.5, startY * 7 + 65, { align: 'right' });
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoEnergia1F.toString(), startX * 12 - 8, startY * 7 + 70);
+            doc.text(totalCargoEnergia1F.toString(), startX * 12 +14.5, startY * 7 + 70, { align: 'right' });
             doc.setFont("helvetica", "normal");
 
             doc.setFont("helvetica", "bold");
             doc.text("CVE2", startX * 13 + 12, startY * 7 + 5);
-            doc.text(primariaB2F.toString(), startX * 13 + 7, startY * 7 + 10);
-            doc.text(respaldoB2F.toString(), startX * 13 + 7, startY * 7 + 15);
-            doc.text(sumaCVE2f.toString(), startX * 13 + 7, startY * 7 + 20);
+            doc.text(primariaB2F.toString(), startX * 13 +29, startY * 7 + 10, { align: 'right' });
+            doc.text(respaldoB2F.toString(), startX * 13 + 29, startY * 7 + 15, { align: 'right' });
+            doc.text(sumaCVE2f.toString(), startX * 13 + 29, startY * 7 + 20, { align: 'right' });
             doc.setFont("helvetica", "normal");
-            doc.text(cvi.toString(), startX * 13 + 7, startY * 7 + 30);
-            doc.text(indiceCombustible.toString(), startX * 13 + 7, startY * 7 + 35);
-            doc.text(CVCn.toString(), startX * 13 + 7, startY * 7 + 40);
-            doc.text(cvOyM2.toString(), startX * 13 + 7, startY * 7 + 45);
-            doc.text(euro.toString(), startX * 13 + 7, startY * 7 + 50);
-            doc.text(cpiRelacionInfalcion.toString(), startX * 13 + 7, startY * 7 + 55);
-            doc.text(CVOyM2.toString(), startX * 13 + 7, startY * 7 + 60);
-            doc.text(cvc2.toString(), startX * 13 + 7, startY * 7 + 65);
+            doc.text(cvi.toString(), startX * 13 + 29, startY * 7 + 30, { align: 'right' });
+            doc.text(indiceCombustible.toString(), startX * 13 + 29, startY * 7 + 35, { align: 'right' });
+            doc.text(CVCn.toString(), startX * 13 + 29, startY * 7 + 40, { align: 'right' });
+            doc.text(cvOyM2.toString(), startX * 13 + 29, startY * 7 + 45, { align: 'right' });
+            doc.text(euro.toString(), startX * 13 + 29, startY * 7 + 50, { align: 'right' });
+            doc.text(cpiRelacionInfalcion.toString(), startX * 13 + 29, startY * 7 + 55, { align: 'right' });
+            doc.text(CVOyM2.toString(), startX * 13 + 29, startY * 7 + 60, { align: 'right' });
+            doc.text(cvc2.toString(), startX * 13 + 29, startY * 7 + 65, { align: 'right' });
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoEnergia2F.toString(), startX * 13 + 7, startY * 7 + 70);
-
+            doc.text(totalCargoEnergia2F.toString(), startX * 13 + 29, startY * 7 + 70, { align: 'right' });
 
             //total
             let totalEnergiaSuministradaF = formatoHn(totalEnergiaSuministrada);
-            doc.text(totalEnergiaSuministradaF.toString(), startX * 12 + 5, startY * 7 + 75);
+            doc.text(totalEnergiaSuministradaF.toString(), startX * 12 + 14.5, startY * 7 + 75, { align: 'right' });
             doc.setFont("helvetica", "normal");
-
 
             doc.text("US$", startX * 16 + 4, startY * 7 + 70);
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18, startY * 7 + 70);
+            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18+22, startY * 7 + 70, { align: 'right' });
             doc.setFont("helvetica", "bold");
             doc.text("TOTAL A PAGAR POR CARGOS DE ENERGÍA, DÓLARES DE EEUU ($)", startX + 12, startY * 7 + 80);
-            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18, startY * 7 + 80);
+            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18+22, startY * 7 + 80,{ align: 'right' });
             doc.text("US$", startX * 16 + 4, startY * 7 + 80);
             doc.text("TOTAL OTROS CARGOS O CRÉDITOS, en Lempiras (L)", startX + 2, startY * 7 + 85);
             doc.setFont("helvetica", "bold");
-            doc.text(otrosCargos.toString(), startX * 18, startY * 7 + 85);
+            doc.text(otrosCargos.toString(), startX * 18+22, startY * 7 + 85, { align: 'right' });
             doc.text("L", startX * 16 + 6, startY * 7 + 85);
             doc.text("TOTAL OTROS CARGOS", startX + 2, startY * 7 + 90);
             doc.setFont("helvetica", "bold");
-            doc.text(otrosCargos.toString(), startX * 18, startY * 7 + 90);
+            doc.text(otrosCargos.toString(), startX * 18+22, startY * 7 + 90,{ align: 'right' });
             doc.text("US$", startX * 16 + 4, startY * 7 + 90);
 
             doc.setFont("helvetica", "bold");
             doc.text("TOTAL A PAGAR EN DOLARES DE EEUU($).", startX * 5, startY * 7 + 95);
-            doc.text(totalPagarDolaresFormatted.toString(), startX * 18, startY * 7 + 95);
+            doc.text(totalPagarDolaresFormatted.toString(), startX * 18+22, startY * 7 + 95,{ align: 'right' });
 
             doc.text("US$", startX * 16 + 4, startY * 7 + 95);
             doc.setFont("helvetica", "normal");
@@ -2790,7 +2779,6 @@ export class ReportsComponent implements OnInit {
             doc.text(fechaConstancia, startX * 15 - 3, startY * 7 + 128);
             doc.text("__________________________________________", startX * 12, startY * 7 + 128);
             doc.text("Fecha", startX * 15 + 5, startY * 7 + 133);
-            doc.save('Factura ENERSA-ENEE ' + mes + " " + anio);
             window.open(doc.output('bloburl'))
           } else { console.log("NO DATA FOR FACTURA...") }
         });
@@ -4978,9 +4966,8 @@ export class ReportsComponent implements OnInit {
       const img = new Image();
       img.src = 'assets/Images/Logo.jpeg';
       img.onload = () => {
-        doc.addImage(img, 10, 15, 40, 10);
+        doc.addImage(img, 10, 15, 45, 10);
       };
-
 
       function obtenerAnioYNombreMes(fecha: any) {
         const meses = [
@@ -5013,14 +5000,11 @@ export class ReportsComponent implements OnInit {
       let anio = resultado.anio;
       let mes = resultado.nombreMes;
 
-
       const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
         return number.toString().replace(exp, rep);
       }
-
-
 
       this.reportService.getEnersa227(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (response: any) => {
@@ -5060,10 +5044,7 @@ export class ReportsComponent implements OnInit {
             for (let i = 0; i < response.euro.length; i++) {
               euro = response.euro[i].RelacionInflacion;
             }
-
             let capacidadFirmeComprometidaf = formatoHn(capacidadFirmeComprometida);
-
-
             // Definir las coordenadas de inicio para la tabla
             const startX = 10;
             const startY = 20;
@@ -5073,7 +5054,7 @@ export class ReportsComponent implements OnInit {
 
             doc.setFontSize(10);
             doc.text("CENTRAL TERMOELÉCTRICA CHOLOMA III - HONDURAS", startX, startY + 10);
-            doc.text("Contrato " + nombreContrato, startX, startY + 15);
+            doc.text("Contrato No. " + nombreContrato, startX, startY + 15);
             doc.text("Periodo de Facturación: " + mes + " " + anio, startX, startY * 2);
             doc.text("FACTURA No.  " + correlativo, startX * 16, startY + 10);
 
@@ -5142,9 +5123,7 @@ export class ReportsComponent implements OnInit {
             totalPagoCapacidad = totalA + totalB + totalC;
             totalPagoCapacidad = Number(totalPagoCapacidad.toFixed(2));
 
-
             //data
-
             doc.setFont("helvetica", "bold");
             //parte descripcion
             doc.text("DESCRIPCIÓN", startY + 2 * startX - 2, startY * 3 - 6);
@@ -5180,24 +5159,26 @@ export class ReportsComponent implements OnInit {
             doc.setFontSize(9);
             doc.text("US$/kW-mes", startY * 3 + 4.5 * startX - 14, startY * 3 + 4);
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 9);
-            doc.text(cargoCapacidadFijo.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 4);
-            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 9);
-            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 14);
+            doc.text(cargoCapacidadFijo.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 4, { align: 'right' });
+            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 9, { align: 'right' });
+            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 24, startY * 3 + 14, { align: 'right' });
             doc.text("US$/kW-mes", startY * 3 + 4.5 * startX - 14, startY * 3 + 19);
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 24);
-            doc.text(cargoOperacionDolares.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 19);
-            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 24);
-            doc.text(cpiRelacionInfalcion.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 29);
-            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 34);
+            doc.text(cargoOperacionDolares.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 19, { align: 'right' });
+            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 24, { align: 'right' });
+            doc.text(cpiRelacionInfalcion.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 29, { align: 'right' });
+            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 24, startY * 3 + 34, { align: 'right' });
             doc.text("L/kW-mes", startY * 3 + 4.5 * startX - 14, startY * 3 + 39);
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 44);
-            doc.text(cargoOperacionLempiras.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 39);
-            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 44);
-            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 49, { align: 'right' });
-            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 54);
+            doc.text(cargoOperacionLempiras.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 39, { align: 'right' });
+            doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 44, { align: 'right' });
 
-            doc.text(resultadoF.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 59);
-            doc.text(tasaDolar.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 64);
+            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 49, { align: 'right' });
+            //alinear
+            doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 24, startY * 3 + 54, { align: 'right' });
+
+            doc.text(resultadoF.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 59, { align: 'right' });
+            doc.text(tasaDolar.toString(), startY * 4 + 3 * startX + 24, startY * 3 + 64, { align: 'right' });
             doc.text("L", startY * 3 + 4.5 * startX - 8, startY * 3 + 59);
             doc.text("L/$", startY * 3 + 4.5 * startX - 8, startY * 3 + 64);
 
@@ -5215,11 +5196,11 @@ export class ReportsComponent implements OnInit {
             let totalAf = formatoHn(totalA);
             let totalBf = formatoHn(totalB);
             let totalCf = formatoHn(totalC);
-            doc.text(totalAf.toString(), startY * 4 + 10 * startX - 5, startY * 4 - 1);
-            doc.text(totalBf.toString(), startY * 4 + 10 * startX - 5, startY * 5 - 1);
-            doc.text(totalCf.toString(), startY * 4 + 10 * startX - 5, startY * 6 + 9);
+            doc.text(totalAf.toString(), startY * 4 + 10 * startX +21, startY * 4 - 1, { align: 'right' });
+            doc.text(totalBf.toString(), startY * 4 + 10 * startX +21, startY * 5 - 1, { align: 'right' });
+            doc.text(totalCf.toString(), startY * 4 + 10 * startX +21, startY * 6 + 9, { align: 'right' });
             doc.setFont("helvetica", "bold");
-            doc.text(totalPagoCapacidadF.toString(), startY * 4 + 10 * startX - 5, startY * 6 + 14);
+            doc.text(totalPagoCapacidadF.toString(), startY * 4 + 10 * startX +21, startY * 6 + 14, { align: 'right' });
             doc.setFont("helvetica", "normal");
             //cuadro2
             doc.rect(startX, startY * 7 - 5, cellWidth * 2 + 33, cellHeight - 4)
@@ -5403,66 +5384,64 @@ export class ReportsComponent implements OnInit {
             doc.setFont("helvetica", "bold");
             doc.text("CVE1", startX * 12 - 2, startY * 7 + 5);
             doc.setFontSize(9);
-            doc.text(primariaB1F.toString(), startX * 12 - 8, startY * 7 + 10);
-            doc.text(respaldoB1F.toString(), startX * 12 - 8, startY * 7 + 15);
-            doc.text(sumaCVE1f.toString(), startX * 12 - 8, startY * 7 + 20);
+            doc.text(primariaB1F.toString(), startX * 12 +14.5, startY * 7 + 10, { align: 'right' });
+            doc.text(respaldoB1F.toString(), startX * 12 +14.5, startY * 7 + 15, { align: 'right' });
+            doc.text(sumaCVE1f.toString(), startX * 12 +14.5, startY * 7 + 20, { align: 'right' });
             doc.setFont("helvetica", "normal");
 
-            doc.text(cvi.toString(), startX * 12 - 8, startY * 7 + 30);
-            doc.text(indiceCombustible.toString(), startX * 12 - 8, startY * 7 + 35);
-            doc.text(CVCn.toString(), startX * 12 - 8, startY * 7 + 40);
-            doc.text(cvOyM.toString(), startX * 12 - 8, startY * 7 + 45);
-            doc.text(euro.toString(), startX * 12 - 8, startY * 7 + 50);
-            doc.text(cpiRelacionInfalcion.toString(), startX * 12 - 8, startY * 7 + 55);
-            doc.text(CVOyM1.toString(), startX * 12 - 8, startY * 7 + 60);
-            doc.text(cvc.toString(), startX * 12 - 8, startY * 7 + 65);
+            doc.text(cvi.toString(), startX * 12 +14.5, startY * 7 + 30, { align: 'right' });
+            doc.text(indiceCombustible.toString(), startX * 12 +14.5, startY * 7 + 35, { align: 'right' });
+            doc.text(CVCn.toString(), startX * 12 +14.5, startY * 7 + 40, { align: 'right' });
+            doc.text(cvOyM.toString(), startX * 12 +14.5, startY * 7 + 45, { align: 'right' });
+            doc.text(euro.toString(), startX * 12 +14.5, startY * 7 + 50, { align: 'right' });
+            doc.text(cpiRelacionInfalcion.toString(), startX * 12 +14.5, startY * 7 + 55, { align: 'right' });
+            doc.text(CVOyM1.toString(), startX * 12 +14.5, startY * 7 + 60, { align: 'right' });
+            doc.text(cvc.toString(), startX * 12 +14.5, startY * 7 + 65, { align: 'right' });
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoEnergia1F.toString(), startX * 12 - 8, startY * 7 + 70);
+            doc.text(totalCargoEnergia1F.toString(), startX * 12 +14.5, startY * 7 + 70, { align: 'right' });
             doc.setFont("helvetica", "normal");
 
             doc.setFont("helvetica", "bold");
             doc.text("CVE2", startX * 13 + 12, startY * 7 + 5);
-            doc.text(primariaB2F.toString(), startX * 13 + 7, startY * 7 + 10);
-            doc.text(respaldoB2F.toString(), startX * 13 + 7, startY * 7 + 15);
-            doc.text(sumaCVE2f.toString(), startX * 13 + 7, startY * 7 + 20);
+            doc.text(primariaB2F.toString(), startX * 13 +29, startY * 7 + 10, { align: 'right' });
+            doc.text(respaldoB2F.toString(), startX * 13 + 29, startY * 7 + 15, { align: 'right' });
+            doc.text(sumaCVE2f.toString(), startX * 13 + 29, startY * 7 + 20, { align: 'right' });
             doc.setFont("helvetica", "normal");
-            doc.text(cvi.toString(), startX * 13 + 7, startY * 7 + 30);
-            doc.text(indiceCombustible.toString(), startX * 13 + 7, startY * 7 + 35);
-            doc.text(CVCn.toString(), startX * 13 + 7, startY * 7 + 40);
-            doc.text(cvOyM2.toString(), startX * 13 + 7, startY * 7 + 45);
-            doc.text(euro.toString(), startX * 13 + 7, startY * 7 + 50);
-            doc.text(cpiRelacionInfalcion.toString(), startX * 13 + 7, startY * 7 + 55);
-            doc.text(CVOyM2.toString(), startX * 13 + 7, startY * 7 + 60);
-            doc.text(cvc2.toString(), startX * 13 + 7, startY * 7 + 65);
+            doc.text(cvi.toString(), startX * 13 + 29, startY * 7 + 30, { align: 'right' });
+            doc.text(indiceCombustible.toString(), startX * 13 + 29, startY * 7 + 35, { align: 'right' });
+            doc.text(CVCn.toString(), startX * 13 + 29, startY * 7 + 40, { align: 'right' });
+            doc.text(cvOyM2.toString(), startX * 13 + 29, startY * 7 + 45, { align: 'right' });
+            doc.text(euro.toString(), startX * 13 + 29, startY * 7 + 50, { align: 'right' });
+            doc.text(cpiRelacionInfalcion.toString(), startX * 13 + 29, startY * 7 + 55, { align: 'right' });
+            doc.text(CVOyM2.toString(), startX * 13 + 29, startY * 7 + 60, { align: 'right' });
+            doc.text(cvc2.toString(), startX * 13 + 29, startY * 7 + 65, { align: 'right' });
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoEnergia2F.toString(), startX * 13 + 7, startY * 7 + 70);
-
+            doc.text(totalCargoEnergia2F.toString(), startX * 13 + 29, startY * 7 + 70, { align: 'right' });
 
             //total
             let totalEnergiaSuministradaF = formatoHn(totalEnergiaSuministrada);
-            doc.text(totalEnergiaSuministradaF.toString(), startX * 12 + 5, startY * 7 + 75);
+            doc.text(totalEnergiaSuministradaF.toString(), startX * 12 + 14.5, startY * 7 + 75, { align: 'right' });
             doc.setFont("helvetica", "normal");
-
 
             doc.text("US$", startX * 16 + 4, startY * 7 + 70);
             doc.setFont("helvetica", "bold");
-            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18, startY * 7 + 70);
+            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18+22, startY * 7 + 70, { align: 'right' });
             doc.setFont("helvetica", "bold");
             doc.text("TOTAL A PAGAR POR CARGOS DE ENERGÍA, DÓLARES DE EEUU ($)", startX + 12, startY * 7 + 80);
-            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18, startY * 7 + 80);
+            doc.text(totalCargoVariableEnergiaF.toString(), startX * 18+22, startY * 7 + 80,{ align: 'right' });
             doc.text("US$", startX * 16 + 4, startY * 7 + 80);
             doc.text("TOTAL OTROS CARGOS O CRÉDITOS, en Lempiras (L)", startX + 2, startY * 7 + 85);
             doc.setFont("helvetica", "bold");
-            doc.text(otrosCargos.toString(), startX * 18, startY * 7 + 85);
+            doc.text(otrosCargos.toString(), startX * 18+22, startY * 7 + 85, { align: 'right' });
             doc.text("L", startX * 16 + 6, startY * 7 + 85);
             doc.text("TOTAL OTROS CARGOS", startX + 2, startY * 7 + 90);
             doc.setFont("helvetica", "bold");
-            doc.text(otrosCargos.toString(), startX * 18, startY * 7 + 90);
+            doc.text(otrosCargos.toString(), startX * 18+22, startY * 7 + 90,{ align: 'right' });
             doc.text("US$", startX * 16 + 4, startY * 7 + 90);
 
             doc.setFont("helvetica", "bold");
             doc.text("TOTAL A PAGAR EN DOLARES DE EEUU($).", startX * 5, startY * 7 + 95);
-            doc.text(totalPagarDolaresFormatted.toString(), startX * 18, startY * 7 + 95);
+            doc.text(totalPagarDolaresFormatted.toString(), startX * 18+22, startY * 7 + 95,{ align: 'right' });
 
             doc.text("US$", startX * 16 + 4, startY * 7 + 95);
             doc.setFont("helvetica", "normal");
@@ -5475,10 +5454,9 @@ export class ReportsComponent implements OnInit {
             doc.text(fechaConstancia, startX * 15 - 3, startY * 7 + 128);
             doc.text("__________________________________________", startX * 12, startY * 7 + 128);
             doc.text("Fecha", startX * 15 + 5, startY * 7 + 133);
-            doc.save('Factura ENERSA-ENEE ' + mes + " " + anio);
+           doc.save("Factura ENERSA-ENEE " +mes+" "+anio);
           } else { console.log("NO DATA FOR FACTURA...") }
         });
+      }
     }
-  }
-
 }
