@@ -38,9 +38,6 @@ export class ReportsComponent implements OnInit {
   constructor(private reportService: ReportsService, private notification: NotificationService,) {
     this.tipoReporte = '';
   }
-
-
-
   ngOnInit(): void { }
 
   onFechaInicialChange(value: Date): void {
@@ -63,18 +60,12 @@ export class ReportsComponent implements OnInit {
   getDiasDelMes(fecha: any) {
     const year = fecha.getFullYear();
     const month = fecha.getMonth();
-
-
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
-
-
-
     const diasDelMes = [];
     for (let dia = firstDay; dia <= lastDay; dia.setDate(dia.getDate() + 1)) {
       diasDelMes.push(new Date(dia));
     }
-
     return diasDelMes;
   }
 
@@ -135,7 +126,7 @@ export class ReportsComponent implements OnInit {
     fechaInicialFormatted.setHours(0, 0, 0, 0);
 
     let fechaFinalFormatted = new Date(this.fechaFinal);
-      fechaFinalFormatted.setHours(0, 0, 0, 0);
+    fechaFinalFormatted.setHours(0, 0, 0, 0);
     const diasDelMesInicial = this.getDiasDelMes(this.fechaInicial);
     // console.log("DIA EN MES ", diasDelMesInicial);
     const fechaLocalTime = new Date(this.fechaInicial);
@@ -182,11 +173,10 @@ export class ReportsComponent implements OnInit {
       };
     }
 
-
     const fecha = new Date(fechaInicialFormatted);
-      const resultado = obtenerAnioYNombreMes(fecha);
-      let anio = resultado.anio;
-      let mes = resultado.nombreMes;
+    const resultado = obtenerAnioYNombreMes(fecha);
+    let anio = resultado.anio;
+    let mes = resultado.nombreMes;
 
     if (this.tipoReporte == 'Energia Sumistrada') {
       const doc = new jsPDF();
@@ -235,12 +225,14 @@ export class ReportsComponent implements OnInit {
       let calibracion = '';
       let dataDiferencia = 0;
       const ids = [129, 139];
-      let dataEnergiaNetaAnterior = 0
+      let dataEnergiaNetaAnterior = 0;
       let dataenergiaNetaActual = 0;
       let dataDiferenciaEnergiaNeta = 0;
       let sumMedPrimarios = 0;
       let sumMedSecundarios = 0;
       let porcentajeTotales = 0
+
+
       const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
@@ -330,7 +322,7 @@ export class ReportsComponent implements OnInit {
                     dataEnergiaNetaAnterior = Number(dataEnergiaNetaAnterior.toFixed(2));
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataenergiaNetaActual = Number(dataenergiaNetaActual.toFixed(2));
-                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
+                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaActualRec - dataLecturaAnteriorRec);
                     dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedPrimarios += dataDiferenciaEnergiaNeta;
                     sumMedPrimarios = Number(sumMedPrimarios.toFixed(2));
@@ -385,21 +377,21 @@ export class ReportsComponent implements OnInit {
                     let dataEnergiaNetaAnteriorF = formatoHn(dataEnergiaNetaAnterior);
                     let dataenergiaNetaActualF = formatoHn(dataenergiaNetaActual);
                     let dataDiferenciaEnergiaNetaF = formatoHn(dataDiferenciaEnergiaNeta);
-                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend1 + 2, 45 + i * 15);
-                    doc.text(dataLecturaActualF.toString(), xPosLegend1 + 25, 45 + i * 15);
-                    doc.text(dataDiferenciaF.toString(), xPosLegend1 + 48, 45 + i * 15);
-                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend1 + 2, 57 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 24, 57 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 45, 57 + i * 15);
+                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend1 + 21, 45 + i * 15, { align: 'right' });
+                    doc.text(dataLecturaActualF.toString(), xPosLegend1 + 42, 45 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaF.toString(), xPosLegend1 + 61, 45 + i * 15, { align: 'right' });
+                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend1 + 21, 57 + i * 15, { align: 'right' });
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 42, 57 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 61, 57 + i * 15, { align: 'right' });
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                    dataDiferencia = Number(dataDiferencia.toFixed(2))
+                    dataDiferencia = Number(dataDiferencia.toFixed(2));
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataenergiaNetaActual = Number(dataenergiaNetaActual.toFixed(2));
-                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
+                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaActualRec - dataLecturaAnteriorRec);
                     dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedSecundarios += dataDiferenciaEnergiaNeta;
                     sumMedSecundarios = Number(sumMedSecundarios.toFixed(2));
@@ -447,19 +439,20 @@ export class ReportsComponent implements OnInit {
                     doc.text(calibracion, xPosLegend2 - 20, 38 + i * 15);
                     doc.text(EnergiNeta, xPosLegend2 - 20, 42 + i * 15);
 
-                    //data
+                    //data respaldo
                     let dataLecturaAnteriorF = formatoHn(dataLecturaAnterior);
                     let dataLecturaActualF = formatoHn(dataLecturaActual);
                     let dataDiferenciaF = formatoHn(dataDiferencia);
                     let dataEnergiaNetaAnteriorF = formatoHn(dataEnergiaNetaAnterior)
                     let dataenergiaNetaActualF = formatoHn(dataenergiaNetaActual);
                     let dataDiferenciaEnergiaNetaF = formatoHn(dataDiferenciaEnergiaNeta);
-                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend2 + 2, 30 + i * 15);
-                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 24, 30 + i * 15);
-                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 47, 30 + i * 15);
-                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend2 + 2, 42 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 24, 42 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 45, 42 + i * 15);
+                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend2 + 21.5, 30 + i * 15, { align: 'right' });
+                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 42, 30 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 61.5, 30 + i * 15, { align: 'right' });
+
+                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend2 + 21.5, 42 + i * 15, { align: 'right' });
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 42, 42 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 61.5, 42 + i * 15, { align: 'right' });
 
                   }
                   doc.setFontSize(10);
@@ -470,16 +463,16 @@ export class ReportsComponent implements OnInit {
                 this.validateError = true;
                 this.notification.createNotification('error', 'Falló', `${resp129.content} 😓`);
               }
-              porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios).toFixed(4));
+              porcentajeTotales = Number((((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios) * 100).toFixed(4));
               doc.setFontSize(6);
               doc.text(subtitle1, xPosLegend1 - 21, 185.5)
               doc.text(subtitle2, xPosLegend2 - 21, 185.5)
               doc.setFontSize(7);
               let sumMedPrimariosF = formatoHn(sumMedPrimarios);
               let sumMedSecundariosF = formatoHn(sumMedSecundarios);
-              doc.text(sumMedPrimariosF.toString(), 74, 185.5);
-              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 44.5, 185.5)
-              doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 19, 193)
+              doc.text(sumMedPrimariosF.toString(), 91, 185.5, { align: 'right' });
+              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 61.5, 185.5, { align: 'right' })
+              doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 5.5, 193, { align: 'right' })
               doc.setFontSize(6)
               doc.text(subtitle3, xPosLegend1 - 21, 193);
               doc.setFontSize(10);
@@ -509,9 +502,9 @@ export class ReportsComponent implements OnInit {
                     let dataLecturaAnteriorRecF = formatoHn(dataLecturaAnteriorRec);
                     let dataLecturaActualRecF = formatoHn(dataLecturaActualRec);
                     let dataDiferenciaRecF = formatoHn(dataDiferenciaRec);
-                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend1 + 5, 49 + j * 15);
-                    doc.text(dataLecturaActualRecF.toString(), xPosLegend1 + 28, 49 + j * 15);
-                    doc.text(dataDiferenciaRecF.toString(), xPosLegend1 + 48, 49 + j * 15);
+                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend1 + 21, 49 + j * 15, { align: 'right' });
+                    doc.text(dataLecturaActualRecF.toString(), xPosLegend1 + 42, 49 + j * 15, { align: 'right' });
+                    doc.text(dataDiferenciaRecF.toString(), xPosLegend1 + 61, 49 + j * 15, { align: 'right' });
                   } else {
                     //labels para medidores de respaldo
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
@@ -521,9 +514,9 @@ export class ReportsComponent implements OnInit {
                     let dataLecturaAnteriorRecF = formatoHn(dataLecturaAnteriorRec);
                     let dataLecturaActualRecF = formatoHn(dataLecturaActualRec);
                     let dataDiferenciaRecF = formatoHn(dataDiferenciaRec);
-                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend2 + 3, 34 + j * 15);
-                    doc.text(dataLecturaActualRecF.toString(), xPosLegend2 + 28, 34 + j * 15);
-                    doc.text(dataDiferenciaRecF.toString(), xPosLegend2 + 48, 34 + j * 15);
+                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend2 + 21.5, 34 + j * 15, { align: 'right' });
+                    doc.text(dataLecturaActualRecF.toString(), xPosLegend2 + 42, 34 + j * 15, { align: 'right' });
+                    doc.text(dataDiferenciaRecF.toString(), xPosLegend2 + 61.5, 34 + j * 15, { align: 'right' });
                   }
 
                 }
@@ -571,6 +564,7 @@ export class ReportsComponent implements OnInit {
         const rep = '$1,';
         return number.toString().replace(exp, rep);
       }
+
       const doc = new jsPDF();
       const asignacionPorDia: AsignacionPorDia[] = [];
       let dia = 1;
@@ -829,7 +823,7 @@ export class ReportsComponent implements OnInit {
               sumaTotalCogeneracion = Number(sumaTotalCogeneracion.toFixed(2));
               doc.setFontSize(6);
               let totalCogeneracionF = formatoHn(totalCogeneracion);
-              doc.text(totalCogeneracionF.toString(), 158, 38.5 + i * 5);
+              doc.text(totalCogeneracionF.toString(), 178.5, 38.5 + i * 5, { align: 'right' });
               doc.setFontSize(7);
             }
 
@@ -856,7 +850,7 @@ export class ReportsComponent implements OnInit {
               sumTotalHpunta = Number(sumTotalHpunta.toFixed(2));
               doc.setFontSize(6);
               let hPuntaF = formatoHn(hPunta);
-              doc.text(hPuntaF.toString(), 123, 38.5 + i * 5);
+              doc.text(hPuntaF.toString(), 135.5, 38.5 + i * 5, { align: 'right' });
               doc.setFontSize(7);
             }
 
@@ -878,7 +872,7 @@ export class ReportsComponent implements OnInit {
               sumFueraHpunta = Number(sumFueraHpunta.toFixed(2));
               let fHpuntaF = formatoHn(fHpunta.toFixed(2));
               doc.setFontSize(6);
-              doc.text(fHpuntaF.toString(), 138, 38.5 + i * 5);
+              doc.text(fHpuntaF.toString(), 155.5, 38.5 + i * 5, { align: 'right' });
               doc.setFontSize(7);
             }
             //PequMW
@@ -1116,9 +1110,9 @@ export class ReportsComponent implements OnInit {
                 let bloque1PrimF = formatoHn(bloque1Prim);
                 let bloque2PrimF = formatoHn(bloque2Prim);
                 let totalBPrimariaF = formatoHn(totalBPrimaria);
-                doc.text(bloque1PrimF.toString(), 25.5, 38.5 + i * 5);
-                doc.text(bloque2PrimF.toString(), 41, 38.5 + i * 5);
-                doc.text(totalBPrimariaF.toString(), 56, 38.5 + i * 5);
+                doc.text(bloque1PrimF.toString(), 39.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(bloque2PrimF.toString(), 54.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(totalBPrimariaF.toString(), 72.5, 38.5 + i * 5, { align: 'right' });
               }
             } else {
               console.log("La suma de la energia primaria 06+22:24 no puede ser procesada")
@@ -1149,9 +1143,9 @@ export class ReportsComponent implements OnInit {
                 let sumaF = formatoHn(suma);
                 let bloque2respF = formatoHn(bloque2resp)
                 let totalBRespaldoF = formatoHn(totalBRespaldo);
-                doc.text(sumaF.toString(), 75, 38.5 + i * 5);
-                doc.text(bloque2respF.toString(), 90, 38.5 + i * 5);
-                doc.text(totalBRespaldoF.toString(), 105, 38.5 + i * 5);
+                doc.text(sumaF.toString(), 87.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(bloque2respF.toString(), 102.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(totalBRespaldoF.toString(), 120.5, 38.5 + i * 5, { align: 'right' });
               }
 
               console.log("SSSSUMMM", sumaB1primaria);
@@ -1165,7 +1159,7 @@ export class ReportsComponent implements OnInit {
                   sumTotalEntregado = Number(sumTotalEntregado.toFixed(2));
                   doc.setFontSize(6);
                   let totalEntregadoF = formatoHn(totalEntregado);
-                  doc.text(totalEntregadoF.toString(), 180, 38.5 + i * 5);
+                  doc.text(totalEntregadoF.toString(), 193.5, 38.5 + i * 5, { align: 'right' });
                   doc.setFontSize(7);
                 }
               } else {
@@ -1253,7 +1247,7 @@ export class ReportsComponent implements OnInit {
                 doc.setFillColor(247, 205, 89);
                 doc.rect(startX, startY * 7 + 15.5, 169, cellHeight, 'F');
 
-                doc.setFontSize(5)
+                doc.setFontSize(5.5)
                 doc.setFont("helvetica", "bold");
 
                 let sumaB1primariaF = formatoHn(sumaB1primaria);
@@ -1267,25 +1261,26 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 18.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 18.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 18.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 18.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 18.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 18.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 18.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 18.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 18.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 18.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 18.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 18.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 18.5, { align: 'right' });
 
               }
               if (primario06.length === 30) {
                 doc.setFillColor(247, 205, 89);
                 doc.rect(startX, startY * 7 + 10.5, 169, cellHeight, 'F');
 
-                doc.setFontSize(5)
+                doc.setFontSize(5.5)
                 doc.setFont("helvetica", "bold");
 
                 let sumaB1primariaF = formatoHn(sumaB1primaria);
@@ -1299,18 +1294,19 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 13.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 13.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 13.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 13.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 13.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 13.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 13.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 13.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 13.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 13.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 13.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 13.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 13.5, { align: 'right' });
 
 
               }
@@ -1332,18 +1328,19 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 8.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 8.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 8.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 8.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 8.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 8.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 8.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 8.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 8.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 8.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 8.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 8.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 8.5, { align: 'right' });
               }
               if (primario06.length === 28) {
                 doc.setFillColor(247, 205, 89);
@@ -1363,35 +1360,33 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 3.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 3.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 3.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 3.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 3.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 3.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 3.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 3.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 3.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 3.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 3.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 3.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 3.5, { align: 'right' });
               }
               doc.setFontSize(7)
-
-
-
               //cuadro penultimo
               doc.rect(startX + 15, startY * 8 + 10, 16, cellHeight + 15);//enersa cuadro
               doc.text("ENERSA 227", startX + 15.5, startY * 8 + 21.5);
               doc.rect(startX + 31, startY * 8 + 10, 15, cellHeight);//cuadro primaria
               doc.setFont("helvetica", "bold");
-              doc.text("Primaria", startX + 33, startY * 8 + 13.5);
+              doc.text("Primaria", startX + 32, startY * 8 + 13.5);
               doc.rect(startX + 31, startY * 8 + 15, 15, cellHeight);//cuadro secundaria
               doc.text("Secundaria", startX + 32, startY * 8 + 18.5);
               doc.rect(startX + 31, startY * 8 + 20, 15, cellHeight);//cuadro respaldo
-              doc.text("Respaldo", startX + 33, startY * 8 + 23.5);
+              doc.text("Respaldo", startX + 32, startY * 8 + 23.5);
               doc.rect(startX + 31, startY * 8 + 25, 15, cellHeight);//cuadro Total
-              doc.text("Total", startX + 35, startY * 8 + 28.5);
+              doc.text("Total", startX + 32, startY * 8 + 28.5);
 
               //data penultimo cuadro
               sumPrimariaRespaldo = totalSumPrimaria + totalSumRespaldo;
@@ -1400,25 +1395,30 @@ export class ReportsComponent implements OnInit {
               let totalSumRespaldoF = formatoHn(totalSumRespaldo);
               let sumPrimariaRespaldoF = formatoHn(sumPrimariaRespaldo);
               doc.rect(startX * 3 - 4, startY * 8 + 10, 25, cellHeight);//1
-              doc.text(totalSumPrimariaF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 13.5);
+              doc.text(totalSumPrimariaF.toString() + " Kwh", startX * 4 - 4.5, startY * 8 + 13.5, { align: 'right' });
               doc.rect(startX * 3 - 4, startY * 8 + 15, 25, cellHeight);//2
-              doc.text("0", startX * 3 - 3, startY * 8 + 18.5);
+              doc.text("0 kwh", startX * 4 - 4.5, startY * 8 + 18.5, { align: 'right' });
               doc.rect(startX * 3 - 4, startY * 8 + 20, 25, cellHeight);//3
-              doc.text(totalSumRespaldoF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 23.5);
+              doc.text(totalSumRespaldoF.toString() + " Kwh", startX * 4 - 4.5, startY * 8 + 23.5, { align: 'right' });
               doc.rect(startX * 3 - 4, startY * 8 + 25, 25, cellHeight);//4
-              doc.text(sumPrimariaRespaldoF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 28.5);
+              doc.text(sumPrimariaRespaldoF.toString() + " Kwh", startX * 4 - 4.5, startY * 8 + 28.5, { align: 'right' });
               doc.setFont("helvetica", "normal");
 
               //cuadro ultimo
+              doc.setFontSize(6.5);
               doc.rect(startX + 15, startY * 9 + 15, 16, cellHeight + 10);//cogeneracion cuadro
-              doc.text("Cogeneración", startX + 15.5, startY * 9 + 23.5);
-              doc.rect(startX + 31, startY * 9 + 15, 20, cellHeight);//cuadro hpunta
               doc.setFont("helvetica", "bold");
-              doc.text("Hrs Punta", startX + 33, startY * 9 + 18.5);
-              doc.rect(startX + 31, startY * 9 + 20, 20, cellHeight);//cuadro fuera
+              doc.text("Cogeneración", startX + 15.5, startY * 9 + 23.5);
+              doc.rect(startX + 31, startY * 9 + 15, 19, cellHeight);//cuadro hpunta
+              doc.setFontSize(7);
+              doc.setFont("helvetica", "bold");
+              doc.text("Hrs Punta", startX + 32, startY * 9 + 18.5);
+              doc.rect(startX + 31, startY * 9 + 20, 19, cellHeight);//cuadro fuera
+              doc.setFontSize(6.5);
               doc.text("Fuera Hrs Punta", startX + 32, startY * 9 + 23.5);
-              doc.rect(startX + 31, startY * 9 + 25, 20, cellHeight);//cuadro total hpunta
-              doc.text("Total", startX + 33, startY * 9 + 28.5);
+              doc.setFontSize(7);
+              doc.rect(startX + 31, startY * 9 + 25, 19, cellHeight);//cuadro total hpunta
+              doc.text("Total", startX + 32, startY * 9 + 28.5);
 
               //data ultimo cuadro
               totalSumHpunta = sumTotalHpunta + sumFueraHpunta;
@@ -1428,17 +1428,15 @@ export class ReportsComponent implements OnInit {
               let sumFueraHpuntaF = formatoHn(sumFueraHpunta);
               let totalSumHpuntaF = formatoHn(totalSumHpunta);
               doc.setFontSize(6.5);
-              doc.rect(startX * 3 + 1, startY * 9 + 15, 20, cellHeight);//1
-              doc.text(sumTotalHpuntaF.toString() + " Kwh", startX * 3 + 2, startY * 9 + 18.5);
-              doc.rect(startX * 3 + 1, startY * 9 + 20, 20, cellHeight);//2
-              doc.text(sumFueraHpuntaF.toString() + ' Kwh', startX * 3 + 2, startY * 9 + 23.5);
-              doc.rect(startX * 3 + 1, startY * 9 + 25, 20, cellHeight);//3
-              doc.text(totalSumHpuntaF.toString() + " Kwh", startX * 3 + 2, startY * 9 + 28.5);
+              doc.rect(startX * 3, startY * 9 + 15, 21, cellHeight);//1
+              doc.text(sumTotalHpuntaF.toString() + " Kwh", startX * 4 - 4.5, startY * 9 + 18.5, { align: 'right' });
+              doc.rect(startX * 3, startY * 9 + 20, 21, cellHeight);//2
+              doc.text(sumFueraHpuntaF.toString() + ' Kwh', startX * 4 - 4.5, startY * 9 + 23.5, { align: 'right' });
+              doc.rect(startX * 3, startY * 9 + 25, 21, cellHeight);//3
+              doc.text(totalSumHpuntaF.toString() + " Kwh", startX * 4 - 4.5, startY * 9 + 28.5, { align: 'right' });
               doc.setFont("helvetica", "normal");
 
-
               window.open(doc.output('bloburl'))
-
             } else {
               console.log("La suma de la energía respaldo 06+22:24 no puede ser procesada");
             }
@@ -1466,7 +1464,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 40, 15);
+        doc.addImage(img, 10, 10, 35, 15);
       };
 
       img2.onload = () => {
@@ -1476,7 +1474,9 @@ export class ReportsComponent implements OnInit {
       img3.onload = () => {
         doc.addImage(img3, 10, 259, 193, 18);
       };
+      doc.setFont("helvetica", "bold");
       let tittle = `LECTURAS DE ENERGIA COGENERACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
+      doc.setFont("helvetica", "normal");
       let lecturasPrincipalTxt = '1. LECTURAS Y DIFERENCIA DE ENERGIA MEDIDOR PRINCIPAL';
       let lecturasRespaldoTxt = '2. LECTURAS Y DIFERENCIA DE ENERGIA MEDIDOR DE RESPALDO';
       let promedioMedidoresTxt = '3. PROMEDIO Y % ERROR DE ENERGIA';
@@ -1594,6 +1594,8 @@ export class ReportsComponent implements OnInit {
       let dataPorcentRestoEnee = 0;
       let dataPorcentActivoEnee = 0;
 
+      const feriadosHn: string[] = [];
+
 
       const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
@@ -1604,12 +1606,62 @@ export class ReportsComponent implements OnInit {
       this.reportService.getCogeneracion_12(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (response: any) => {
           console.log("Respuesta 1 ", response);
-
-          if (response) {
-            dataHorasPunta = response.horaPunta[0].horas;
-            dataMultiplicador = response.horaPunta[0].multiplicador;
-            dataHpuntaPeriodo = dataHorasPunta * dataMultiplicador;
+          for (let i = 0; i < response.feriadosHn.length; i++) {
+            const fechaString = response.feriadosHn[i].fecha;
+            const fechaSinHora = fechaString.substr(0, 10);
+            feriadosHn.push(fechaSinHora);
           }
+
+          function contarSabadosDomingos(fecha: Date): number {
+            // Obtiene el primer día del mes
+            const primerDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+            // Obtiene el último día del mes
+            const ultimoDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0);
+            // Inicializa un contador para los sábados y domingos
+            let contadorSabadosDomingos = 0;
+            // Itera a través de los días del mes
+            let diaActual = new Date(primerDiaDelMes);
+            while (diaActual <= ultimoDiaDelMes) {
+              // Comprueba si el día actual es un sábado o un domingo (0: domingo, 6: sábado)
+              if (diaActual.getDay() === 0 || diaActual.getDay() === 6) {
+                contadorSabadosDomingos++;
+              }
+              diaActual.setDate(diaActual.getDate() + 1);
+            }
+            return contadorSabadosDomingos;
+          }
+          const fecha = new Date(fechaInicialFormatted); // Reemplaza con tu fecha de inicio (meses en JavaScript son 0-indexed)
+
+          const diasSabadosDomingos = contarSabadosDomingos(fecha);
+          console.log(`En el mes de ${fecha.toLocaleString('default', { month: 'long' })} hay ${diasSabadosDomingos} sábados y domingos.`);
+
+          function contarFeriadosEnMes(fecha: Date, feriadosHn: string[]): number {
+            const primerDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+            console.log("primer dia del mes ", primerDiaDelMes);
+            const ultimoDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0);
+            const fechaInicialFormatted = fecha.toISOString().split('T')[0];
+
+            const feriadosEnMes = feriadosHn
+              .map((feriado) => new Date(feriado))
+              .filter(
+                (feriado) => (
+                  feriado >= primerDiaDelMes && feriado <= ultimoDiaDelMes) ||
+                  feriado.toISOString().split('T')[0] === fechaInicialFormatted
+              );
+
+            return feriadosEnMes.length;
+          }
+
+          const fechaF = new Date(fechaInicialFormatted); // Reemplaza con tu fecha de inicio (meses en JavaScript son 0-indexed)
+          const cantidadFeriadosEnMes = contarFeriadosEnMes(fechaF, feriadosHn);
+          console.log(`En el mes de ${fechaF.toLocaleString('default', { month: 'long' })} hay ${cantidadFeriadosEnMes} feriados.`);
+          let sumaDiasPunta = diasSabadosDomingos + cantidadFeriadosEnMes;
+          let diasPunta = cantidadDias - sumaDiasPunta;
+          console.log("dias punta", diasPunta);
+          dataHorasPunta = diasPunta;
+          dataMultiplicador = 5;
+          dataHpuntaPeriodo = dataHorasPunta * dataMultiplicador;
+
           //lecturas manuales enee
           if (response) {
             for (let i = 0; i < response.lecturasEnee.length; i++) {
@@ -1708,11 +1760,15 @@ export class ReportsComponent implements OnInit {
               dataPromedioActivoEnee = Number(dataDiferenciaActivoEnee + dataDiferenciaActivoRespaldoEnee) / 2;
               dataPromedioActivoEnee = Number(dataPromedioActivoEnee.toFixed(2));
 
-              dataPorcentPuntaEnee = Math.abs((dataDiferenciaPuntaEnee / dataPromedioActivoEnee - 1));
+              console.log("data diferencia punta enee ",dataDiferenciaPuntaEnee  );
+              console.log("data Promedio ActivoEnee",dataPromedioActivoEnee);
+
+              console.log("proooom ",dataPromedioActivoEnee );
+              dataPorcentPuntaEnee = Math.abs((dataDiferenciaPuntaEnee / dataPromedioPuntaEnee -1))*100;
               dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
-              dataPorcentRestoEnee = Math.abs((dataDiferenciaRestoEnee / dataPromedioRestoEnee - 1));
+              dataPorcentRestoEnee = Math.abs((dataDiferenciaRestoEnee / dataPromedioRestoEnee - 1))*100;
               dataPorcentRestoEnee = Number(dataPorcentRestoEnee.toFixed(4));
-              dataPorcentActivoEnee = Math.abs((dataDiferenciaActivoEnee / dataPromedioActivoEnee - 1));
+              dataPorcentActivoEnee = Math.abs((dataDiferenciaActivoEnee / dataPromedioActivoEnee - 1))*100;
               dataPorcentActivoEnee = Number(dataPorcentActivoEnee.toFixed(4));
 
               dataTotalPuntaEnee = dataPromedioPuntaEnee * dataFactor;
@@ -1729,9 +1785,7 @@ export class ReportsComponent implements OnInit {
             let dataPromedioPuntaEneeF = formatoHn(dataPromedioPuntaEnee);
             let dataPromedioRestoEneeF = formatoHn(dataPromedioRestoEnee);
             let dataPromedioActivoEneeF = formatoHn(dataPromedioActivoEnee);
-            let dataPorcentPuntaEneeF = formatoHn(dataPorcentPuntaEnee);
-            let dataPorcentRestoEneeF = formatoHn(dataPorcentRestoEnee);
-            let dataPorcentActivoEneeF = formatoHn(dataPorcentActivoEnee);
+
             let dataTotalPuntaEneeF = formatoHn(dataTotalPuntaEnee);
             let dataTotalRestoEneeF = formatoHn(dataTotalRestoEnee);
             let dataTotalActivoEneeF = formatoHn(dataTotalActivoEnee);
@@ -1740,9 +1794,9 @@ export class ReportsComponent implements OnInit {
             doc.text(dataPromedioRestoEneeF.toString(), 13 * startX + 30, startY + 18.5);
             doc.text(dataPromedioActivoEneeF.toString(), 15 * startX + 33, startY + 18.5);
 
-            doc.text(dataPorcentPuntaEneeF.toString() + '%', 10 * startX + 43, startY + 23.5);
-            doc.text(dataPorcentRestoEneeF.toString() + '%', 13 * startX + 33, startY + 23.5);
-            doc.text(dataPorcentActivoEneeF.toString() + '%', 15 * startX + 35, startY + 23.5);
+            doc.text(dataPorcentPuntaEnee.toString() + '%', 10 * startX + 43, startY + 23.5);
+            doc.text(dataPorcentRestoEnee.toString() + '%', 13 * startX + 33, startY + 23.5);
+            doc.text(dataPorcentActivoEnee.toString() + '%', 15 * startX + 35, startY + 23.5);
 
             doc.text(dataTotalPuntaEneeF.toString(), 10 * startX + 43, startY + 38.5);
             doc.text(dataTotalRestoEneeF.toString(), 13 * startX + 33, startY + 38.5);
@@ -1996,12 +2050,12 @@ export class ReportsComponent implements OnInit {
               dataPromedioResto = Number(dataPromedioResto.toFixed(2));
               dataPromedioTotalActivo = (dataDiferenciaActivoPrincipal + dataDiferenciaActivoRespaldo) / 2
               dataPromedioTotalActivo = Number(dataPromedioTotalActivo.toFixed(2));
-              dataPorcentPunta = Math.abs((dataDiferenciaPuntaPrincipal / dataPromedioPunta) - 1);
-              dataPorcentPunta = Number(dataPorcentPunta.toFixed(8));
-              dataPorcentResto = Math.abs((dataDiferenciaRestoPrincipal / dataPromedioResto - 1));
-              dataPorcentResto = Number(dataPorcentResto.toFixed(8));
-              dataPorcentTotalActivo = Math.abs((dataDiferenciaActivoPrincipal / dataPromedioTotalActivo - 1));
-              dataPorcentTotalActivo = Number(dataPorcentTotalActivo.toFixed(8));
+              dataPorcentPunta = Math.abs((dataDiferenciaPuntaPrincipal / dataPromedioPunta) - 1)*100;
+              dataPorcentPunta = Number(dataPorcentPunta.toFixed(4));
+              dataPorcentResto = Math.abs((dataDiferenciaRestoPrincipal / dataPromedioResto - 1))*100;
+              dataPorcentResto = Number(dataPorcentResto.toFixed(4));
+              dataPorcentTotalActivo = Math.abs((dataDiferenciaActivoPrincipal / dataPromedioTotalActivo - 1))*100;
+              dataPorcentTotalActivo = Number(dataPorcentTotalActivo.toFixed(4));
               dataTotalPunta = dataPromedioPunta * dataFactor;
               dataTotalPunta = Number(dataTotalPunta.toFixed(2));
               dataTotalResto = dataPromedioResto * dataFactor;
@@ -2452,7 +2506,9 @@ export class ReportsComponent implements OnInit {
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 44);
             doc.text(cargoOperacionLempiras.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 39);
             doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 44);
-            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 49);
+
+            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 25, startY * 3 + 49, { align: 'right' });
+            //alinear
             doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 54);
 
             doc.text(resultadoF.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 59);
@@ -2730,11 +2786,11 @@ export class ReportsComponent implements OnInit {
             doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 108);
             doc.text("aplicado sobre la facturación, según el Contrato " + nombreContrato, startX + 2, startY * 7 + 115);
             doc.text("__________________________________________", startX + 8, startY * 7 + 128);
-            doc.text("Firma y Sello", startX * 5-2, startY * 7 + 133);
-            doc.text(fechaConstancia, startX * 15-3, startY * 7 + 128);
+            doc.text("Firma y Sello", startX * 5 - 2, startY * 7 + 133);
+            doc.text(fechaConstancia, startX * 15 - 3, startY * 7 + 128);
             doc.text("__________________________________________", startX * 12, startY * 7 + 128);
             doc.text("Fecha", startX * 15 + 5, startY * 7 + 133);
-            doc.save('Factura ENERSA-ENEE '+ mes +" " +anio);
+            doc.save('Factura ENERSA-ENEE ' + mes + " " + anio);
             window.open(doc.output('bloburl'))
           } else { console.log("NO DATA FOR FACTURA...") }
         });
@@ -2756,7 +2812,7 @@ export class ReportsComponent implements OnInit {
     fechaInicialFormatted.setHours(0, 0, 0, 0);
 
     let fechaFinalFormatted = new Date(this.fechaFinal);
-      fechaFinalFormatted.setHours(0, 0, 0, 0);
+    fechaFinalFormatted.setHours(0, 0, 0, 0);
     const diasDelMesInicial = this.getDiasDelMes(this.fechaInicial);
     // console.log("DIA EN MES ", diasDelMesInicial);
     const fechaLocalTime = new Date(this.fechaInicial);
@@ -2805,9 +2861,9 @@ export class ReportsComponent implements OnInit {
 
 
     const fecha = new Date(fechaInicialFormatted);
-      const resultado = obtenerAnioYNombreMes(fecha);
-      let anio = resultado.anio;
-      let mes = resultado.nombreMes;
+    const resultado = obtenerAnioYNombreMes(fecha);
+    let anio = resultado.anio;
+    let mes = resultado.nombreMes;
 
     if (this.tipoReporte == 'Energia Sumistrada') {
       const doc = new jsPDF();
@@ -2820,7 +2876,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 30, 10);
+        doc.addImage(img, 10, 10, 31, 10);
       };
 
       img2.onload = () => {
@@ -2856,12 +2912,14 @@ export class ReportsComponent implements OnInit {
       let calibracion = '';
       let dataDiferencia = 0;
       const ids = [129, 139];
-      let dataEnergiaNetaAnterior = 0
+      let dataEnergiaNetaAnterior = 0;
       let dataenergiaNetaActual = 0;
       let dataDiferenciaEnergiaNeta = 0;
       let sumMedPrimarios = 0;
       let sumMedSecundarios = 0;
       let porcentajeTotales = 0
+
+
       const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
         const rep = '$1,';
@@ -2951,7 +3009,7 @@ export class ReportsComponent implements OnInit {
                     dataEnergiaNetaAnterior = Number(dataEnergiaNetaAnterior.toFixed(2));
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataenergiaNetaActual = Number(dataenergiaNetaActual.toFixed(2));
-                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
+                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaActualRec - dataLecturaAnteriorRec);
                     dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedPrimarios += dataDiferenciaEnergiaNeta;
                     sumMedPrimarios = Number(sumMedPrimarios.toFixed(2));
@@ -3006,21 +3064,21 @@ export class ReportsComponent implements OnInit {
                     let dataEnergiaNetaAnteriorF = formatoHn(dataEnergiaNetaAnterior);
                     let dataenergiaNetaActualF = formatoHn(dataenergiaNetaActual);
                     let dataDiferenciaEnergiaNetaF = formatoHn(dataDiferenciaEnergiaNeta);
-                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend1 + 2, 45 + i * 15);
-                    doc.text(dataLecturaActualF.toString(), xPosLegend1 + 25, 45 + i * 15);
-                    doc.text(dataDiferenciaF.toString(), xPosLegend1 + 48, 45 + i * 15);
-                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend1 + 2, 57 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 24, 57 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 45, 57 + i * 15);
+                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend1 + 21, 45 + i * 15, { align: 'right' });
+                    doc.text(dataLecturaActualF.toString(), xPosLegend1 + 42, 45 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaF.toString(), xPosLegend1 + 61, 45 + i * 15, { align: 'right' });
+                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend1 + 21, 57 + i * 15, { align: 'right' });
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend1 + 42, 57 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend1 + 61, 57 + i * 15, { align: 'right' });
                   } else {
                     //labels para medidores de respaldo
                     dataDiferencia = dataLecturaActual - dataLecturaAnterior;
-                    dataDiferencia = Number(dataDiferencia.toFixed(2))
+                    dataDiferencia = Number(dataDiferencia.toFixed(2));
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataEnergiaNetaAnterior = dataLecturaAnterior - dataLecturaAnteriorRec;
                     dataenergiaNetaActual = dataLecturaActual - dataLecturaActualRec;
                     dataenergiaNetaActual = Number(dataenergiaNetaActual.toFixed(2));
-                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaAnteriorRec - dataLecturaActualRec);
+                    dataDiferenciaEnergiaNeta = (dataLecturaActual - dataLecturaAnterior) - (dataLecturaActualRec - dataLecturaAnteriorRec);
                     dataDiferenciaEnergiaNeta = Number(dataDiferenciaEnergiaNeta.toFixed(2));
                     sumMedSecundarios += dataDiferenciaEnergiaNeta;
                     sumMedSecundarios = Number(sumMedSecundarios.toFixed(2));
@@ -3068,19 +3126,20 @@ export class ReportsComponent implements OnInit {
                     doc.text(calibracion, xPosLegend2 - 20, 38 + i * 15);
                     doc.text(EnergiNeta, xPosLegend2 - 20, 42 + i * 15);
 
-                    //data
+                    //data respaldo
                     let dataLecturaAnteriorF = formatoHn(dataLecturaAnterior);
                     let dataLecturaActualF = formatoHn(dataLecturaActual);
                     let dataDiferenciaF = formatoHn(dataDiferencia);
                     let dataEnergiaNetaAnteriorF = formatoHn(dataEnergiaNetaAnterior)
                     let dataenergiaNetaActualF = formatoHn(dataenergiaNetaActual);
                     let dataDiferenciaEnergiaNetaF = formatoHn(dataDiferenciaEnergiaNeta);
-                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend2 + 2, 30 + i * 15);
-                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 24, 30 + i * 15);
-                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 47, 30 + i * 15);
-                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend2 + 2, 42 + i * 15);
-                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 24, 42 + i * 15);
-                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 45, 42 + i * 15);
+                    doc.text(dataLecturaAnteriorF.toString(), xPosLegend2 + 21.5, 30 + i * 15, { align: 'right' });
+                    doc.text(dataLecturaActualF.toString(), xPosLegend2 + 42, 30 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaF.toString(), xPosLegend2 + 61.5, 30 + i * 15, { align: 'right' });
+
+                    doc.text(dataEnergiaNetaAnteriorF.toString(), xPosLegend2 + 21.5, 42 + i * 15, { align: 'right' });
+                    doc.text(dataenergiaNetaActualF.toString(), xPosLegend2 + 42, 42 + i * 15, { align: 'right' });
+                    doc.text(dataDiferenciaEnergiaNetaF.toString(), xPosLegend2 + 61.5, 42 + i * 15, { align: 'right' });
 
                   }
                   doc.setFontSize(10);
@@ -3091,16 +3150,16 @@ export class ReportsComponent implements OnInit {
                 this.validateError = true;
                 this.notification.createNotification('error', 'Falló', `${resp129.content} 😓`);
               }
-              porcentajeTotales = Number(((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios).toFixed(4));
+              porcentajeTotales = Number((((sumMedPrimarios - sumMedSecundarios) / sumMedPrimarios) * 100).toFixed(4));
               doc.setFontSize(6);
               doc.text(subtitle1, xPosLegend1 - 21, 185.5)
               doc.text(subtitle2, xPosLegend2 - 21, 185.5)
               doc.setFontSize(7);
               let sumMedPrimariosF = formatoHn(sumMedPrimarios);
               let sumMedSecundariosF = formatoHn(sumMedSecundarios);
-              doc.text(sumMedPrimariosF.toString(), 74, 185.5);
-              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 44.5, 185.5)
-              doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 19, 193)
+              doc.text(sumMedPrimariosF.toString(), 91, 185.5, { align: 'right' });
+              doc.text(sumMedSecundariosF.toString(), xPosLegend2 + 61.5, 185.5, { align: 'right' })
+              doc.text(porcentajeTotales.toString() + "%", xPosLegend2 - 5.5, 193, { align: 'right' })
               doc.setFontSize(6)
               doc.text(subtitle3, xPosLegend1 - 21, 193);
               doc.setFontSize(10);
@@ -3130,9 +3189,9 @@ export class ReportsComponent implements OnInit {
                     let dataLecturaAnteriorRecF = formatoHn(dataLecturaAnteriorRec);
                     let dataLecturaActualRecF = formatoHn(dataLecturaActualRec);
                     let dataDiferenciaRecF = formatoHn(dataDiferenciaRec);
-                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend1 + 5, 49 + j * 15);
-                    doc.text(dataLecturaActualRecF.toString(), xPosLegend1 + 28, 49 + j * 15);
-                    doc.text(dataDiferenciaRecF.toString(), xPosLegend1 + 48, 49 + j * 15);
+                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend1 + 21, 49 + j * 15, { align: 'right' });
+                    doc.text(dataLecturaActualRecF.toString(), xPosLegend1 + 42, 49 + j * 15, { align: 'right' });
+                    doc.text(dataDiferenciaRecF.toString(), xPosLegend1 + 61, 49 + j * 15, { align: 'right' });
                   } else {
                     //labels para medidores de respaldo
                     let dataDiferenciaRec = dataLecturaActualRec - dataLecturaAnteriorRec;
@@ -3142,19 +3201,18 @@ export class ReportsComponent implements OnInit {
                     let dataLecturaAnteriorRecF = formatoHn(dataLecturaAnteriorRec);
                     let dataLecturaActualRecF = formatoHn(dataLecturaActualRec);
                     let dataDiferenciaRecF = formatoHn(dataDiferenciaRec);
-                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend2 + 3, 34 + j * 15);
-                    doc.text(dataLecturaActualRecF.toString(), xPosLegend2 + 28, 34 + j * 15);
-                    doc.text(dataDiferenciaRecF.toString(), xPosLegend2 + 48, 34 + j * 15);
+                    doc.text(dataLecturaAnteriorRecF.toString(), xPosLegend2 + 21.5, 34 + j * 15, { align: 'right' });
+                    doc.text(dataLecturaActualRecF.toString(), xPosLegend2 + 42, 34 + j * 15, { align: 'right' });
+                    doc.text(dataDiferenciaRecF.toString(), xPosLegend2 + 61.5, 34 + j * 15, { align: 'right' });
                   }
-                  // doc.setFontSize(10);
-                  //window.open(doc.output('bloburl'))
+
                 }
               } else {
                 console.log('this.resp es null para el servicio 139');
                 this.validateError = true;
                 this.notification.createNotification('error', 'Falló', `${resp139.content} 😓`);
               }
-              doc.save('Energia suministrada '+ mes +" " +anio);
+              doc.save('Energia Suministrada ' + mes + " " + anio);
             });
         });
       doc.text(title, xPosTitle, 10);
@@ -3193,6 +3251,7 @@ export class ReportsComponent implements OnInit {
         const rep = '$1,';
         return number.toString().replace(exp, rep);
       }
+
       const doc = new jsPDF();
       const asignacionPorDia: AsignacionPorDia[] = [];
       let dia = 1;
@@ -3451,7 +3510,7 @@ export class ReportsComponent implements OnInit {
               sumaTotalCogeneracion = Number(sumaTotalCogeneracion.toFixed(2));
               doc.setFontSize(6);
               let totalCogeneracionF = formatoHn(totalCogeneracion);
-              doc.text(totalCogeneracionF.toString(), 158, 38.5 + i * 5);
+              doc.text(totalCogeneracionF.toString(), 178.5, 38.5 + i * 5, { align: 'right' });
               doc.setFontSize(7);
             }
 
@@ -3478,7 +3537,7 @@ export class ReportsComponent implements OnInit {
               sumTotalHpunta = Number(sumTotalHpunta.toFixed(2));
               doc.setFontSize(6);
               let hPuntaF = formatoHn(hPunta);
-              doc.text(hPuntaF.toString(), 123, 38.5 + i * 5);
+              doc.text(hPuntaF.toString(), 135.5, 38.5 + i * 5, { align: 'right' });
               doc.setFontSize(7);
             }
 
@@ -3500,7 +3559,7 @@ export class ReportsComponent implements OnInit {
               sumFueraHpunta = Number(sumFueraHpunta.toFixed(2));
               let fHpuntaF = formatoHn(fHpunta.toFixed(2));
               doc.setFontSize(6);
-              doc.text(fHpuntaF.toString(), 138, 38.5 + i * 5);
+              doc.text(fHpuntaF.toString(), 155.5, 38.5 + i * 5, { align: 'right' });
               doc.setFontSize(7);
             }
             //PequMW
@@ -3738,9 +3797,9 @@ export class ReportsComponent implements OnInit {
                 let bloque1PrimF = formatoHn(bloque1Prim);
                 let bloque2PrimF = formatoHn(bloque2Prim);
                 let totalBPrimariaF = formatoHn(totalBPrimaria);
-                doc.text(bloque1PrimF.toString(), 25.5, 38.5 + i * 5);
-                doc.text(bloque2PrimF.toString(), 41, 38.5 + i * 5);
-                doc.text(totalBPrimariaF.toString(), 56, 38.5 + i * 5);
+                doc.text(bloque1PrimF.toString(), 39.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(bloque2PrimF.toString(), 54.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(totalBPrimariaF.toString(), 72.5, 38.5 + i * 5, { align: 'right' });
               }
             } else {
               console.log("La suma de la energia primaria 06+22:24 no puede ser procesada")
@@ -3771,9 +3830,9 @@ export class ReportsComponent implements OnInit {
                 let sumaF = formatoHn(suma);
                 let bloque2respF = formatoHn(bloque2resp)
                 let totalBRespaldoF = formatoHn(totalBRespaldo);
-                doc.text(sumaF.toString(), 75, 38.5 + i * 5);
-                doc.text(bloque2respF.toString(), 90, 38.5 + i * 5);
-                doc.text(totalBRespaldoF.toString(), 105, 38.5 + i * 5);
+                doc.text(sumaF.toString(), 87.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(bloque2respF.toString(), 102.5, 38.5 + i * 5, { align: 'right' });
+                doc.text(totalBRespaldoF.toString(), 120.5, 38.5 + i * 5, { align: 'right' });
               }
 
               console.log("SSSSUMMM", sumaB1primaria);
@@ -3787,7 +3846,7 @@ export class ReportsComponent implements OnInit {
                   sumTotalEntregado = Number(sumTotalEntregado.toFixed(2));
                   doc.setFontSize(6);
                   let totalEntregadoF = formatoHn(totalEntregado);
-                  doc.text(totalEntregadoF.toString(), 180, 38.5 + i * 5);
+                  doc.text(totalEntregadoF.toString(), 193.5, 38.5 + i * 5, { align: 'right' });
                   doc.setFontSize(7);
                 }
               } else {
@@ -3875,7 +3934,7 @@ export class ReportsComponent implements OnInit {
                 doc.setFillColor(247, 205, 89);
                 doc.rect(startX, startY * 7 + 15.5, 169, cellHeight, 'F');
 
-                doc.setFontSize(5)
+                doc.setFontSize(5.5)
                 doc.setFont("helvetica", "bold");
 
                 let sumaB1primariaF = formatoHn(sumaB1primaria);
@@ -3889,25 +3948,26 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 18.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 18.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 18.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 18.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 18.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 18.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 18.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 18.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 18.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 18.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 18.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 18.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 18.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 18.5, { align: 'right' });
 
               }
               if (primario06.length === 30) {
                 doc.setFillColor(247, 205, 89);
                 doc.rect(startX, startY * 7 + 10.5, 169, cellHeight, 'F');
 
-                doc.setFontSize(5)
+                doc.setFontSize(5.5)
                 doc.setFont("helvetica", "bold");
 
                 let sumaB1primariaF = formatoHn(sumaB1primaria);
@@ -3921,18 +3981,19 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 13.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 13.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 13.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 13.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 13.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 13.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 13.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 13.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 13.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 13.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 13.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 13.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 13.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 13.5, { align: 'right' });
 
 
               }
@@ -3954,18 +4015,19 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 8.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 8.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 8.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 8.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 8.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 8.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 8.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 8.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 8.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 8.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 8.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 8.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 8.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 8.5, { align: 'right' });
               }
               if (primario06.length === 28) {
                 doc.setFillColor(247, 205, 89);
@@ -3985,35 +4047,33 @@ export class ReportsComponent implements OnInit {
                 let sumTotalCogeneracionF = formatoHn(sumaTotalCogeneracion);
                 let sumaTotalEntregadoF = formatoHn(sumTotalEntregado);
 
-                doc.text(sumaB1primariaF.toString(), startX + 1, startY * 7 + 3.5);
-                doc.text(sumaB2PrimariaF.toString(), startX + 16, startY * 7 + 3.5);
-                doc.text(totalSumPrimariaF.toString(), startX + 31, startY * 7 + 3.5);
+                doc.text(sumaB1primariaF.toString(), startX + 1 + 13.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumaB2PrimariaF.toString(), startX + 16 + 13.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(totalSumPrimariaF.toString(), startX + 31 + 16.5, startY * 7 + 3.5, { align: 'right' });
 
 
-                doc.text(sumaB1RespaldoF.toString(), startX + 50, startY * 7 + 3.5);
-                doc.text(sumaB2RespaldoF.toString(), startX + 65, startY * 7 + 3.5);
-                doc.text(totalSumRespaldoF.toString(), startX + 80, startY * 7 + 3.5);
-                doc.text(sumTotalHpuntaF.toString(), startX + 98, startY * 7 + 3.5);
-                doc.text(sumFueraHpuntaF.toString(), startX + 113, startY * 7 + 3.5);
-                doc.text(sumTotalCogeneracionF.toString(), startX + 133, startY * 7 + 3.5);
-                doc.text(sumaTotalEntregadoF.toString(), startX + 155, startY * 7 + 3.5);
+                doc.text(sumaB1RespaldoF.toString(), startX + 50 + 12.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumaB2RespaldoF.toString(), startX + 65 + 12.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(totalSumRespaldoF.toString(), startX + 80 + 15.5, startY * 7 + 3.5, { align: 'right' });
+
+                doc.text(sumTotalHpuntaF.toString(), startX + 98 + 12.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumFueraHpuntaF.toString(), startX + 113 + 17.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumTotalCogeneracionF.toString(), startX + 133 + 20.5, startY * 7 + 3.5, { align: 'right' });
+                doc.text(sumaTotalEntregadoF.toString(), startX + 155 + 13.5, startY * 7 + 3.5, { align: 'right' });
               }
               doc.setFontSize(7)
-
-
-
               //cuadro penultimo
               doc.rect(startX + 15, startY * 8 + 10, 16, cellHeight + 15);//enersa cuadro
               doc.text("ENERSA 227", startX + 15.5, startY * 8 + 21.5);
               doc.rect(startX + 31, startY * 8 + 10, 15, cellHeight);//cuadro primaria
               doc.setFont("helvetica", "bold");
-              doc.text("Primaria", startX + 33, startY * 8 + 13.5);
+              doc.text("Primaria", startX + 32, startY * 8 + 13.5);
               doc.rect(startX + 31, startY * 8 + 15, 15, cellHeight);//cuadro secundaria
               doc.text("Secundaria", startX + 32, startY * 8 + 18.5);
               doc.rect(startX + 31, startY * 8 + 20, 15, cellHeight);//cuadro respaldo
-              doc.text("Respaldo", startX + 33, startY * 8 + 23.5);
+              doc.text("Respaldo", startX + 32, startY * 8 + 23.5);
               doc.rect(startX + 31, startY * 8 + 25, 15, cellHeight);//cuadro Total
-              doc.text("Total", startX + 35, startY * 8 + 28.5);
+              doc.text("Total", startX + 32, startY * 8 + 28.5);
 
               //data penultimo cuadro
               sumPrimariaRespaldo = totalSumPrimaria + totalSumRespaldo;
@@ -4022,25 +4082,30 @@ export class ReportsComponent implements OnInit {
               let totalSumRespaldoF = formatoHn(totalSumRespaldo);
               let sumPrimariaRespaldoF = formatoHn(sumPrimariaRespaldo);
               doc.rect(startX * 3 - 4, startY * 8 + 10, 25, cellHeight);//1
-              doc.text(totalSumPrimariaF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 13.5);
+              doc.text(totalSumPrimariaF.toString() + " Kwh", startX * 4 - 4.5, startY * 8 + 13.5, { align: 'right' });
               doc.rect(startX * 3 - 4, startY * 8 + 15, 25, cellHeight);//2
-              doc.text("0", startX * 3 - 3, startY * 8 + 18.5);
+              doc.text("0 kwh", startX * 4 - 4.5, startY * 8 + 18.5, { align: 'right' });
               doc.rect(startX * 3 - 4, startY * 8 + 20, 25, cellHeight);//3
-              doc.text(totalSumRespaldoF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 23.5);
+              doc.text(totalSumRespaldoF.toString() + " Kwh", startX * 4 - 4.5, startY * 8 + 23.5, { align: 'right' });
               doc.rect(startX * 3 - 4, startY * 8 + 25, 25, cellHeight);//4
-              doc.text(sumPrimariaRespaldoF.toString() + " Kwh", startX * 3 - 3, startY * 8 + 28.5);
+              doc.text(sumPrimariaRespaldoF.toString() + " Kwh", startX * 4 - 4.5, startY * 8 + 28.5, { align: 'right' });
               doc.setFont("helvetica", "normal");
 
               //cuadro ultimo
+              doc.setFontSize(6.5);
               doc.rect(startX + 15, startY * 9 + 15, 16, cellHeight + 10);//cogeneracion cuadro
-              doc.text("Cogeneración", startX + 15.5, startY * 9 + 23.5);
-              doc.rect(startX + 31, startY * 9 + 15, 20, cellHeight);//cuadro hpunta
               doc.setFont("helvetica", "bold");
-              doc.text("Hrs Punta", startX + 33, startY * 9 + 18.5);
-              doc.rect(startX + 31, startY * 9 + 20, 20, cellHeight);//cuadro fuera
+              doc.text("Cogeneración", startX + 15.5, startY * 9 + 23.5);
+              doc.rect(startX + 31, startY * 9 + 15, 19, cellHeight);//cuadro hpunta
+              doc.setFontSize(7);
+              doc.setFont("helvetica", "bold");
+              doc.text("Hrs Punta", startX + 32, startY * 9 + 18.5);
+              doc.rect(startX + 31, startY * 9 + 20, 19, cellHeight);//cuadro fuera
+              doc.setFontSize(6.5);
               doc.text("Fuera Hrs Punta", startX + 32, startY * 9 + 23.5);
-              doc.rect(startX + 31, startY * 9 + 25, 20, cellHeight);//cuadro total hpunta
-              doc.text("Total", startX + 33, startY * 9 + 28.5);
+              doc.setFontSize(7);
+              doc.rect(startX + 31, startY * 9 + 25, 19, cellHeight);//cuadro total hpunta
+              doc.text("Total", startX + 32, startY * 9 + 28.5);
 
               //data ultimo cuadro
               totalSumHpunta = sumTotalHpunta + sumFueraHpunta;
@@ -4050,17 +4115,15 @@ export class ReportsComponent implements OnInit {
               let sumFueraHpuntaF = formatoHn(sumFueraHpunta);
               let totalSumHpuntaF = formatoHn(totalSumHpunta);
               doc.setFontSize(6.5);
-              doc.rect(startX * 3 + 1, startY * 9 + 15, 20, cellHeight);//1
-              doc.text(sumTotalHpuntaF.toString() + " Kwh", startX * 3 + 2, startY * 9 + 18.5);
-              doc.rect(startX * 3 + 1, startY * 9 + 20, 20, cellHeight);//2
-              doc.text(sumFueraHpuntaF.toString() + ' Kwh', startX * 3 + 2, startY * 9 + 23.5);
-              doc.rect(startX * 3 + 1, startY * 9 + 25, 20, cellHeight);//3
-              doc.text(totalSumHpuntaF.toString() + " Kwh", startX * 3 + 2, startY * 9 + 28.5);
+              doc.rect(startX * 3, startY * 9 + 15, 21, cellHeight);//1
+              doc.text(sumTotalHpuntaF.toString() + " Kwh", startX * 4 - 4.5, startY * 9 + 18.5, { align: 'right' });
+              doc.rect(startX * 3, startY * 9 + 20, 21, cellHeight);//2
+              doc.text(sumFueraHpuntaF.toString() + ' Kwh', startX * 4 - 4.5, startY * 9 + 23.5, { align: 'right' });
+              doc.rect(startX * 3, startY * 9 + 25, 21, cellHeight);//3
+              doc.text(totalSumHpuntaF.toString() + " Kwh", startX * 4 - 4.5, startY * 9 + 28.5, { align: 'right' });
               doc.setFont("helvetica", "normal");
 
-
-              doc.save('Resumen '+ mes +" " +anio);
-
+              doc.save("Resumen " + mes + " " + anio);
             } else {
               console.log("La suma de la energía respaldo 06+22:24 no puede ser procesada");
             }
@@ -4088,7 +4151,7 @@ export class ReportsComponent implements OnInit {
 
 
       img.onload = () => {
-        doc.addImage(img, 10, 10, 40, 15);
+        doc.addImage(img, 10, 10, 35, 15);
       };
 
       img2.onload = () => {
@@ -4096,9 +4159,11 @@ export class ReportsComponent implements OnInit {
       };
 
       img3.onload = () => {
-        doc.addImage(img3, 10, 261, 193, 18);
+        doc.addImage(img3, 10, 259, 193, 18);
       };
+      doc.setFont("helvetica", "bold");
       let tittle = `LECTURAS DE ENERGIA COGENERACIÓN DEL ${fechaInicioFormateada} AL ${fechaFinFormateada}`;
+      doc.setFont("helvetica", "normal");
       let lecturasPrincipalTxt = '1. LECTURAS Y DIFERENCIA DE ENERGIA MEDIDOR PRINCIPAL';
       let lecturasRespaldoTxt = '2. LECTURAS Y DIFERENCIA DE ENERGIA MEDIDOR DE RESPALDO';
       let promedioMedidoresTxt = '3. PROMEDIO Y % ERROR DE ENERGIA';
@@ -4216,6 +4281,8 @@ export class ReportsComponent implements OnInit {
       let dataPorcentRestoEnee = 0;
       let dataPorcentActivoEnee = 0;
 
+      const feriadosHn: string[] = [];
+
 
       const formatoHn = (number: any) => {
         const exp = /(\d)(?=(\d{3})+(?!\d))/g;
@@ -4226,12 +4293,62 @@ export class ReportsComponent implements OnInit {
       this.reportService.getCogeneracion_12(fechaInicialFormatted.toISOString().split('T')[0], fechaFinalFormatted.toISOString().split('T')[0],).subscribe(
         (response: any) => {
           console.log("Respuesta 1 ", response);
-
-          if (response) {
-            dataHorasPunta = response.horaPunta[0].horas;
-            dataMultiplicador = response.horaPunta[0].multiplicador;
-            dataHpuntaPeriodo = dataHorasPunta * dataMultiplicador;
+          for (let i = 0; i < response.feriadosHn.length; i++) {
+            const fechaString = response.feriadosHn[i].fecha;
+            const fechaSinHora = fechaString.substr(0, 10);
+            feriadosHn.push(fechaSinHora);
           }
+
+          function contarSabadosDomingos(fecha: Date): number {
+            // Obtiene el primer día del mes
+            const primerDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+            // Obtiene el último día del mes
+            const ultimoDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0);
+            // Inicializa un contador para los sábados y domingos
+            let contadorSabadosDomingos = 0;
+            // Itera a través de los días del mes
+            let diaActual = new Date(primerDiaDelMes);
+            while (diaActual <= ultimoDiaDelMes) {
+              // Comprueba si el día actual es un sábado o un domingo (0: domingo, 6: sábado)
+              if (diaActual.getDay() === 0 || diaActual.getDay() === 6) {
+                contadorSabadosDomingos++;
+              }
+              diaActual.setDate(diaActual.getDate() + 1);
+            }
+            return contadorSabadosDomingos;
+          }
+          const fecha = new Date(fechaInicialFormatted); // Reemplaza con tu fecha de inicio (meses en JavaScript son 0-indexed)
+
+          const diasSabadosDomingos = contarSabadosDomingos(fecha);
+          console.log(`En el mes de ${fecha.toLocaleString('default', { month: 'long' })} hay ${diasSabadosDomingos} sábados y domingos.`);
+
+          function contarFeriadosEnMes(fecha: Date, feriadosHn: string[]): number {
+            const primerDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth(), 1);
+            console.log("primer dia del mes ", primerDiaDelMes);
+            const ultimoDiaDelMes = new Date(fecha.getFullYear(), fecha.getMonth() + 1, 0);
+            const fechaInicialFormatted = fecha.toISOString().split('T')[0];
+
+            const feriadosEnMes = feriadosHn
+              .map((feriado) => new Date(feriado))
+              .filter(
+                (feriado) => (
+                  feriado >= primerDiaDelMes && feriado <= ultimoDiaDelMes) ||
+                  feriado.toISOString().split('T')[0] === fechaInicialFormatted
+              );
+
+            return feriadosEnMes.length;
+          }
+
+          const fechaF = new Date(fechaInicialFormatted); // Reemplaza con tu fecha de inicio (meses en JavaScript son 0-indexed)
+          const cantidadFeriadosEnMes = contarFeriadosEnMes(fechaF, feriadosHn);
+          console.log(`En el mes de ${fechaF.toLocaleString('default', { month: 'long' })} hay ${cantidadFeriadosEnMes} feriados.`);
+          let sumaDiasPunta = diasSabadosDomingos + cantidadFeriadosEnMes;
+          let diasPunta = cantidadDias - sumaDiasPunta;
+          console.log("dias punta", diasPunta);
+          dataHorasPunta = diasPunta;
+          dataMultiplicador = 5;
+          dataHpuntaPeriodo = dataHorasPunta * dataMultiplicador;
+
           //lecturas manuales enee
           if (response) {
             for (let i = 0; i < response.lecturasEnee.length; i++) {
@@ -4330,11 +4447,15 @@ export class ReportsComponent implements OnInit {
               dataPromedioActivoEnee = Number(dataDiferenciaActivoEnee + dataDiferenciaActivoRespaldoEnee) / 2;
               dataPromedioActivoEnee = Number(dataPromedioActivoEnee.toFixed(2));
 
-              dataPorcentPuntaEnee = Math.abs((dataDiferenciaPuntaEnee / dataPromedioActivoEnee - 1));
+              console.log("data diferencia punta enee ",dataDiferenciaPuntaEnee  );
+              console.log("data Promedio ActivoEnee",dataPromedioActivoEnee);
+
+              console.log("proooom ",dataPromedioActivoEnee );
+              dataPorcentPuntaEnee = Math.abs((dataDiferenciaPuntaEnee / dataPromedioPuntaEnee -1))*100;
               dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
-              dataPorcentRestoEnee = Math.abs((dataDiferenciaRestoEnee / dataPromedioRestoEnee - 1));
+              dataPorcentRestoEnee = Math.abs((dataDiferenciaRestoEnee / dataPromedioRestoEnee - 1))*100;
               dataPorcentRestoEnee = Number(dataPorcentRestoEnee.toFixed(4));
-              dataPorcentActivoEnee = Math.abs((dataDiferenciaActivoEnee / dataPromedioActivoEnee - 1));
+              dataPorcentActivoEnee = Math.abs((dataDiferenciaActivoEnee / dataPromedioActivoEnee - 1))*100;
               dataPorcentActivoEnee = Number(dataPorcentActivoEnee.toFixed(4));
 
               dataTotalPuntaEnee = dataPromedioPuntaEnee * dataFactor;
@@ -4351,9 +4472,7 @@ export class ReportsComponent implements OnInit {
             let dataPromedioPuntaEneeF = formatoHn(dataPromedioPuntaEnee);
             let dataPromedioRestoEneeF = formatoHn(dataPromedioRestoEnee);
             let dataPromedioActivoEneeF = formatoHn(dataPromedioActivoEnee);
-            let dataPorcentPuntaEneeF = formatoHn(dataPorcentPuntaEnee);
-            let dataPorcentRestoEneeF = formatoHn(dataPorcentRestoEnee);
-            let dataPorcentActivoEneeF = formatoHn(dataPorcentActivoEnee);
+
             let dataTotalPuntaEneeF = formatoHn(dataTotalPuntaEnee);
             let dataTotalRestoEneeF = formatoHn(dataTotalRestoEnee);
             let dataTotalActivoEneeF = formatoHn(dataTotalActivoEnee);
@@ -4362,9 +4481,9 @@ export class ReportsComponent implements OnInit {
             doc.text(dataPromedioRestoEneeF.toString(), 13 * startX + 30, startY + 18.5);
             doc.text(dataPromedioActivoEneeF.toString(), 15 * startX + 33, startY + 18.5);
 
-            doc.text(dataPorcentPuntaEneeF.toString() + '%', 10 * startX + 43, startY + 23.5);
-            doc.text(dataPorcentRestoEneeF.toString() + '%', 13 * startX + 33, startY + 23.5);
-            doc.text(dataPorcentActivoEneeF.toString() + '%', 15 * startX + 35, startY + 23.5);
+            doc.text(dataPorcentPuntaEnee.toString() + '%', 10 * startX + 43, startY + 23.5);
+            doc.text(dataPorcentRestoEnee.toString() + '%', 13 * startX + 33, startY + 23.5);
+            doc.text(dataPorcentActivoEnee.toString() + '%', 15 * startX + 35, startY + 23.5);
 
             doc.text(dataTotalPuntaEneeF.toString(), 10 * startX + 43, startY + 38.5);
             doc.text(dataTotalRestoEneeF.toString(), 13 * startX + 33, startY + 38.5);
@@ -4618,12 +4737,12 @@ export class ReportsComponent implements OnInit {
               dataPromedioResto = Number(dataPromedioResto.toFixed(2));
               dataPromedioTotalActivo = (dataDiferenciaActivoPrincipal + dataDiferenciaActivoRespaldo) / 2
               dataPromedioTotalActivo = Number(dataPromedioTotalActivo.toFixed(2));
-              dataPorcentPunta = Math.abs((dataDiferenciaPuntaPrincipal / dataPromedioPunta) - 1);
-              dataPorcentPunta = Number(dataPorcentPunta.toFixed(8));
-              dataPorcentResto = Math.abs((dataDiferenciaRestoPrincipal / dataPromedioResto - 1));
-              dataPorcentResto = Number(dataPorcentResto.toFixed(8));
-              dataPorcentTotalActivo = Math.abs((dataDiferenciaActivoPrincipal / dataPromedioTotalActivo - 1));
-              dataPorcentTotalActivo = Number(dataPorcentTotalActivo.toFixed(8));
+              dataPorcentPunta = Math.abs((dataDiferenciaPuntaPrincipal / dataPromedioPunta) - 1)*100;
+              dataPorcentPunta = Number(dataPorcentPunta.toFixed(4));
+              dataPorcentResto = Math.abs((dataDiferenciaRestoPrincipal / dataPromedioResto - 1))*100;
+              dataPorcentResto = Number(dataPorcentResto.toFixed(4));
+              dataPorcentTotalActivo = Math.abs((dataDiferenciaActivoPrincipal / dataPromedioTotalActivo - 1))*100;
+              dataPorcentTotalActivo = Number(dataPorcentTotalActivo.toFixed(4));
               dataTotalPunta = dataPromedioPunta * dataFactor;
               dataTotalPunta = Number(dataTotalPunta.toFixed(2));
               dataTotalResto = dataPromedioResto * dataFactor;
@@ -4791,7 +4910,7 @@ export class ReportsComponent implements OnInit {
 
 
             // Abrir el PDF en una nueva ventana o descargarlo
-            doc.save('Cogeneración '+ mes +" " +anio);
+            doc.save("Cogeneración "+mes + " " + anio);
           } else {
             console.log("No hay mediciones")
           }
@@ -5074,7 +5193,7 @@ export class ReportsComponent implements OnInit {
             doc.text("kW", startY * 3 + 4.5 * startX - 8, startY * 3 + 44);
             doc.text(cargoOperacionLempiras.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 39);
             doc.text(capacidadFirmeComprometidaf.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 44);
-            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 49);
+            doc.text(relacionInflacion.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 49, { align: 'right' });
             doc.text(fdr.toString() + " %", startY * 4 + 3 * startX + 2, startY * 3 + 54);
 
             doc.text(resultadoF.toString(), startY * 4 + 3 * startX + 2, startY * 3 + 59);
@@ -5352,11 +5471,11 @@ export class ReportsComponent implements OnInit {
             doc.text("Nota 2: El retraso en el pago de esta factura dará lugar a un recargo de intereses por pago tardío", startX + 2, startY * 7 + 108);
             doc.text("aplicado sobre la facturación, según el Contrato " + nombreContrato, startX + 2, startY * 7 + 115);
             doc.text("__________________________________________", startX + 8, startY * 7 + 128);
-            doc.text("Firma y Sello", startX * 5-2, startY * 7 + 133);
-            doc.text(fechaConstancia, startX * 15-3, startY * 7 + 128);
+            doc.text("Firma y Sello", startX * 5 - 2, startY * 7 + 133);
+            doc.text(fechaConstancia, startX * 15 - 3, startY * 7 + 128);
             doc.text("__________________________________________", startX * 12, startY * 7 + 128);
             doc.text("Fecha", startX * 15 + 5, startY * 7 + 133);
-            doc.save('Factura ENERSA-ENEE '+ mes +" " +anio);
+            doc.save('Factura ENERSA-ENEE ' + mes + " " + anio);
           } else { console.log("NO DATA FOR FACTURA...") }
         });
     }

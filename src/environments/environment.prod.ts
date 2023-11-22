@@ -1,4 +1,4 @@
 export const environment =  {
   production: true,
-  api:'http://fi-it-j:3000/'
+  api:'http://JOKSAN-IT:3000/'
 };
