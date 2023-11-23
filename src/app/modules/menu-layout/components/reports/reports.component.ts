@@ -1774,15 +1774,12 @@ export class ReportsComponent implements OnInit {
 
               if (isNaN(dataPorcentPuntaEnee)) {
                 dataPorcentPuntaEnee=0;
-                console.log("entroooo1")
               }
               if(isNaN(dataPorcentRestoEnee)) {
                 dataPorcentRestoEnee=0;
-                console.log("entroooo2")
               }
               if(isNaN(dataPorcentActivoEnee)){
                 dataPorcentActivoEnee=0;
-                console.log("entroooo3")
               }
 
               dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
@@ -4479,15 +4476,12 @@ export class ReportsComponent implements OnInit {
 
               if (isNaN(dataPorcentPuntaEnee)) {
                 dataPorcentPuntaEnee=0;
-                console.log("entroooo1")
               }
               if(isNaN(dataPorcentRestoEnee)) {
                 dataPorcentRestoEnee=0;
-                console.log("entroooo2")
               }
               if(isNaN(dataPorcentActivoEnee)){
                 dataPorcentActivoEnee=0;
-                console.log("entroooo3")
               }
 
               dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
