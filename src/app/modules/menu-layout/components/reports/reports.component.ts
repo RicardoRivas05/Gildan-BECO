@@ -1760,16 +1760,36 @@ export class ReportsComponent implements OnInit {
               dataPromedioActivoEnee = Number(dataDiferenciaActivoEnee + dataDiferenciaActivoRespaldoEnee) / 2;
               dataPromedioActivoEnee = Number(dataPromedioActivoEnee.toFixed(2));
 
-              console.log("data diferencia punta enee ",dataDiferenciaPuntaEnee  );
-              console.log("data Promedio ActivoEnee",dataPromedioActivoEnee);
+              // console.log("data diferencia punta enee ",dataDiferenciaPuntaEnee  );
+              // console.log("data Promedio ActivoEnee",dataPromedioActivoEnee);
 
-              console.log("proooom ",dataPromedioActivoEnee );
+              // console.log("proooom ",dataPromedioActivoEnee );
+
+
               dataPorcentPuntaEnee = Math.abs((dataDiferenciaPuntaEnee / dataPromedioPuntaEnee -1))*100;
-              dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
+
               dataPorcentRestoEnee = Math.abs((dataDiferenciaRestoEnee / dataPromedioRestoEnee - 1))*100;
-              dataPorcentRestoEnee = Number(dataPorcentRestoEnee.toFixed(4));
+
               dataPorcentActivoEnee = Math.abs((dataDiferenciaActivoEnee / dataPromedioActivoEnee - 1))*100;
+
+              if (isNaN(dataPorcentPuntaEnee)) {
+                dataPorcentPuntaEnee=0;
+                console.log("entroooo1")
+              }
+              if(isNaN(dataPorcentRestoEnee)) {
+                dataPorcentRestoEnee=0;
+                console.log("entroooo2")
+              }
+              if(isNaN(dataPorcentActivoEnee)){
+                dataPorcentActivoEnee=0;
+                console.log("entroooo3")
+              }
+
+              dataPorcentPuntaEnee = Number(dataPorcentPuntaEnee.toFixed(4));
+              dataPorcentRestoEnee = Number(dataPorcentRestoEnee.toFixed(4));
               dataPorcentActivoEnee = Number(dataPorcentActivoEnee.toFixed(4));
+
+
 
               dataTotalPuntaEnee = dataPromedioPuntaEnee * dataFactor;
               dataTotalPuntaEnee = Number(dataTotalPuntaEnee);
@@ -2051,11 +2071,26 @@ export class ReportsComponent implements OnInit {
               dataPromedioTotalActivo = (dataDiferenciaActivoPrincipal + dataDiferenciaActivoRespaldo) / 2
               dataPromedioTotalActivo = Number(dataPromedioTotalActivo.toFixed(2));
               dataPorcentPunta = Math.abs((dataDiferenciaPuntaPrincipal / dataPromedioPunta) - 1)*100;
-              dataPorcentPunta = Number(dataPorcentPunta.toFixed(4));
+
               dataPorcentResto = Math.abs((dataDiferenciaRestoPrincipal / dataPromedioResto - 1))*100;
-              dataPorcentResto = Number(dataPorcentResto.toFixed(4));
+
               dataPorcentTotalActivo = Math.abs((dataDiferenciaActivoPrincipal / dataPromedioTotalActivo - 1))*100;
+
+              if (isNaN(dataPorcentPunta)) {
+                dataPorcentPunta=0;
+              }
+              if(isNaN(dataPorcentResto)) {
+                dataPorcentResto=0;
+              }
+
+              if(isNaN(dataPorcentTotalActivo)){
+                dataPorcentTotalActivo=0;
+              }
+
+              dataPorcentPunta = Number(dataPorcentPunta.toFixed(4));
+              dataPorcentResto = Number(dataPorcentResto.toFixed(4));
               dataPorcentTotalActivo = Number(dataPorcentTotalActivo.toFixed(4));
+
               dataTotalPunta = dataPromedioPunta * dataFactor;
               dataTotalPunta = Number(dataTotalPunta.toFixed(2));
               dataTotalResto = dataPromedioResto * dataFactor;
