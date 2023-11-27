@@ -14,7 +14,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { DigitalInvoiceComponent } from './components/digital-invoice/digital-invoice.component';
 
 //import graphics module
 import { CommonModule } from '@angular/common';
@@ -36,7 +35,7 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 @NgModule({
   declarations: [
     MenuLayoutComponent,
-    DigitalInvoiceComponent,
+
   ],
   imports: [
     RouterModule,
@@ -62,7 +61,6 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
   exports: [
     MenuLayoutComponent,
     NzFormModule,
-    DigitalInvoiceComponent
   ]
 })
 export class SharedModule { }

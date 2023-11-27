@@ -294,6 +294,7 @@ export class ReportsComponent implements OnInit {
 
               if (resp129) {
                 for (let i = 0; i < resp129.inicial.length; i++) {
+                  console.log("iniciaaaaal ", resp129.inicial.length);
                   const elementoInicial = resp129.inicial[i];
                   const elementoFinal = resp129.final[i];
                   dataLecturaAnterior = elementoInicial.Value.toFixed(2);
