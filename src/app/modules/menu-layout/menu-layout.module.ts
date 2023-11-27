@@ -14,8 +14,6 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 
 import { SharedModule } from "@shared/shared.module";
 import { MainPageComponent } from './pages/main-page/main-page.component';
-import { ClientsComponent } from './components/clients/clients.component';
-import { combustibleComponent } from './components/combustible/combustible.component';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -36,8 +34,6 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SubmitcombustibleModalComponent } from './components/combustible/submit-combustible-modal/submit-combustible-modal.component';
-import { SubmitClientModalComponent } from './components/clients/submit-client-modal/submit-client-modal.component';
 import { ReportsComponent } from './components/reports/reports.component';
 
 
@@ -45,11 +41,6 @@ import { ReportsComponent } from './components/reports/reports.component';
   declarations: [
     HomeComponent,
     MainPageComponent,
-    ClientsComponent,
-        combustibleComponent,
-        SubmitcombustibleModalComponent,
-        SubmitClientModalComponent,
-    SubmitClientModalComponent,
       ReportsComponent,
   ],
   imports: [
