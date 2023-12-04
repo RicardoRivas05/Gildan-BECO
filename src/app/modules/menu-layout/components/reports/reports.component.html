@@ -23,18 +23,21 @@
     <form nz-form [formGroup]="generateInvoicesForm">
       <div nz-row>
         <div nz-col>
-          <!-- Nuevo control para seleccionar el periodo -->
-          <nz-select formControlName="periodo" style="width: 150px">
-            <nz-option nzValue="hoy">Hoy</nz-option>
-            <nz-option nzValue="ayer">Ayer</nz-option>
-            <nz-option nzValue="estaSemana">Esta Semana</nz-option>
-            <nz-option nzValue="esteMes">Este Mes</nz-option>
-            <nz-option nzValue="mesAnterior">Mes Anterior</nz-option>
-            <nz-option nzValue="rangoFechas">Rango de Fechas</nz-option>
-         </nz-select>
 
-          <!-- Rango de fechas -->
-          <nz-range-picker *ngIf="showFechaPicker" [nzShowTime]="false" style="width: 475px;" formControlName="fecha"></nz-range-picker>
+          <nz-select formControlName="periodo" style="width: 150px">
+            <nz-option nzValue="seleccionar" nzLabel="Periodo"></nz-option>
+            <nz-option nzValue="hoy" nzLabel="Hoy"></nz-option>
+            <nz-option nzValue="ayer" nzLabel="Ayer"></nz-option>
+            <nz-option nzValue="estaSemana" nzLabel="Esta Semana"></nz-option>
+            <nz-option nzValue="esteMes" nzLabel="Este Mes"></nz-option>
+            <nz-option nzValue="mesAnterior" nzLabel="Mes Anterior"></nz-option>
+            <nz-option nzValue="rangoFechas" nzLabel="Rango de Fechas"></nz-option>
+           </nz-select>
+           <nz-range-picker  [nzShowTime]="false" style="width: 475px;" formControlName="fecha" [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+
+        <div nz-col>
+          <button nz-button nzType="primary" nzSize="default" (click)="submitForm()">Consultar</button>
         </div>
 
         <div nz-col>
@@ -54,11 +57,10 @@
       <div>
         Source Name: {{ item.sourceName }}
       </div>
-      <!-- Agrega más campos según sea necesario -->
+
     </div>
   </div>
   <div *ngIf="listOfData && listOfData.length === 0">
     <p>No hay datos disponibles.</p>
   </div>
 </div>
-

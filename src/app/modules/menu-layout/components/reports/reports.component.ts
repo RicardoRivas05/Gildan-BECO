@@ -4,12 +4,15 @@ import jsPDF from 'jspdf';
 import { ReportData } from 'src/Core/interfaces/report.interface';
 import { NotificationService } from '@shared/services/notification.service';
 import { formatDate } from '@angular/common';
-import { endOfMonth } from 'date-fns';
 import { constancias } from 'src/Core/interfaces/constancia.interface';
 import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { concatMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { startOfWeek, endOfWeek, addDays, addMonths, startOfMonth, endOfMonth } from 'date-fns';
+import { ChangeDetectorRef } from '@angular/core';
+
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -30,7 +33,7 @@ export class ReportsComponent implements OnInit {
   showFechaPicker: boolean = false;
   pdfData: string = '';
 
-  constructor(private reportService: ReportsService,private notificationService: NotificationService, private nzMessageService: NzMessageService,private datePipe: DatePipe,     private fb: FormBuilder, ) {
+  constructor(private cd: ChangeDetectorRef, private reportService: ReportsService, private notificationService: NotificationService, private nzMessageService: NzMessageService,private datePipe: DatePipe,     private fb: FormBuilder, ) {
 
   }
   ngOnInit(): void {
@@ -45,15 +48,36 @@ export class ReportsComponent implements OnInit {
   onPeriodChange(selectedPeriod: string): void {
     this.showFechaPicker = selectedPeriod === 'rangoFechas';
     const fechaControl = this.generateInvoicesForm.get('fecha');
-
     if (fechaControl) {
-      if (selectedPeriod === 'rangoFechas') {
-        fechaControl.enable();  // Habilita el control de fecha
-      } else {
-        fechaControl.enable();  // Deshabilita el control de fecha
+      if (selectedPeriod === 'hoy') {
+        this.fechaInicial = new Date();
+        this.fechaFinal = addDays(new Date(), 1);
       }
+      if (selectedPeriod === 'ayer') {
+        this.fechaInicial = addDays(new Date(), -1);
+        this.fechaFinal =  new Date();
+      }
+       if (selectedPeriod === 'estaSemana') {
+        this.fechaInicial = startOfWeek(new Date());
+        this.fechaFinal = new Date();
+      }
+      if (selectedPeriod === 'esteMes') {
+        this.fechaInicial = startOfMonth(new Date());
+        this.fechaFinal = addDays(endOfMonth(new Date()), 1); // Agrega un día a la fecha final
+      }
+      if (selectedPeriod === 'mesAnterior') {
+        this.fechaInicial = startOfMonth(addMonths(new Date(), -1));
+        this.fechaFinal = addDays(endOfMonth(addMonths(new Date(), -1)), 1); // Agrega un día a la fecha final
+      }
+      if (selectedPeriod === 'rangoFechas') {
+        fechaControl.enable(); // Habilita el control de fecha
+      } else {
+        fechaControl.disable(); // Deshabilita el control de fecha
+      }
+
+      fechaControl.setValue([this.fechaInicial, this.fechaFinal]);
+     }
     }
-  }
 
 
   onChange(result: Date[]): void {
@@ -65,7 +89,7 @@ export class ReportsComponent implements OnInit {
 
   GenerateInvoicesCleanForm(){
     this.generateInvoicesForm = this.fb.group({
-      periodo: ['hoy', [Validators.required]],
+      periodo: ['seleccionar', [Validators.required]],
       // fecha: [ '', [Validators.required]],
       fecha: [{ value: '', disabled: true }, [Validators.required]],
 
@@ -76,21 +100,28 @@ export class ReportsComponent implements OnInit {
     let isLoading = true;
 
     this.nzMessageService
-      .loading('Action in progress', { nzAnimate: isLoading, nzPauseOnHover: isLoading })
+      .loading('Acción en progreso', { nzAnimate: isLoading, nzPauseOnHover: isLoading })
       .onClose!.pipe(
-        concatMap(() => this.nzMessageService.success('Loading finished').onClose!),
-        concatMap(() => this.nzMessageService.info('Loading finished').onClose!)
+        concatMap(() => this.nzMessageService.success('Carga finalizada').onClose!),
+        concatMap(() => this.nzMessageService.info('Carga finalizada').onClose!)
       )
       .subscribe(() => {});
 
     let generateFacturaSchema1 = {
-      fechaInicial: this.pipe.transform(new Date(this.generateInvoicesForm.value.fecha[0]), 'yyyy-MM-dd 00:00:00.000', '-0600') ?? '',
+      fechaInicial: '',
     };
 
     let generateFacturaSchema2 = {
-      fechaFinal: this.pipe.transform(new Date(this.generateInvoicesForm.value.fecha[1]), 'yyyy-MM-dd 00:00:00.000', '-0600') ?? '',
+      fechaFinal: '',
     };
 
+    if (this.generateInvoicesForm.value.periodo === 'rangoFechas') {
+      generateFacturaSchema1.fechaInicial = this.pipe.transform(new Date(this.generateInvoicesForm.value.fecha[0]), 'yyyy-MM-dd 00:00:00.000', '-0600') ?? '';
+      generateFacturaSchema2.fechaFinal = this.pipe.transform(new Date(this.generateInvoicesForm.value.fecha[1]), 'yyyy-MM-dd 00:00:00.000', '-0600') ?? '';
+    } else {
+      generateFacturaSchema1.fechaInicial = this.pipe.transform(this.fechaInicial, 'yyyy-MM-dd 00:00:00.000', '-0600') ?? '';
+      generateFacturaSchema2.fechaFinal = this.pipe.transform(this.fechaFinal, 'yyyy-MM-dd 00:00:00.000', '-0600') ?? '';
+    }
     let { fechaInicial } = generateFacturaSchema1;
     let { fechaFinal } = generateFacturaSchema2;
 
@@ -100,11 +131,10 @@ export class ReportsComponent implements OnInit {
           this.notificationService.createNotification('error', 'Falló', `${result.error} 😓`);
           isLoading = false;
         } else {
-          // Asigna directamente el array dentro del objeto al listOfData
           this.listOfData = result.dataM || [];
           this.notificationService.createMessage('success', 'La acción se ejecutó con éxito 😎');
           isLoading = false;
-          console.log("este es result", result);
+          console.log("Este es el resultado", result);
         }
       }
     );
