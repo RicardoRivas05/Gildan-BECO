@@ -1,59 +1,64 @@
+<!-- <div class="container">
+
+  <div nz-col>
+    <form nz-form [formGroup]="generateInvoicesForm">
+      <div nz-row>
+        <div nz-col>
+          <nz-range-picker [nzShowTime]="false" style="width: 475px;" formControlName="fecha" [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+        <div nz-col>
+          <button nz-button nzType="primary" nzSize="default" (click)="submitForm()">Consultar</button>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+</div> -->
+
+
 <div class="container">
-  <div class="form-group">
-    <label for="fechaInicial">Fecha Inicial:</label>
-    <nz-date-picker [(ngModel)]="fechaInicial" (ngModelChange)="onFechaInicialChange($event)"></nz-date-picker>
+  <div nz-col>
+    <form nz-form [formGroup]="generateInvoicesForm">
+      <div nz-row>
+        <div nz-col>
+          <!-- Nuevo control para seleccionar el periodo -->
+          <nz-select formControlName="periodo" style="width: 150px">
+            <nz-option nzValue="hoy">Hoy</nz-option>
+            <nz-option nzValue="ayer">Ayer</nz-option>
+            <nz-option nzValue="estaSemana">Esta Semana</nz-option>
+            <nz-option nzValue="esteMes">Este Mes</nz-option>
+            <nz-option nzValue="mesAnterior">Mes Anterior</nz-option>
+            <nz-option nzValue="rangoFechas">Rango de Fechas</nz-option>
+         </nz-select>
+
+          <!-- Rango de fechas -->
+          <nz-range-picker *ngIf="showFechaPicker" [nzShowTime]="false" style="width: 475px;" formControlName="fecha"></nz-range-picker>
+        </div>
+
+        <div nz-col>
+          <button nz-button nzType="primary" nzSize="default" (click)="submitForm()">Consultar</button>
+        </div>
+      </div>
+    </form>
   </div>
-
-  <div class="form-group">
-    <label for="fechaFinal">Fecha Final:</label>
-    <nz-date-picker [(ngModel)]="fechaFinal" (ngModelChange)="onFechaFinalChange($event)"></nz-date-picker>
-  </div>
-
-  <div class="form-group">
-    <label for="tipoReporte">Tipo de Reporte:</label>
-    <select [(ngModel)]="tipoReporte">
-      <option value="Energia Sumistrada">Energia Sumistrada</option>
-      <option value="Resumen">Resumen</option>
-      <option value="Cogeneracion">Cogeneracion</option>
-      <option value="FACTURA 227">FACTURA 227</option>
-    </select>
-  </div>
+</div>
 
 
-  <button class="btn-generar" (click)="generarReporte()">Generar Reporte</button>
-  <div class="checkbox-group">
-    <div *ngIf="mostrarTabla" class="tabla-container">
-      <table class="tabla-reportes">
-        <thead>
-          <tr>
-            <th>Fecha Inicial</th>
-            <th>Fecha Final</th>
-            <th>Nombre del Reporte</th>
-            <th>Ver Reporte</th>
-            <th>Descargar Reporte</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{{ fechaInicial | date:'yyyy-MM-dd' }}</td>
-            <td>{{ fechaFinal | date:'yyyy-MM-dd' }}</td>
-            <td>{{ tipoReporte }}</td>
-            <td>
-              <button class="btn-generar-pdf" (click)="crearPDF()">
-                <i class="pdf-icon"></i>
-                Visualizar Reporte
-              </button>
-            </td>
-            <td>
-              <button class="btn-generar-pdf" (click)="descargarPDF()">
-                <i class="pdf-icon"></i>
-                Descargar Reporte
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+
+<div class="info">
+  <div *ngIf="listOfData && listOfData.length > 0">
+    <div *ngFor="let item of listOfData">
+      <div>
+        Source Name: {{ item.sourceName }}
+      </div>
+      <!-- Agrega más campos según sea necesario -->
     </div>
+  </div>
+  <div *ngIf="listOfData && listOfData.length === 0">
+    <p>No hay datos disponibles.</p>
   </div>
 </div>
 
