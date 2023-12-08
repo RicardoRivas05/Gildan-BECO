@@ -1,8 +1,44 @@
-.container {
+.info {
   width: 100%;
-  border: 5px solid #555;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+  text-align: center;
+ }
+
+ .info h1, .info h2 {
+  text-align: center;
+  color: #333;
+ }
+ .titles {
+  text-align: center;
+ }
+
+ .info table {
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-top: 20px;
+ }
+
+ .info table, .info th, .info td {
+  border: 1px solid #ddd;
+ }
+
+ .info th, .info td {
+  padding: 10px;
+  text-align: center;
+ }
+
+ .info th {
+  background-color: #f2f2f2;
+  color: #333;
+ }
+
+ .info tr:nth-child(even) {
+  background-color: #f2f2f2;
+ }
+
+ .info tr:hover {
+  background-color: #ddd;
+ }

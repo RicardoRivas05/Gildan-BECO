@@ -23,7 +23,17 @@
     <form nz-form [formGroup]="generateInvoicesForm">
       <div nz-row>
         <div nz-col>
-
+          <nz-select formControlName="reporte" style="width: 150px">
+            <nz-option nzValue="reporte" nzLabel="Reporte"></nz-option>
+            <nz-option nzValue="T577Beco" nzLabel="BECO-GILDAN-T577"></nz-option>
+            <nz-option nzValue="T578Beco" nzLabel="BECO-GILDAN-T578"></nz-option>
+            <nz-option nzValue="GildanBeco" nzLabel="BECO-GILDAN"></nz-option>
+            <nz-option nzValue="T577Enee" nzLabel="ENEE-GILDAN-T577"></nz-option>
+            <nz-option nzValue="T578Enee" nzLabel="ENEE-GILDAN-T578"></nz-option>
+            <nz-option nzValue="GildanBecoEnee" nzLabel="ENEE-GILDAN"></nz-option>
+          </nz-select>
+        </div>
+        <div nz-col>
           <nz-select formControlName="periodo" style="width: 150px">
             <nz-option nzValue="seleccionar" nzLabel="Periodo"></nz-option>
             <nz-option nzValue="hoy" nzLabel="Hoy"></nz-option>
@@ -35,11 +45,6 @@
            </nz-select>
            <nz-range-picker  [nzShowTime]="false" style="width: 475px;" formControlName="fecha" [nzRanges]="ranges" ngModel (ngModelChange)="onChange($event)"></nz-range-picker>
         </div>
-
-        <div nz-col>
-          <button nz-button nzType="primary" nzSize="default" (click)="submitForm()">Consultar</button>
-        </div>
-
         <div nz-col>
           <button nz-button nzType="primary" nzSize="default" (click)="submitForm()">Consultar</button>
         </div>
@@ -48,19 +53,110 @@
   </div>
 </div>
 
-
-
-
 <div class="info">
   <div *ngIf="listOfData && listOfData.length > 0">
-    <div *ngFor="let item of listOfData">
-      <div>
-        Source Name: {{ item.sourceName }}
-      </div>
+    <h1>CONSTACIA LECTURAS DE ENERGIA MES DE ----</h1>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="5" class="titles">
+            <h2>T577 PRINCIPAL</h2>
+          </th>
+        </tr>
+        <tr>
+          <th>Medicion</th>
+          <th>Lecturas Anterior</th>
+          <th>Lecturas Actual</th>
+          <th>RollOver</th>
+          <th>Diferencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listOfData">
+          <td>Energia Activa</td>
+          <td>{{ item.energiaActivaInicialPT577 }}</td>
+          <td>{{ item.energiaActivaFinalPT577 }}</td>
+          <td>0 x 100,000,000</td>
+          <td>{{ item.diferenciaEnergiaActivaPT577 }}</td>
+        </tr>
+        <tr *ngFor="let item of listOfData">
+          <td>Energia Reactiva</td>
+          <td>{{ item.energiaReactivaInicialPT577}}</td>
+          <td>{{ item.energiaReactivaFinalPT577}}</td>
+          <td>0 x 100,000,000</td>
+          <td>{{ item.diferenciaEnergiaReactivaPT577}}</td>
+        </tr>
+      </tbody>
+    </table>
 
-    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th colspan="5" class="titles">
+            <h2>T577 RESPALDO</h2>
+          </th>
+        </tr>
+        <tr>
+          <th>Medicion</th>
+          <th>Lecturas Anterior</th>
+          <th>Lecturas Actual</th>
+          <th>RollOver</th>
+          <th>Diferencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listOfData">
+          <td>Energia Activa</td>
+          <td>{{ item.energiaActivaInicialRT577 }}</td>
+          <td>{{ item.energiaActivaFinalRT577 }}</td>
+          <td>0 x 100,000,000</td>
+          <td>{{ item.diferenciaEnergiaActivaRT577 }}</td>
+        </tr>
+        <tr *ngFor="let item of listOfData">
+          <td>Energia Reactiva</td>
+          <td>{{ item.energiaReactivaInicialRT577}}</td>
+          <td>{{ item.energiaReactivaFinalRT577}}</td>
+          <td>0 x 100,000,000</td>
+          <td>{{ item.diferenciaEnergiaReactivaRT577}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <table>
+      <thead>
+        <tr>
+          <th colspan="5" class="titles">
+            <h2>otrooo</h2>
+          </th>
+        </tr>
+        <tr>
+          <th>Medicion</th>
+          <th>Lecturas Anterior</th>
+          <th>Lecturas Actual</th>
+          <th>RollOver</th>
+          <th>Diferencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listOfData">
+          <td>Energia Activa</td>
+          <td>{{ item.energiaActivaInicialRT577 }}</td>
+          <td>{{ item.energiaActivaFinalRT577 }}</td>
+          <td>0 x 100,000,000</td>
+          <td>{{ item.diferenciaEnergiaActivaRT577 }}</td>
+        </tr>
+        <tr *ngFor="let item of listOfData">
+          <td>Energia Reactiva</td>
+          <td>{{ item.energiaReactivaInicialRT577}}</td>
+          <td>{{ item.energiaReactivaFinalRT577}}</td>
+          <td>0 x 100,000,000</td>
+          <td>{{ item.diferenciaEnergiaReactivaRT577}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div *ngIf="listOfData && listOfData.length === 0">
-    <p>No hay datos disponibles.</p>
-  </div>
-</div>
+ </div>
+
+

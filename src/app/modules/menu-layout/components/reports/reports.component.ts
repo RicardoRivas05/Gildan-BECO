@@ -11,13 +11,13 @@ import { concatMap } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { startOfWeek, endOfWeek, addDays, addMonths, startOfMonth, endOfMonth } from 'date-fns';
 import { ChangeDetectorRef } from '@angular/core';
-
-
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css'],
 })
+
 export class ReportsComponent implements OnInit {
   fechaInicial: Date = new Date();
   fechaFinal: Date = new Date();
@@ -49,47 +49,62 @@ export class ReportsComponent implements OnInit {
     this.showFechaPicker = selectedPeriod === 'rangoFechas';
     const fechaControl = this.generateInvoicesForm.get('fecha');
     if (fechaControl) {
-      if (selectedPeriod === 'hoy') {
-        this.fechaInicial = new Date();
-        this.fechaFinal = addDays(new Date(), 1);
-      }
-      if (selectedPeriod === 'ayer') {
-        this.fechaInicial = addDays(new Date(), -1);
-        this.fechaFinal =  new Date();
-      }
-       if (selectedPeriod === 'estaSemana') {
-        this.fechaInicial = startOfWeek(new Date());
-        this.fechaFinal = new Date();
-      }
-      if (selectedPeriod === 'esteMes') {
-        this.fechaInicial = startOfMonth(new Date());
-        this.fechaFinal = addDays(endOfMonth(new Date()), 1); // Agrega un día a la fecha final
-      }
-      if (selectedPeriod === 'mesAnterior') {
-        this.fechaInicial = startOfMonth(addMonths(new Date(), -1));
-        this.fechaFinal = addDays(endOfMonth(addMonths(new Date(), -1)), 1); // Agrega un día a la fecha final
+      switch (selectedPeriod) {
+        case 'hoy':
+          this.fechaInicial = new Date();
+          this.fechaFinal = addDays(new Date(), 1);
+          fechaControl.disable();
+          break;
+
+        case 'ayer':
+          this.fechaInicial = addDays(new Date(), -1);
+          this.fechaFinal = new Date();
+          fechaControl.disable();
+          break;
+        case 'estaSemana':
+          this.fechaInicial = startOfWeek(new Date());
+          this.fechaFinal = new Date();
+          fechaControl.disable();
+          break;
+        case 'esteMes':
+          this.fechaInicial = startOfMonth(new Date());
+          this.fechaFinal = addDays(endOfMonth(new Date()), 1);
+          fechaControl.disable();
+          break;
+        case 'mesAnterior':
+          this.fechaInicial = startOfMonth(addMonths(new Date(), -1));
+          this.fechaFinal = addDays(endOfMonth(addMonths(new Date(), -1)), 1);
+          fechaControl.disable();
+          break;
+        case 'rangoFechas':
+          fechaControl.enable();
+          break;
+        default:
+          fechaControl.disable();
       }
       if (selectedPeriod === 'rangoFechas') {
-        fechaControl.enable(); // Habilita el control de fecha
-      } else {
-        fechaControl.disable(); // Deshabilita el control de fecha
-      }
+        this.onChange
+       }else{
+        fechaControl.setValue([this.fechaInicial, this.fechaFinal]);
+       }
 
-      fechaControl.setValue([this.fechaInicial, this.fechaFinal]);
-     }
     }
+   }
 
-
-  onChange(result: Date[]): void {
+   onChange(result: Date[]): void {
+    this.fechaInicial = result[0];
+    this.fechaFinal = result[1];
     this.dates = {
       from: result[0],
       to: result[1]
     }
-  }
+   }
+
 
   GenerateInvoicesCleanForm(){
     this.generateInvoicesForm = this.fb.group({
       periodo: ['seleccionar', [Validators.required]],
+      reporte: ['reporte', [Validators.required]],
       // fecha: [ '', [Validators.required]],
       fecha: [{ value: '', disabled: true }, [Validators.required]],
 
@@ -131,13 +146,21 @@ export class ReportsComponent implements OnInit {
           this.notificationService.createNotification('error', 'Falló', `${result.error} 😓`);
           isLoading = false;
         } else {
-          this.listOfData = result.dataM || [];
-          this.notificationService.createMessage('success', 'La acción se ejecutó con éxito 😎');
-          isLoading = false;
-          console.log("Este es el resultado", result);
+          if (result.dataM && result.dataM.length > 0) {
+            const primerElemento = result.dataM[0];
+            this.listOfData = [primerElemento];
+
+            this.notificationService.createMessage('success', 'La acción se ejecutó con éxito 😎');
+            isLoading = false;
+            console.log("Este es el resultado", primerElemento);
+          } else {
+            this.notificationService.createNotification('error', 'No existen lecturas para este periodo', '😓');
+            isLoading = false;
+          }
         }
       }
     );
+
   }
 
 }
