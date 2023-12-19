@@ -17,6 +17,33 @@ export interface ReportData {
   energiaReactivaInicialRT577:Number;
   energiaReactivaFinalRT577:Number;
   diferenciaEnergiaReactivaRT577:Number;
+  activaInicialPT578:Number;
+  activaFinalPT578: Number;
+  diferenciaActivaPT578: Number;
+  reactivaInicialPT578:Number;
+  reactivaFinalPT578:Number;
+  diferenciaReactivaPT578:Number;
+  activaInicialRT578:Number;
+  activaFinalRT578: Number;
+  diferenciaActivaRT578: Number;
+  reactivaInicialRT578:Number;
+  reactivaFinalRT578:Number;
+  diferenciaReactivaRT578:Number;
+
+  demandaT577P:Number;
+  demandaT577R:Number;
+  demandaT578P:Number;
+  demandaT578R:Number;
+
+  energiaActivaBG:Number;
+  energiaReactivaBG:Number;
+  demandaBG:Number;
+
+  mes:Number;
+  anio:Number;
+  fechaInicio:String;
+  fechaFin:String;
+
   energiaActivaBecoT577: number;
   lecturaReactiva:number;
   factorPotencia:number;
