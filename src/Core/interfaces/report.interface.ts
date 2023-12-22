@@ -37,7 +37,13 @@ export interface ReportData {
 
   energiaActivaBG:Number;
   energiaReactivaBG:Number;
+  factorPotenciaBG:Number;
   demandaBG:Number;
+
+  energiaActivaEG:Number;
+  energiaReactivaEG:Number;
+  factorPotenciaEG:Number;
+  demandaEG:Number;
 
   mes:Number;
   anio:Number;

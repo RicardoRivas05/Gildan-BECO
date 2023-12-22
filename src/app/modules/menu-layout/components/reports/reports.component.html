@@ -231,7 +231,7 @@
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Factor de Potencia</strong></td>
-          <td colspan="5" class="demanda">{{ item.demandaT578R.toString() | number:'1.0':'en-US'}}</td>
+          <td colspan="5" class="demanda">{{ item.factorPotenciaBG.toString() | number:'1.0':'en-US'}}</td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Demanda</strong></td>
@@ -246,7 +246,7 @@
       <thead>
         <tr>
           <th colspan="5" class="titles">
-            <h2>Cpmsumo de Energia ENEE-GILDAN</h2>
+            <h2>Consumo de Energia ENEE-GILDAN</h2>
           </th>
         </tr>
         <tr>
@@ -257,19 +257,19 @@
       <tbody>
         <tr *ngFor="let item of listOfData">
           <td><strong>Energia Activa</strong></td>
-          <td>{{ item.energiaActivaBG.toString() | number:'1.0':'en-US'}} kWh</td>
+          <td>{{ item.energiaActivaEG.toString() | number:'1.0':'en-US'}} kWh</td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Energia Reactiva</strong></td>
-          <td>{{ item.energiaReactivaBG.toString() | number:'1.0':'en-US'}} kVarh</td>
+          <td>{{ item.energiaReactivaEG.toString() | number:'1.0':'en-US'}} kVarh</td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Factor de Potencia</strong></td>
-          <td colspan="5" class="demanda">{{ item.demandaT578R.toString() | number:'1.0':'en-US'}}</td>
+          <td colspan="5" class="demanda">{{ item.factorPotenciaEG.toString() | number:'1.0':'en-US'}}</td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Demanda</strong></td>
-          <td colspan="5" class="demanda">{{ item.demandaBG.toString() | number:'1.0':'en-US'}} kWh</td>
+          <td colspan="5" class="demanda">{{ item.demandaEG.toString() | number:'1.0':'en-US'}} kWh</td>
         </tr>
       </tbody>
     </table>

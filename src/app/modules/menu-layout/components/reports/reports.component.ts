@@ -228,6 +228,7 @@ export class ReportsComponent implements OnInit {
           if (result.dataM && result.dataM.length > 0) {
             const primerElemento = result.dataM[0];
             this.listOfData = [primerElemento];
+            console.log(result.DataM)
 
             this.notificationService.createMessage(
               'success',
