@@ -53,4 +53,13 @@ export interface ReportData {
   energiaActivaBecoT577: number;
   lecturaReactiva:number;
   factorPotencia:number;
+
+  rolloverActivaT577P: boolean;
+  rolloverActivaT577R: boolean;
+  rolloverActivaT578P: boolean;
+  rolloverActivaT578R: boolean;
+  rolloverReactivaT577P: boolean;
+  rolloverReactivaT577R: boolean;
+  rolloverReactivaT578P: boolean;
+  rolloverReactivaT578R: boolean;
 }

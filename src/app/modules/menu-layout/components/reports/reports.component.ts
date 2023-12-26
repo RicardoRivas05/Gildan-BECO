@@ -43,6 +43,7 @@ export class ReportsComponent implements OnInit {
   pipe = new DatePipe('en-US');
   isLoading: boolean = false;
   dates: { from: any; to: any } = { from: '', to: '' };
+  mes:string = '';
   initialDate = new Date(
     formatDate(
       new Date().toISOString(),
@@ -65,7 +66,6 @@ export class ReportsComponent implements OnInit {
   ];
 
   fecha = new Date(this.fechaInicial);
-  mes = this.meses[this.fecha.getMonth()];
   anio = this.fecha.getFullYear();
   horas = new Date();
   hora = this.horas.getHours();
@@ -94,7 +94,6 @@ export class ReportsComponent implements OnInit {
         this.onPeriodChange(selectedPeriod);
       });
   }
-
 
 
   onPeriodChange(selectedPeriod: string): void {
@@ -145,11 +144,18 @@ export class ReportsComponent implements OnInit {
   onChange(result: Date[]): void {
     this.fechaInicial = result[0];
     this.fechaFinal = result[1];
+
+    // Obtén el mes y el año de la fecha inicial
+    this.mes = this.meses[this.fechaInicial.getMonth()];
+    const anio = this.fechaInicial.getFullYear();
+
+    // Resto de tu código...
     this.dates = {
       from: result[0],
       to: result[1],
     };
   }
+
 
   GenerateInvoicesCleanForm() {
     this.generateInvoicesForm = this.fb.group({
@@ -228,7 +234,6 @@ export class ReportsComponent implements OnInit {
           if (result.dataM && result.dataM.length > 0) {
             const primerElemento = result.dataM[0];
             this.listOfData = [primerElemento];
-            console.log(result.DataM)
 
             this.notificationService.createMessage(
               'success',
@@ -236,7 +241,6 @@ export class ReportsComponent implements OnInit {
             );
             this.isConsulted=true;
             isLoading = false;
-            console.log('Este es el resultado', primerElemento);
           } else {
             this.notificationService.createNotification(
               'error',
@@ -288,7 +292,7 @@ export class ReportsComponent implements OnInit {
      heightLeft -= pageHeight;
     }
 
-    pdf.save('BECO-GILDAN-ENEE '+this.mes+' '+this.anio+ ' '+this.horaFormateada+'.pdf');
+    pdf.save('BECO-GILDAN-ENEE '+ this.mes +' '+this.anio+ ' '+this.horaFormateada+'.pdf');
     });
    }
 

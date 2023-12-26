@@ -84,6 +84,7 @@
           <th>Lecturas Anterior</th>
           <th>Lecturas Actual</th>
           <th>Diferencia</th>
+          <th>ROLLOVER</th>
         </tr>
       </thead>
       <tbody>
@@ -92,12 +93,18 @@
           <td>{{ item.energiaActivaInicialPT577.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.energiaActivaFinalPT577.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.diferenciaEnergiaActivaPT577.toString() | number:'1.0':'en-US'}} kWh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverActivaT577P"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Energia Reactiva</strong></td>
           <td>{{ item.energiaReactivaInicialPT577.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.energiaReactivaFinalPT577.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.diferenciaEnergiaReactivaPT577.toString() | number:'1.0':'en-US'}} kVarh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverReactivaT577P"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Demanda</strong></td>
@@ -117,6 +124,7 @@
           <th>Lecturas Anterior</th>
           <th>Lecturas Actual</th>
           <th>Diferencia</th>
+          <th>ROLLOVER</th>
         </tr>
       </thead>
       <tbody>
@@ -125,12 +133,18 @@
           <td>{{ item.energiaActivaInicialRT577.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.energiaActivaFinalRT577.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.diferenciaEnergiaActivaRT577.toString() | number:'1.0':'en-US'}} kWh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverActivaT577R"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Energia Reactiva</strong></td>
           <td>{{ item.energiaReactivaInicialRT577.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.energiaReactivaFinalRT577.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.diferenciaEnergiaReactivaRT577.toString() | number:'1.0':'en-US'}} kVarh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverReactivaT577R"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Demanda</strong></td>
@@ -151,6 +165,7 @@
           <th>Lecturas Anterior</th>
           <th>Lecturas Actual</th>
           <th>Diferencia</th>
+          <th>ROLLOVER</th>
         </tr>
       </thead>
       <tbody>
@@ -159,12 +174,18 @@
           <td>{{ item.activaInicialPT578.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.activaFinalPT578.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.diferenciaActivaPT578.toString() | number:'1.0':'en-US'}} kWh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverActivaT578P"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Energia Reactiva</strong></td>
           <td>{{ item.reactivaInicialPT578.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.reactivaFinalPT578.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.diferenciaReactivaPT578.toString() | number:'1.0':'en-US'}} kVarh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverReactivaT578P"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Demanda</strong></td>
@@ -184,6 +205,7 @@
           <th>Lecturas Anterior</th>
           <th>Lecturas Actual</th>
           <th>Diferencia</th>
+          <th>ROLLOVER</th>
         </tr>
       </thead>
       <tbody>
@@ -192,12 +214,18 @@
           <td>{{ item.activaInicialRT578.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.activaFinalRT578.toString() | number:'1.0':'en-US'}} kWh</td>
           <td>{{ item.diferenciaActivaRT578.toString() | number:'1.0':'en-US'}} kWh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverActivaT578R"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Energia Reactiva</strong></td>
           <td>{{ item.reactivaInicialRT578.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.reactivaFinalRT578.toString() | number:'1.0':'en-US'}} kVarh</td>
           <td>{{ item.diferenciaReactivaRT578.toString() | number:'1.0':'en-US'}} kVarh</td>
+          <td>
+            <input type="checkbox" [checked]="item.rolloverReactivaT578R"  disabled />
+          </td>
         </tr>
         <tr *ngFor="let item of listOfData">
           <td><strong>Demanda</strong></td>
